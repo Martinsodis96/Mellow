@@ -1,16 +1,21 @@
 package com.mellow.service;
 
-import com.mellow.entity.Profile;
+import com.mellow.model.Profile;
+import com.mellow.repository.ProfileRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class ProfileService {
 
-    public List<Profile> getAllProfiles(){
-        ArrayList<Profile> profiles = new ArrayList<>();
-        profiles.add(new Profile());
-        return profiles;
+    @Autowired
+    private ProfileRepository profileRepository;
+
+    public Iterable<Profile> getAllProfiles(){
+        return profileRepository.findAll();
     }
 
 }
