@@ -4,33 +4,45 @@ import com.mellow.model.Profile;
 import com.mellow.repository.ProfileRepository;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
-import java.util.function.Function;
+import java.util.ArrayList;
+import java.util.List;
 
+import static org.mockito.Mockito.verify;
+
+@RunWith(MockitoJUnitRunner.class)
 public class TestProfileService {
 
-    private ProfileService profileService;
+    @Mock
     private ProfileRepository profileRepository;
-    private final String projectPackage = "com.mellow";
+
+    @InjectMocks
+    private ProfileService profileService;
+    private Profile profile;
+    private Long profileId;
+    private List<Profile> profilesInDb;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
+        this.profile = new Profile("name");
+        this.profileId = 1L;
+        this.profilesInDb = new ArrayList<>();
+        createProfiles(5);
     }
 
     @Test
-    public void canGetAllProfiles() throws Exception {
-        Iterable<Profile> profiles = executeMany(profileService1 -> profileService1.getAllProfiles());
-        profiles.forEach(profile -> System.out.println(profile.getUsername()));
+    public void canGetAllProfiles() {
+        profileService.getAllProfiles();
+        verify(profileRepository).findAll();
     }
 
-    private Iterable<Profile> executeMany(Function<ProfileService, Iterable<Profile>> operation) {
-        try (AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext()) {
-            context.scan(projectPackage);
-            context.refresh();
-            this.profileRepository = context.getBean(ProfileRepository.class);
-            profileService = new ProfileService(profileRepository);
-            return operation.apply(profileService);
+    private void createProfiles(int amount) {
+        for (int i = 0; i < amount; i++) {
+            profilesInDb.add(new Profile("test" + i));
         }
     }
 }
