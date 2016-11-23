@@ -1,9 +1,13 @@
 package com.mellow.config;
 
 
+import com.mellow.repository.ProfileRepository;
+import com.mellow.service.ProfileService;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -11,11 +15,15 @@ import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 @Configuration
+@ComponentScan(basePackages = {"com.mellow"})
 @EnableJpaRepositories("com.mellow.repository")
+@EnableTransactionManagement
 public class JpaConfig {
 
     @Bean
@@ -49,4 +57,5 @@ public class JpaConfig {
         factory.setPackagesToScan("com.mellow.model");
         return factory;
     }
+
 }

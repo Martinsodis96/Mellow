@@ -1,23 +1,29 @@
 package com.mellow.resources;
 
+import com.mellow.config.JpaConfig;
 import com.mellow.model.Profile;
-import com.mellow.service.ProfileService;
+import org.springframework.test.context.ContextConfiguration;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import java.util.ArrayList;
 
 @Path("profiles")
+@ContextConfiguration(classes = {JpaConfig.class})
 public class ProfileResource {
 
-    private ProfileService profileService;
-
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Iterable<Profile> getProfiles() {
+        return null;
+    }
 
     @GET
-    @Produces(MediaType.APPLICATION_XML)
-    public Iterable<Profile> getProfiles() {
-        return new ArrayList<>();
+    @Path("{profileId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Profile getProfile(@PathParam("profileId") String username){
+        return null;
     }
 }

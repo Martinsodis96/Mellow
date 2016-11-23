@@ -1,11 +1,10 @@
 package com.mellow.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement
 @Entity
 public class Profile {
 
@@ -13,6 +12,7 @@ public class Profile {
     @GeneratedValue
     private Long id;
 
+    @Column(unique = true)
     private String username;
 
     public Profile() {
