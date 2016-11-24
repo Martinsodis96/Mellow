@@ -1,11 +1,7 @@
 package com.mellow.config;
 
-
-import com.mellow.repository.ProfileRepository;
-import com.mellow.service.ProfileService;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -57,5 +53,4 @@ public class JpaConfig {
         factory.setPackagesToScan("com.mellow.model");
         return factory;
     }
-
 }

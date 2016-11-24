@@ -30,7 +30,13 @@ public class Profile {
         return username;
     }
 
-    public void setUsername(String username) {
+    public Profile setUsername(String username) {
         this.username = username;
+        return this;
+    }
+
+    public Profile setId(Long id) {
+        this.id = id;
+        return this;
     }
 }

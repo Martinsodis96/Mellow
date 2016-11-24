@@ -15,7 +15,7 @@ import java.util.List;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
-public class TestProfileService {
+public final class TestProfileService {
 
     @Mock
     private ProfileRepository profileRepository;

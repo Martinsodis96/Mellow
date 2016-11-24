@@ -6,7 +6,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 import java.util.function.Function;
 
-public class TestProfileRepository {
+public final class TestProfileRepository {
 
     private final String projectPackage = "com.mellow";
 
