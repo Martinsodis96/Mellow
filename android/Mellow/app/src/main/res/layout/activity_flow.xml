@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,10 +7,62 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.mellow.FlowActivity">
+    tools:context="com.mellow.FlowActivity"
+    android:orientation="vertical"
+    android:baselineAligned="false"
+    android:background="#efeeee">
 
-    <TextView
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:text="Flow"
+            android:id="@+id/button"
+            android:layout_weight="1"
+            android:background="#f2a450"
+            android:textColor="#ffffff"
+            android:onClick="onFlowClicked" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:text="Chat"
+            android:id="@+id/button2"
+            android:layout_weight="1"
+            android:background="#ff8400"
+            android:textColor="#ffffff" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:text="Profile"
+            android:id="@+id/button3"
+            android:layout_weight="1"
+            android:background="#ff8400"
+            android:textColor="#ffffff" />
+    </LinearLayout>
+
+    <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
-</RelativeLayout>
+        android:id="@+id/postListView"
+        android:layout_alignParentEnd="true"
+        android:scrollbars="none"
+        android:smoothScrollbar="false"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:divider="#efeeee"
+        android:dividerHeight="15dp"
+        android:headerDividersEnabled="false"
+        android:background="#efeeee"
+        android:clickable="false"
+        android:contextClickable="false"
+        android:clipToPadding="false"
+        android:drawSelectorOnTop="false"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp" />
+</LinearLayout>
