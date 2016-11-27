@@ -7,17 +7,15 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.mellow.FlowActivity"
+    tools:context="com.mellow.ChatActivity"
     android:orientation="vertical"
-    android:baselineAligned="false"
-    android:background="#efeeee"
     android:id="@+id/main_container">
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/top_button_container">
+        android:id="@+id/top_button_container" >
 
         <Button
             android:layout_width="wrap_content"
@@ -25,7 +23,7 @@
             android:text="Flow"
             android:id="@+id/flow_button"
             android:layout_weight="1"
-            android:background="#f2a450"
+            android:background="#ff8400"
             android:textColor="#ffffff"
             android:onClick="onFlowClicked" />
 
@@ -35,10 +33,9 @@
             android:text="Chat"
             android:id="@+id/chat_button"
             android:layout_weight="1"
-            android:background="#ff8400"
+            android:background="#f2a450"
             android:textColor="#ffffff"
-            android:nestedScrollingEnabled="false"
-            android:onClick="onChatClicked" />
+            android:nestedScrollingEnabled="false" />
 
         <Button
             android:layout_width="wrap_content"
@@ -50,24 +47,4 @@
             android:textColor="#ffffff"
             android:onClick="onProfileClicked" />
     </LinearLayout>
-
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/post_listview"
-        android:layout_alignParentEnd="true"
-        android:scrollbars="none"
-        android:smoothScrollbar="false"
-        android:layout_marginRight="15dp"
-        android:layout_marginLeft="15dp"
-        android:divider="#efeeee"
-        android:dividerHeight="15dp"
-        android:headerDividersEnabled="false"
-        android:background="#efeeee"
-        android:clickable="false"
-        android:contextClickable="false"
-        android:clipToPadding="false"
-        android:drawSelectorOnTop="false"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp" />
 </LinearLayout>

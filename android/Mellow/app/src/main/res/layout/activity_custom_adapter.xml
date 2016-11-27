@@ -50,7 +50,7 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="90dp"
+        android:layout_height="wrap_content"
         android:text="This is just a temp text to show how it will look in the future!"
         android:id="@+id/content_text"
         android:layout_marginBottom="5dp"
@@ -58,7 +58,8 @@
         android:layout_marginRight="15dp"
         android:textColor="#1f1f1f"
         android:textSize="17sp"
-        android:paddingTop="5dp" />
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp" />
 
     <LinearLayout
         android:orientation="horizontal"
