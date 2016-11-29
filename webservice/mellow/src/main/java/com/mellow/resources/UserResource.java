@@ -3,6 +3,7 @@ package com.mellow.resources;
 import com.mellow.model.User;
 import com.mellow.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 
 import javax.ws.rs.*;
@@ -10,7 +11,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 @Path("users")
-@Controller
 public class UserResource {
 
     @Autowired
@@ -32,17 +32,18 @@ public class UserResource {
     }
 
     @POST
-    public Response addUser(String username, String firstname, String lastname) {
-        User createdUser = userService.createUser(username, firstname, lastname);
-        return Response.status(Response.Status.CREATED).header("location", "users/" + createdUser.getId()).build();
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addUser(User user) {
+        User createdUser = userService.createUser(user);
+        return Response.accepted(createdUser).status(Response.Status.CREATED).header("location", "users/" + createdUser.getId()).build();
     }
 
     @PUT
     @Path("{userId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateUser(@PathParam("userId") Long id, String username) {
-        userService.updateUser(username, id);
-        return Response.status(Response.Status.NO_CONTENT).build();
+        User user = userService.updateUser(username, id);
+        return Response.accepted(user).build();
     }
 
     @DELETE

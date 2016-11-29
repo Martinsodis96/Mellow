@@ -33,8 +33,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User createUser(String username, String firstname, String lastname){
-        User user = new User(username, firstname, lastname);
+    public User createUser(User user){
         return userRepository.save(user);
     }
 
