@@ -1,0 +1,28 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.mellow.fragment.FlowFragment"
+    android:background="#efeeee">
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/post_listview"
+        android:layout_alignParentEnd="true"
+        android:scrollbars="none"
+        android:smoothScrollbar="false"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:divider="#efeeee"
+        android:dividerHeight="15dp"
+        android:headerDividersEnabled="false"
+        android:background="#efeeee"
+        android:clickable="false"
+        android:contextClickable="false"
+        android:clipToPadding="false"
+        android:drawSelectorOnTop="false"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp" />
+
+</FrameLayout>

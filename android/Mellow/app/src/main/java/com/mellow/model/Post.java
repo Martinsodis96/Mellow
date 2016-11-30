@@ -1,8 +1,5 @@
 package com.mellow.model;
 
-/**
- * Created by Martin on 2016-11-24.
- */
 public class Post {
 
     private String contentText;

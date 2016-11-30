@@ -14,7 +14,7 @@ import com.mellow.model.Post;
 
 import java.util.List;
 
-public class CustomAdapterActivity extends ArrayAdapter<Post> {
+public class CustomArrayAdapter extends ArrayAdapter<Post> {
 
     private List<Post> posts;
     ImageView profilePicture;
@@ -25,7 +25,9 @@ public class CustomAdapterActivity extends ArrayAdapter<Post> {
     TextView firstName;
     TextView lastName;
 
-    public CustomAdapterActivity(Context context, List<Post> posts) {
+
+
+    public CustomArrayAdapter(Context context, List<Post> posts) {
         super(context, R.layout.activity_custom_adapter, posts);
         this.posts=posts;
     }
