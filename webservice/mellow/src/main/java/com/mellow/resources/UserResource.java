@@ -1,5 +1,6 @@
 package com.mellow.resources;
 
+import com.mellow.model.PageRequestBean;
 import com.mellow.model.User;
 import com.mellow.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 @Path("users")
+@Component
 public class UserResource {
 
     @Autowired
@@ -18,8 +20,16 @@ public class UserResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllUsers() {
-        Iterable<User> users = userService.getAllUsers();
+    public Response getAllUsers(@BeanParam PageRequestBean request) {
+        Iterable<User> users;
+        if(request.getPage() == 0 && request.getSize() == 0){
+            users = userService.getAllUsers();
+        }else {
+            if(request.getSort().equals("desc"))
+                users = userService.getAllByPage(request.getPage(), request.getSize(), UserService.SortType.DESC);
+            else
+                users = userService.getAllByPage(request.getPage(), request.getSize(), UserService.SortType.ASC);
+        }
         return Response.ok(users).build();
     }
 

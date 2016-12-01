@@ -11,11 +11,11 @@ public class User extends AbstractEntity{
     private String firstname;
     private String lastname;
 
-    @OneToMany(mappedBy = "user")
+/*    @OneToMany(mappedBy = "user")
     private List<Post> posts;
 
     @ManyToMany
-    private List<Chat> chats;
+    private List<Chat> chats;*/
 
     protected User() {
     }
@@ -43,7 +43,7 @@ public class User extends AbstractEntity{
         return lastname;
     }
 
-    public List<Post> getPosts() {
+/*    public List<Post> getPosts() {
         return posts;
     }
 
@@ -57,5 +57,5 @@ public class User extends AbstractEntity{
 
     public void setChats(List<Chat> chats) {
         this.chats = chats;
-    }
+    }*/
 }

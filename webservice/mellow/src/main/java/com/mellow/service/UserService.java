@@ -3,10 +3,16 @@ package com.mellow.service;
 import com.mellow.model.User;
 import com.mellow.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserService {
+
+    public enum SortType {ASC, DESC}
 
     private UserRepository userRepository;
 
@@ -41,5 +47,14 @@ public class UserService {
         User user = userRepository.findOne(id);
         userRepository.delete(id);
         return user;
+    }
+
+    public List<User> getAllByPage(int pageNumber, int pageSize, SortType sortType) {
+        switch (sortType){
+            case DESC :
+                return userRepository.findAll(new PageRequest(pageNumber, pageSize, Sort.Direction.DESC, "id")).getContent();
+            default:
+                return userRepository.findAll(new PageRequest(pageNumber, pageSize, Sort.Direction.ASC, "id")).getContent();
+        }
     }
 }

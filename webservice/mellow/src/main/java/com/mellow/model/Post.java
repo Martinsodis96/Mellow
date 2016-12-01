@@ -11,11 +11,11 @@ public class Post extends AbstractEntity{
 
     private String content;
 
-    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "post")
     private List<Comment> comments;
 
-    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER)
-    private List<List> likes;
+    @OneToMany(mappedBy = "post")
+    private List<Like> likes;
 
     @ManyToOne
     private User user;
