@@ -1,10 +1,32 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.mellow.fragment.ProfileFragment"
-    android:background="#141a77">
+    android:background="#efeeee"
+    android:orientation="vertical">
 
     <!-- TODO: Update blank fragment layout -->
 
-</FrameLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="404"
+        android:id="@+id/textView4"
+        android:textColor="#5d5d5d"
+        android:textSize="42dp"
+        android:layout_marginTop="150dp"
+        android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="NOT FOUND"
+        android:id="@+id/textView3"
+        android:textColor="#5d5d5d"
+        android:textSize="42dp"
+        android:layout_gravity="center_horizontal" />
+
+</LinearLayout>
