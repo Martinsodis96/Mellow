@@ -1,5 +1,8 @@
 package com.mellow.model;
 
+import com.mellow.service.UserService;
+import com.mellow.service.UserService.SortType;
+
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.QueryParam;
 
@@ -9,6 +12,7 @@ public class PageRequestBean {
     private int page;
 
     @QueryParam("size")
+    @DefaultValue("5")
     private int size;
 
     @QueryParam("sort")

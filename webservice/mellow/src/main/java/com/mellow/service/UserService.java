@@ -1,5 +1,6 @@
 package com.mellow.service;
 
+import com.mellow.exception.InvalidUserException;
 import com.mellow.model.User;
 import com.mellow.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,12 @@ public class UserService {
     }
 
     public User createUser(User user) {
-        return userRepository.save(user);
+        if(user.getUsername().length() > 5){
+            return userRepository.save(user);
+        }else {
+            throw new InvalidUserException("Username too short");
+        }
+
     }
 
     public User deleteUser(Long id) {

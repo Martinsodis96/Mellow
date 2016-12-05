@@ -11,11 +11,11 @@ public class User extends AbstractEntity{
     private String firstname;
     private String lastname;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Post> posts;
 
-    @ManyToMany
-    private List<Chat> chats;
+    /*@ManyToMany(fetch = FetchType.EAGER)
+    private List<Chat> chats;*/
 
     protected User() {
     }
@@ -43,7 +43,7 @@ public class User extends AbstractEntity{
         return lastname;
     }
 
-/*    public List<Post> getPosts() {
+    public List<Post> getPosts() {
         return posts;
     }
 
@@ -51,11 +51,12 @@ public class User extends AbstractEntity{
         this.posts = posts;
     }
 
-    public List<Chat> getChats() {
+   /* public List<Chat> getChats() {
         return chats;
     }
 
     public void setChats(List<Chat> chats) {
         this.chats = chats;
     }*/
+
 }
