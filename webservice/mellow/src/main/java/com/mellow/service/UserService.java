@@ -25,33 +25,33 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User getByUsername(String username){
+    public User getByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
-    public User getById(Long id){
+    public User getById(Long id) {
         return userRepository.findOne(id);
     }
 
-    public User updateUser(String username, Long id){
+    public User updateUser(String username, Long id) {
         User user = userRepository.findOne(id);
         user.setUsername(username);
         return userRepository.save(user);
     }
 
-    public User createUser(User user){
+    public User createUser(User user) {
         return userRepository.save(user);
     }
 
-    public User deleteUser(Long id){
+    public User deleteUser(Long id) {
         User user = userRepository.findOne(id);
         userRepository.delete(id);
         return user;
     }
 
     public List<User> getAllByPage(int pageNumber, int pageSize, SortType sortType) {
-        switch (sortType){
-            case DESC :
+        switch (sortType) {
+            case DESC:
                 return userRepository.findAll(new PageRequest(pageNumber, pageSize, Sort.Direction.DESC, "id")).getContent();
             default:
                 return userRepository.findAll(new PageRequest(pageNumber, pageSize, Sort.Direction.ASC, "id")).getContent();

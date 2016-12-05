@@ -53,18 +53,14 @@ public class UserResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateUser(@PathParam("userId") Long id, String username) {
         User user = userService.updateUser(username, id);
-        return Response.accepted(user).build();
+        return Response.ok(user).build();
     }
 
     @DELETE
     @Path("{userId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteUser(@PathParam("userId") Long id) {
-        try{
             User user = userService.deleteUser(id);
             return Response.ok(user).build();
-        }catch (Exception e){
-            return Response.status(404).build();
-        }
     }
 }
