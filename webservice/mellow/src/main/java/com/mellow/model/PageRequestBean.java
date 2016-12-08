@@ -1,8 +1,5 @@
 package com.mellow.model;
 
-import com.mellow.service.UserService;
-import com.mellow.service.UserService.SortType;
-
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.QueryParam;
 

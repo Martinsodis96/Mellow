@@ -18,6 +18,13 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
+	<repositories>
+		<repository>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
+		</repository>
+	</repositories>
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -32,6 +39,12 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jersey</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.martinsodis96</groupId>
+			<artifactId>mellow</artifactId>
+			<version>09a06aae22</version>
 		</dependency>
 
 		<!-- DataSource (HikariCP) -->
