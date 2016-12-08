@@ -1,5 +1,6 @@
 package com.mellow.service;
 
+import com.mellow.model.Post;
 import com.mellow.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,5 +15,7 @@ public class PostService {
         this.postRepository = postRepository;
     }
 
-
+    public Iterable<Post> getAllPosts(){
+        return postRepository.findAll();
+    }
 }

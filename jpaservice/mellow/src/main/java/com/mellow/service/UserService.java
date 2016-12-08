@@ -26,7 +26,7 @@ public class UserService {
     }
 
     public User getByUsername(String username) {
-        return userRepository.findByUsername(username);
+        return null;
     }
 
     public User getById(Long id) {
@@ -57,9 +57,10 @@ public class UserService {
     public List<User> getAllByPage(int pageNumber, int pageSize, SortType sortType) {
         switch (sortType) {
             case DESC:
-                return userRepository.findAll(new PageRequest(pageNumber, pageSize, Sort.Direction.DESC, "id")).getContent();
+             //   return userRepository.findAll(new PageRequest(pageNumber, pageSize, Sort.Direction.DESC, "id")).getContent();
             default:
-                return userRepository.findAll(new PageRequest(pageNumber, pageSize, Sort.Direction.ASC, "id")).getContent();
+               // return userRepository.findAll(new PageRequest(pageNumber, pageSize, Sort.Direction.ASC, "id")).getContent();
+                return null;
         }
     }
 }
