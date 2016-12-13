@@ -10,6 +10,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.mellow.CustomArrayAdapter;
+import com.mellow.client.adapter.PostAdapter;
 import com.mellow.mellow.R;
 import com.mellow.model.Post;
 
@@ -20,6 +21,7 @@ public class FlowFragment extends Fragment {
 
     ListView postListView;
     private ListAdapter adapter;
+    private PostAdapter postAdapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,6 +38,8 @@ public class FlowFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         postListView = (ListView) view.findViewById(R.id.post_listview);
+        postAdapter = new PostAdapter();
+        postAdapter.getAllPosts();
 
         List<Post> posts = new ArrayList<>();
         posts.add(new Post("This is just a temp text!", "Test1", "Testsson1"));
