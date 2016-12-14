@@ -39,14 +39,7 @@ public class FlowFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         postListView = (ListView) view.findViewById(R.id.post_listview);
         postAdapter = new PostAdapter();
-        postAdapter.getAllPosts();
-
-        List<Post> posts = new ArrayList<>();
-        posts.add(new Post("This is just a temp text!", "Test1", "Testsson1"));
-        posts.add(new Post("This is a longer temp text to show how it will look in the future when someone type something longer!", "Test2", "Testsson2"));
-        posts.add(new Post("This is just a temp text to show how it will look in the future3!", "Test3", "Testsson3"));
-        posts.add(new Post("This is just a temp text to show how it will look in the future4!", "Test4", "Testsson4"));
-        adapter = new CustomArrayAdapter(getActivity().getApplicationContext(), posts);
+        adapter = new CustomArrayAdapter(getActivity().getApplicationContext(), postAdapter.getAllPosts());
         postListView.setAdapter(adapter);
     }
 }
