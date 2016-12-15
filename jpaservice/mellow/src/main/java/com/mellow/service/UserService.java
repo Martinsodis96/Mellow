@@ -1,10 +1,8 @@
 package com.mellow.service;
 
-import com.mellow.model.User;
+import com.mellow.model.UserDao;
 import com.mellow.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,25 +19,25 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public Iterable<User> getAllUsers() {
+    public Iterable<UserDao> getAllUsers() {
         return userRepository.findAll();
     }
 
-    public User getByUsername(String username) {
+    public UserDao getByUsername(String username) {
         return null;
     }
 
-    public User getById(Long id) {
+    public UserDao getById(Long id) {
         return userRepository.findOne(id);
     }
 
-    public User updateUser(String username, Long id) {
-        User user = userRepository.findOne(id);
+    public UserDao updateUser(String username, Long id) {
+        UserDao user = userRepository.findOne(id);
         user.setUsername(username);
         return userRepository.save(user);
     }
 
-    public User createUser(User user) {
+    public UserDao createUser(UserDao user) {
         if(user.getUsername().length() > 5){
             return userRepository.save(user);
         }else {
@@ -48,13 +46,13 @@ public class UserService {
 
     }
 
-    public User deleteUser(Long id) {
-        User user = userRepository.findOne(id);
+    public UserDao deleteUser(Long id) {
+        UserDao user = userRepository.findOne(id);
         userRepository.delete(id);
         return user;
     }
 
-    public List<User> getAllByPage(int pageNumber, int pageSize, SortType sortType) {
+    public List<UserDao> getAllByPage(int pageNumber, int pageSize, SortType sortType) {
         switch (sortType) {
             case DESC:
              //   return userRepository.findAll(new PageRequest(pageNumber, pageSize, Sort.Direction.DESC, "id")).getContent();

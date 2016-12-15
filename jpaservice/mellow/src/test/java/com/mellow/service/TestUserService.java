@@ -1,6 +1,6 @@
 package com.mellow.service;
 
-import com.mellow.model.Post;
+import com.mellow.model.PostDao;
 import com.mellow.repository.PostRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,7 +22,7 @@ public final class TestUserService {
 
     @Mock
     private PostRepository postRepository;
-    private List<Post> postsInDb;
+    private List<PostDao> postsInDb;
 
     @InjectMocks
     private PostService postService;
@@ -30,14 +30,14 @@ public final class TestUserService {
     @Before
     public void setUp() throws Exception {
         postsInDb = new ArrayList<>();
-        postsInDb.add(new Post("something"));
-        postsInDb.add(new Post("something Else"));
+        postsInDb.add(new PostDao("something"));
+        postsInDb.add(new PostDao("something Else"));
     }
 
     @Test
     public void canGetAllPosts() {
         when(postRepository.findAll()).thenReturn(postsInDb);
-        Iterable<Post> usersFromDatabase = postService.getAllPosts();
+        Iterable<PostDao> usersFromDatabase = postService.getAllPosts();
         verify(postRepository, times(1)).findAll();
         usersFromDatabase.forEach(post -> {
             assertTrue(postsInDb.contains(post));

@@ -1,7 +1,7 @@
 package com.mellow.repository;
 
-import com.mellow.model.Comment;
+import com.mellow.model.CommentDao;
 import org.springframework.data.repository.CrudRepository;
 
-public interface CommentRepository extends CrudRepository<Comment, Long> {
+public interface CommentRepository extends CrudRepository<CommentDao, Long> {
 }

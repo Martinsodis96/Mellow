@@ -4,17 +4,20 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Message extends AbstractEntity{
+public class MessageDao extends AbstractEntity{
 
     private String message;
 
     @ManyToOne
-    private Chat chat;
+    private UserDao user;
 
-    protected Message() {
+    @ManyToOne
+    private ChatDao chatDao;
+
+    protected MessageDao() {
     }
 
-    public Message(String message) {
+    public MessageDao(String message) {
         this.message = message;
     }
 
@@ -22,7 +25,7 @@ public class Message extends AbstractEntity{
         return message;
     }
 
-    public Chat getChat() {
-        return chat;
+    public ChatDao getChatDao() {
+        return chatDao;
     }
 }

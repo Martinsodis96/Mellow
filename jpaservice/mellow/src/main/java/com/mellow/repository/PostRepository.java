@@ -1,8 +1,8 @@
 package com.mellow.repository;
 
-import com.mellow.model.Post;
+import com.mellow.model.PostDao;
 import org.springframework.data.repository.CrudRepository;
 
-public interface PostRepository extends CrudRepository<Post, Long> {
+public interface PostRepository extends CrudRepository<PostDao, Long> {
 
 }

@@ -4,17 +4,23 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Comment extends AbstractEntity {
+public class CommentDao extends AbstractEntity {
 
     @ManyToOne
-    private Post post;
+    private PostDao post;
     private String content;
 
-    public Comment(String content) {
+    @ManyToOne
+    private UserDao user;
+
+    protected CommentDao() {
+    }
+
+    public CommentDao(String content) {
         this.content = content;
     }
 
-    public Post getPost() {
+    public PostDao getPost() {
         return post;
     }
 
@@ -22,7 +28,8 @@ public class Comment extends AbstractEntity {
         return content;
     }
 
-    public void setContent(String content) {
+    public CommentDao setContent(String content) {
         this.content = content;
+        return this;
     }
 }

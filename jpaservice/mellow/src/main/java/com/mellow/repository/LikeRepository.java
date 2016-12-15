@@ -1,8 +1,8 @@
 package com.mellow.repository;
 
-import com.mellow.model.Like;
+import com.mellow.model.LikeDao;
 import org.springframework.data.repository.CrudRepository;
 
-public interface LikeRepository extends CrudRepository<Like, Long> {
+public interface LikeRepository extends CrudRepository<LikeDao, Long> {
 
 }

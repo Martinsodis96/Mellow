@@ -1,30 +1,28 @@
 package com.mellow.model;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import java.util.List;
 import java.util.Set;
 
 @Entity
-public class Post extends AbstractEntity{
+public class PostDao extends AbstractEntity{
 
     private String content;
 
     @OneToMany(mappedBy = "post")
-    private Set<Comment> comments;
+    private Set<CommentDao> comments;
 
     @OneToMany(mappedBy = "post")
-    private Set<Like> likes;
+    private Set<LikeDao> likes;
 
     @ManyToOne
-    private User user;
+    private UserDao user;
 
-    protected Post() {
+    protected PostDao() {
     }
 
-    public Post(String content) {
+    public PostDao(String content) {
         this.content = content;
     }
 
@@ -32,27 +30,30 @@ public class Post extends AbstractEntity{
         return content;
     }
 
-    public Set<Comment> getComments() {
+    public Set<CommentDao> getComments() {
         return comments;
     }
 
-    public void setComments(Set<Comment> comments) {
+    public PostDao setComments(Set<CommentDao> comments) {
         this.comments = comments;
+        return this;
     }
 
-    public Set<Like> getLikes() {
+    public Set<LikeDao> getLikes() {
         return likes;
     }
 
-    public void setLikes(Set<Like> likes) {
+    public PostDao setLikes(Set<LikeDao> likes) {
         this.likes = likes;
+        return this;
     }
 
-    public User getUser() {
+    public UserDao getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public PostDao setUser(UserDao user) {
         this.user = user;
+        return this;
     }
 }
