@@ -6,9 +6,10 @@ import javax.persistence.ManyToOne;
 @Entity
 public class CommentDao extends AbstractEntity {
 
+    private String content;
+
     @ManyToOne
     private PostDao post;
-    private String content;
 
     @ManyToOne
     private UserDao user;

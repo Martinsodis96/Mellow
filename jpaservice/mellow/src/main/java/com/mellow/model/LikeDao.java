@@ -17,6 +17,11 @@ public class LikeDao extends AbstractEntity {
     protected LikeDao() {
     }
 
+    public LikeDao(PostDao post, UserDao user) {
+        this.post = post;
+        this.user = user;
+    }
+
     public UserDao getUser() {
         return user;
     }
