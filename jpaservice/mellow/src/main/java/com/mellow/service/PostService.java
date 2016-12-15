@@ -18,4 +18,8 @@ public class PostService {
     public Iterable<PostDao> getAllPosts(){
         return postRepository.findAll();
     }
+
+    public PostDao getPostById(Long id){
+        return postRepository.findOne(id);
+    }
 }
