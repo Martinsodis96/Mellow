@@ -14,7 +14,8 @@ public class ChatDao extends AbstractEntity{
     @ManyToMany
     private List<UserDao> users;
 
-    public ChatDao() {
+    public ChatDao(List<UserDao> users) {
+        this.users = users;
     }
 
     public List<MessageDao> getMessages() {
@@ -30,8 +31,13 @@ public class ChatDao extends AbstractEntity{
         return users;
     }
 
-    public ChatDao setUsers(List<UserDao> users) {
-        this.users = users;
+    public ChatDao addUser(UserDao user) {
+        this.users.add(user);
         return this;
     }
+    public ChatDao removeUser(UserDao user) {
+        this.users.remove(user);
+        return this;
+    }
+
 }
