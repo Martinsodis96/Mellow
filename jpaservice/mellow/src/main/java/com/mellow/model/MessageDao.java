@@ -12,7 +12,7 @@ public class MessageDao extends AbstractEntity{
     private UserDao user;
 
     @ManyToOne
-    private ChatDao chatDao;
+    private ChatDao chat;
 
     protected MessageDao() {
     }
@@ -25,7 +25,7 @@ public class MessageDao extends AbstractEntity{
         return message;
     }
 
-    public ChatDao getChatDao() {
-        return chatDao;
+    public ChatDao getChat() {
+        return chat;
     }
 }
