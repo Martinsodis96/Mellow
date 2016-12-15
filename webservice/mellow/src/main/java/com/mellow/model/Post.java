@@ -1,11 +1,11 @@
 package com.mellow.model;
 
-public class PostDto {
+public class Post {
 
     private Long id;
     private String contentText;
 
-    public PostDto(Post post) {
+    public Post(PostDao post) {
         this.id = post.getId();
         this.contentText = post.getContent();
     }

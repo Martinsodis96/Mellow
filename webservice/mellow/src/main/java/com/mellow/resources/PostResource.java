@@ -1,6 +1,6 @@
 package com.mellow.resources;
 
-import com.mellow.model.PostDto;
+import com.mellow.model.Post;
 import com.mellow.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -23,8 +23,8 @@ public class PostResource {
 
     @GET
     public Response getAllPosts(){
-        List<PostDto> postDtos = new ArrayList<>();
-        postService.getAllPosts().forEach(post -> postDtos.add(new PostDto(post)));
-        return Response.ok(postDtos).build();
+        List<Post> posts = new ArrayList<>();
+        postService.getAllPosts().forEach(postDao -> posts.add(new Post(postDao)));
+        return Response.ok(posts).build();
     }
 }
