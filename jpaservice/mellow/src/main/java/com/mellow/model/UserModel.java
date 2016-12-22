@@ -20,7 +20,7 @@ public class UserModel extends AbstractModel {
     @OneToMany(mappedBy = "user")
     private List<MessageModel> messages;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<PostModel> posts;
 
     @ManyToMany
