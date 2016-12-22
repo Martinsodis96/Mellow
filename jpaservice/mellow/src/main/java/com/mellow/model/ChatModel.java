@@ -6,36 +6,36 @@ import javax.persistence.OneToMany;
 import java.util.List;
 
 @Entity
-public class ChatDao extends AbstractEntity{
+public class ChatModel extends AbstractModel {
 
     @OneToMany(mappedBy = "chat")
-    private List<MessageDao> messages;
+    private List<MessageModel> messages;
 
     @ManyToMany
-    private List<UserDao> users;
+    private List<UserModel> users;
 
-    public ChatDao(List<UserDao> users) {
+    public ChatModel(List<UserModel> users) {
         this.users = users;
     }
 
-    public List<MessageDao> getMessages() {
+    public List<MessageModel> getMessages() {
         return messages;
     }
 
-    public ChatDao setMessages(List<MessageDao> messages) {
+    public ChatModel setMessages(List<MessageModel> messages) {
         this.messages = messages;
         return this;
     }
 
-    public List<UserDao> getUsers() {
+    public List<UserModel> getUsers() {
         return users;
     }
 
-    public ChatDao addUser(UserDao user) {
+    public ChatModel addUser(UserModel user) {
         this.users.add(user);
         return this;
     }
-    public ChatDao removeUser(UserDao user) {
+    public ChatModel removeUser(UserModel user) {
         this.users.remove(user);
         return this;
     }

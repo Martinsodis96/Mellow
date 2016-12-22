@@ -1,8 +1,7 @@
 package com.mellow.service;
 
-import com.mellow.model.LikeDao;
-import com.mellow.model.PostDao;
-import com.mellow.model.UserDao;
+import com.mellow.model.PostModel;
+import com.mellow.model.UserModel;
 import com.mellow.repository.PostRepository;
 import com.mellow.repository.UserRepository;
 import com.mellow.service.exception.DatabaseException;
@@ -25,34 +24,22 @@ public class PostService {
         this.userRepository = userRepository;
     }
 
-    public PostDao getPostById(Long postId) {
-        PostDao post = execute(postRepository1 ->
-                        postRepository1.findOne(postId),
+    public PostModel getPostById(Long postId) {
+        return execute(postRepository1 -> postRepository1.findOne(postId),
                 "Failed to get post with id: " + postId);
-        if (post != null) {
-            return post;
-        } else {
-            throw new NoSearchResultException("Could not find post with id: " + postId);
-        }
     }
 
-    public Iterable<PostDao> getAllPosts() {
-        Iterable<PostDao> posts;
+    public Iterable<PostModel> getAllPosts() {
+        Iterable<PostModel> posts;
         try {
-            posts = postRepository.findAll();
+            return postRepository.findAll();
         } catch (DataAccessException e) {
             throw new DatabaseException("Failed to get all posts");
         }
-
-        if (posts != null) {
-            return posts;
-        } else {
-            throw new NoSearchResultException("No posts were found");
-        }
     }
 
-    public PostDao createPost(Long userId, String content) {
-        UserDao user;
+    public PostModel createPost(Long userId, String content) {
+        UserModel user;
         try {
             user = userRepository.findOne(userId);
         } catch (DataAccessException e) {
@@ -60,15 +47,14 @@ public class PostService {
         }
 
         if (user != null) {
-            return postRepository.save(new PostDao(content, user));
+            return postRepository.save(new PostModel(content, user));
         } else {
             throw new NoSearchResultException("Could not find user with id: " + userId);
         }
     }
 
-    public PostDao updatePost(Long postId, String content) {
-        PostDao post = execute(postRepository1 ->
-                        postRepository1.findOne(postId),
+    public PostModel updatePost(Long postId, String content) {
+        PostModel post = execute(postRepository1 -> postRepository1.findOne(postId),
                 "Failed to update post with id: " + postId);
 
         if (post != null) {
@@ -78,9 +64,8 @@ public class PostService {
         }
     }
 
-    public PostDao removePost(Long postId) {
-        PostDao post = execute(postRepository1 ->
-                        postRepository1.findOne(postId),
+    public PostModel removePost(Long postId) {
+        PostModel post = execute(postRepository1 -> postRepository1.findOne(postId),
                 "Failed to remove post with id: " + postId);
 
         if (post != null) {
@@ -91,7 +76,7 @@ public class PostService {
         }
     }
 
-    private PostDao execute(Function<PostRepository, PostDao> operation, String dbExMsg) {
+    private PostModel execute(Function<PostRepository, PostModel> operation, String dbExMsg) {
         try {
             return operation.apply(postRepository);
         } catch (DataAccessException e) {

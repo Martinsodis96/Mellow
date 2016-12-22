@@ -1,7 +1,7 @@
 package com.mellow.service;
 
-import com.mellow.model.ChatDao;
-import com.mellow.model.UserDao;
+import com.mellow.model.ChatModel;
+import com.mellow.model.UserModel;
 import com.mellow.repository.ChatRepository;
 import com.mellow.repository.UserRepository;
 import com.mellow.service.exception.DatabaseException;
@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
@@ -25,41 +26,29 @@ public class ChatService {
         this.userRepository = userRepository;
     }
 
-    public ChatDao getChatById(Long chatId) {
-        ChatDao chat = execute(chatRepository1 ->
-                chatRepository1.findOne(chatId),
+    public ChatModel getChatById(Long chatId) {
+        return execute(chatRepository1 -> chatRepository1.findOne(chatId),
                 "Failed to get chat with id: " + chatId);
-        if (chat != null) {
-            return chat;
-        } else {
-            throw new NoSearchResultException("Could not find chat with id: " + chatId);
-        }
     }
 
-    public Iterable<ChatDao> getAllChats(){
-        Iterable<ChatDao> chat;
+    public Iterable<ChatModel> getAllChats(){
+        Iterable<ChatModel> chats;
         try{
-             chat = chatRepository.findAll();
+            return chatRepository.findAll();
         }catch (DataAccessException e){
             throw new DatabaseException("Failed to get all chats");
         }
-
-        if (chat != null) {
-            return chat;
-        } else {
-            throw new NoSearchResultException("No chats were founds.");
-        }
     }
 
-    public ChatDao createChat(List<UserDao> users){
+    public ChatModel createChat(List<UserModel> users){
         return execute(chatRepository1 ->
-                chatRepository1.save(new ChatDao(users)),
+                chatRepository1.save(new ChatModel(users)),
                 "Failed To Create Chat");
     }
 
-    public ChatDao addUserToChat(Long chatId, Long userId){
-        ChatDao chat;
-        UserDao user;
+    public ChatModel addUserToChat(Long chatId, Long userId){
+        ChatModel chat;
+        UserModel user;
         try{
             chat = chatRepository.findOne(chatId);
             user = userRepository.findOne(userId);
@@ -76,9 +65,9 @@ public class ChatService {
         }
     }
 
-    public ChatDao removeUserFromChat(Long chatId, Long userId){
-        ChatDao chat;
-        UserDao user;
+    public ChatModel removeUserFromChat(Long chatId, Long userId){
+        ChatModel chat;
+        UserModel user;
         try{
             chat = chatRepository.findOne(chatId);
             user = userRepository.findOne(userId);
@@ -95,8 +84,8 @@ public class ChatService {
         }
     }
 
-    public List<UserDao> getAllUsersFromChat(Long chatId){
-        ChatDao chat;
+    public List<UserModel> getAllUsersFromChat(Long chatId){
+        ChatModel chat;
         try{
             chat = chatRepository.findOne(chatId);
         }catch (DataAccessException e){
@@ -109,7 +98,7 @@ public class ChatService {
         }
     }
 
-    private ChatDao execute(Function<ChatRepository, ChatDao> operation, String dbExMsg){
+    private ChatModel execute(Function<ChatRepository, ChatModel> operation, String dbExMsg){
         try{
             return operation.apply(chatRepository);
         }catch (DataAccessException e){

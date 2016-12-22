@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-public class UserDao extends AbstractEntity{
+public class UserModel extends AbstractModel {
 
     @Column(unique = true, nullable = false)
     private String username;
@@ -12,24 +12,24 @@ public class UserDao extends AbstractEntity{
     private String lastname;
 
     @OneToMany(mappedBy = "user")
-    private List<CommentDao> comments;
+    private List<CommentModel> comments;
 
     @OneToMany(mappedBy = "user")
-    private List<LikeDao> likes;
+    private List<LikeModel> likes;
 
     @OneToMany(mappedBy = "user")
-    private List<MessageDao> messages;
+    private List<MessageModel> messages;
 
     @OneToMany(mappedBy = "user")
-    private List<PostDao> posts;
+    private List<PostModel> posts;
 
     @ManyToMany
-    private List<ChatDao> chats;
+    private List<ChatModel> chats;
 
-    protected UserDao() {
+    protected UserModel() {
     }
 
-    public UserDao(String username, String firstname, String lastname) {
+    public UserModel(String username, String firstname, String lastname) {
         this.username = username;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -39,7 +39,7 @@ public class UserDao extends AbstractEntity{
         return username;
     }
 
-    public UserDao setUsername(String username) {
+    public UserModel setUsername(String username) {
         this.username = username;
         return this;
     }
@@ -52,47 +52,47 @@ public class UserDao extends AbstractEntity{
         return lastname;
     }
 
-    public List<CommentDao> getComments() {
+    public List<CommentModel> getComments() {
         return comments;
     }
 
-    public UserDao setComments(List<CommentDao> comments) {
+    public UserModel setComments(List<CommentModel> comments) {
         this.comments = comments;
         return this;
     }
 
-    public List<LikeDao> getLikes() {
+    public List<LikeModel> getLikes() {
         return likes;
     }
 
-    public UserDao setLikes(List<LikeDao> likes) {
+    public UserModel setLikes(List<LikeModel> likes) {
         this.likes = likes;
         return this;
     }
 
-    public List<MessageDao> getMessages() {
+    public List<MessageModel> getMessages() {
         return messages;
     }
 
-    public UserDao setMessages(List<MessageDao> messages) {
+    public UserModel setMessages(List<MessageModel> messages) {
         this.messages = messages;
         return this;
     }
 
-    public List<PostDao> getPosts() {
+    public List<PostModel> getPosts() {
         return posts;
     }
 
-    public UserDao setPosts(List<PostDao> posts) {
+    public UserModel setPosts(List<PostModel> posts) {
         this.posts = posts;
         return this;
     }
 
-    public List<ChatDao> getChats() {
+    public List<ChatModel> getChats() {
         return chats;
     }
 
-    public UserDao setChats(List<ChatDao> chats) {
+    public UserModel setChats(List<ChatModel> chats) {
         this.chats = chats;
         return this;
     }

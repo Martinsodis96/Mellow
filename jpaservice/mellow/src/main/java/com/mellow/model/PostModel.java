@@ -3,28 +3,27 @@ package com.mellow.model;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class PostDao extends AbstractEntity{
+public class PostModel extends AbstractModel {
 
     private String content;
 
     @OneToMany(mappedBy = "post")
-    private Set<CommentDao> comments;
+    private Set<CommentModel> comments;
 
     @OneToMany(mappedBy = "post")
-    private Set<LikeDao> likes;
+    private Set<LikeModel> likes;
 
     @ManyToOne
-    private UserDao user;
+    private UserModel user;
 
-    protected PostDao() {
+    protected PostModel() {
     }
 
-    public PostDao(String content, UserDao user) {
+    public PostModel(String content, UserModel user) {
         this.content = content;
         this.user = user;
         this.likes = new HashSet<>();
@@ -35,44 +34,44 @@ public class PostDao extends AbstractEntity{
         return content;
     }
 
-    public Set<CommentDao> getComments() {
+    public Set<CommentModel> getComments() {
         return comments;
     }
 
-    public PostDao setComments(Set<CommentDao> comments) {
+    public PostModel setComments(Set<CommentModel> comments) {
         this.comments = comments;
         return this;
     }
 
-    public Set<LikeDao> getLikes() {
+    public Set<LikeModel> getLikes() {
         return likes;
     }
 
-    public PostDao setLikes(Set<LikeDao> likes) {
+    public PostModel setLikes(Set<LikeModel> likes) {
         this.likes = likes;
         return this;
     }
 
-    public PostDao addLike(LikeDao like) {
+    public PostModel addLike(LikeModel like) {
         this.likes.add(like);
         return this;
     }
-    public PostDao removeLike(LikeDao like) {
+    public PostModel removeLike(LikeModel like) {
         this.likes.remove(like);
         return this;
     }
 
 
-    public UserDao getUser() {
+    public UserModel getUser() {
         return user;
     }
 
-    public PostDao setUser(UserDao user) {
+    public PostModel setUser(UserModel user) {
         this.user = user;
         return this;
     }
 
-    public PostDao setContent(String content) {
+    public PostModel setContent(String content) {
         this.content = content;
         return this;
     }

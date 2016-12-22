@@ -1,6 +1,6 @@
 package com.mellow.repository;
 
-import com.mellow.model.PostDao;
+import com.mellow.model.PostModel;
 import org.junit.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -13,17 +13,17 @@ public class TestUserRepository {
 
     @Test
     public void canGetAllPosts() throws Exception {
-        List<PostDao> postsIDb = new ArrayList<>();
-        PostDao post1 = execute(postRepository -> postRepository.save(new PostDao("test1")));
-        PostDao post2 = execute(postRepository -> postRepository.save(new PostDao("test2")));
-        postsIDb.add(post1);
-        postsIDb.add(post2);
+        List<PostModel> postsIDb = new ArrayList<>();
+        //PostModel post1 = execute(postRepository -> postRepository.save(new PostModel("test1")));
+        //PostModel post2 = execute(postRepository -> postRepository.save(new PostModel("test2")));
+        //postsIDb.add(post1);
+        //postsIDb.add(post2);
 
-        Iterable<PostDao> posts = executeMany(postRepository -> postRepository.findAll());
+        Iterable<PostModel> posts = executeMany(postRepository -> postRepository.findAll());
         System.out.println(posts.spliterator().estimateSize());
     }
 
-    private PostDao execute(Function<PostRepository, PostDao> operation) {
+    private PostModel execute(Function<PostRepository, PostModel> operation) {
         try (AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext()) {
             context.scan("com.mellow.config");
             context.refresh();
@@ -32,7 +32,7 @@ public class TestUserRepository {
         }
     }
 
-    private Iterable<PostDao> executeMany(Function<PostRepository, Iterable<PostDao>> operation) {
+    private Iterable<PostModel> executeMany(Function<PostRepository, Iterable<PostModel>> operation) {
         try (AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext()) {
             context.scan("com.mellow.config");
             context.refresh();

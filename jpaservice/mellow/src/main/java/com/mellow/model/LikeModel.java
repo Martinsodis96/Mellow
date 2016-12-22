@@ -6,27 +6,27 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "`like`")
-public class LikeDao extends AbstractEntity {
+public class LikeModel extends AbstractModel {
 
     @ManyToOne
-    private PostDao post;
+    private PostModel post;
 
     @ManyToOne
-    private UserDao user;
+    private UserModel user;
 
-    protected LikeDao() {
+    protected LikeModel() {
     }
 
-    public LikeDao(PostDao post, UserDao user) {
+    public LikeModel(PostModel post, UserModel user) {
         this.post = post;
         this.user = user;
     }
 
-    public UserDao getUser() {
+    public UserModel getUser() {
         return user;
     }
 
-    public PostDao getPost() {
+    public PostModel getPost() {
         return post;
     }
 }
