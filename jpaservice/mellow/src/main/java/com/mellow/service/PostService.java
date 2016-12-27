@@ -7,9 +7,11 @@ import com.mellow.repository.CommentRepository;
 import com.mellow.repository.PostRepository;
 import com.mellow.repository.UserRepository;
 import com.mellow.service.exception.DatabaseException;
+import com.mellow.service.exception.InvalidInputException;
 import com.mellow.service.exception.NoSearchResultException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,7 +38,6 @@ public class PostService {
     }
 
     public Iterable<PostModel> getAllPosts() {
-        Iterable<PostModel> posts;
         try {
             return postRepository.findAll();
         } catch (DataAccessException e) {
@@ -45,35 +46,50 @@ public class PostService {
     }
 
     public PostModel createPost(Long userId, String content) {
-        UserModel user;
-        try {
-            user = userRepository.findOne(userId);
-        } catch (DataAccessException e) {
-            throw new DatabaseException("Failed to create post");
-        }
-
-        if (user != null) {
-            return postRepository.save(new PostModel(content, user));
-        } else {
-            throw new NoSearchResultException("Could not find user with id: " + userId);
+        if(content != null){
+            return execute(postRepository1 -> {
+                UserModel user = userRepository.findOne(userId);
+                if (user != null) {
+                    return postRepository1.save(new PostModel(content, user));
+                } else {
+                    throw new NoSearchResultException("Could not find user with id: " + userId);
+                }
+            }, "Failed to create post");
+        }else {
+            throw new InvalidInputException("Post content can't be null");
         }
     }
 
     public PostModel updatePost(Long postId, String content) {
-        PostModel post = execute(postRepository1 -> postRepository1.findOne(postId),
-                "Failed to update post with id: " + postId);
-
-        if (post != null) {
-            return postRepository.save(post.setContent(content));
-        } else {
-            throw new NoSearchResultException("Could not find post with id: " + postId);
+        if(content != null){
+            return execute(postRepository1 -> {
+                PostModel post = postRepository1.findOne(postId);
+                if (post != null) {
+                    return postRepository.save(post.setContent(content));
+                } else {
+                    throw new NoSearchResultException("Could not find post with id: " + postId);
+                }
+            }, "Failed to update post with id: " + postId);
+        }else {
+            throw new InvalidInputException("Post content can't be null");
         }
     }
 
+    public PostModel removePost(Long postId) {
+        return execute(postRepository1 -> {
+            PostModel post = postRepository1.findOne(postId);
+            if (post != null) {
+                postRepository.delete(postId);
+                return post;
+            } else {
+                throw new NoSearchResultException("Could not find post with id: " + postId);
+            }
+        }, "Failed to remove post with id: " + postId);
+    }
 
     public List<CommentModel> getAllCommentsFromPost(Long postId) {
-        PostModel postModel = postRepository.findOne(postId);
         try {
+            PostModel postModel = postRepository.findOne(postId);
             if(postModel != null){
                 return commentRepository.findByPostId(postId);
             }else{
@@ -82,18 +98,6 @@ public class PostService {
             }
         } catch (DataAccessException e) {
             throw new DatabaseException("Failed to get all comments");
-        }
-    }
-
-    public PostModel removePost(Long postId) {
-        PostModel post = execute(postRepository1 -> postRepository1.findOne(postId),
-                "Failed to remove post with id: " + postId);
-
-        if (post != null) {
-            postRepository.delete(postId);
-            return post;
-        } else {
-            throw new NoSearchResultException("Could not find post with id: " + postId);
         }
     }
 

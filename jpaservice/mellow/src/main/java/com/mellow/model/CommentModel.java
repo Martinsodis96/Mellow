@@ -17,8 +17,9 @@ public class CommentModel extends AbstractModel {
     protected CommentModel() {
     }
 
-    public CommentModel(String content) {
+    public CommentModel(String content, PostModel post) {
         this.content = content;
+        this.post = post;
     }
 
     public PostModel getPost() {

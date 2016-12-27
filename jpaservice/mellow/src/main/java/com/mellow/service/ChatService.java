@@ -47,54 +47,43 @@ public class ChatService {
     }
 
     public ChatModel addUserToChat(Long chatId, Long userId){
-        ChatModel chat;
-        UserModel user;
-        try{
-            chat = chatRepository.findOne(chatId);
-            user = userRepository.findOne(userId);
-        }catch (DataAccessException e){
-            throw new DatabaseException("Failed to add user to chat.");
-        }
-
-        if(chat != null && user != null){
-            chat.addUser(user);
-            return chatRepository.save(chat);
-        }else {
-            throw new NoSearchResultException("Could not find user user with id: "
-                    + userId + " or chat with id: " + chatId);
-        }
+            return execute(chatRepository1 -> {
+                ChatModel chat = chatRepository.findOne(chatId);
+                UserModel user = userRepository.findOne(userId);
+                if(chat != null && user != null){
+                    chat.addUser(user);
+                    return chatRepository.save(chat);
+                }else {
+                    throw new NoSearchResultException("Could not find user user with id: "
+                            + userId + " or chat with id: " + chatId);
+                }
+            }, "Failed to add user to chat.");
     }
 
     public ChatModel removeUserFromChat(Long chatId, Long userId){
-        ChatModel chat;
-        UserModel user;
-        try{
-            chat = chatRepository.findOne(chatId);
-            user = userRepository.findOne(userId);
-        }catch (DataAccessException e){
-            throw new DatabaseException("Failed to remove user from chat.");
-        }
-
-        if(chat != null && user != null){
-            chat.removeUser(user);
-            return chatRepository.save(chat);
-        }else {
-            throw new NoSearchResultException("Could not find user user with id: "
-                    + userId + " or chat with id: " + chatId);
-        }
+        return execute(chatRepository1 -> {
+            ChatModel chat = chatRepository.findOne(chatId);
+            UserModel user = userRepository.findOne(userId);
+            if(chat != null && user != null){
+                chat.removeUser(user);
+                return chatRepository.save(chat);
+            }else {
+                throw new NoSearchResultException("Could not find user user with id: "
+                        + userId + " or chat with id: " + chatId);
+            }
+        }, "Failed to remove user from chat.");
     }
 
     public List<UserModel> getAllUsersFromChat(Long chatId){
-        ChatModel chat;
         try{
-            chat = chatRepository.findOne(chatId);
+            ChatModel chat = chatRepository.findOne(chatId);
+            if(chat != null){
+                return chat.getUsers();
+            }else {
+                throw new NoSearchResultException("Could not find chat with id: " + chatId);
+            }
         }catch (DataAccessException e){
             throw new DatabaseException("Failed to add user to chat.");
-        }
-        if(chat != null){
-            return chat.getUsers();
-        }else {
-            throw new NoSearchResultException("Could not find chat with id: " + chatId);
         }
     }
 

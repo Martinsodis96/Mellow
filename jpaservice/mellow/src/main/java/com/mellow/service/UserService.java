@@ -2,6 +2,7 @@ package com.mellow.service;
 
 import com.mellow.model.PostModel;
 import com.mellow.model.UserModel;
+import com.mellow.repository.PostRepository;
 import com.mellow.repository.UserRepository;
 import com.mellow.service.exception.DatabaseException;
 import com.mellow.service.exception.InvalidInputException;
@@ -16,10 +17,12 @@ import java.util.function.Function;
 public class UserService {
 
     private UserRepository userRepository;
+    private PostRepository postRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PostRepository postRepository) {
         this.userRepository = userRepository;
+        this.postRepository = postRepository;
     }
 
     public UserModel getById(Long userId) {
@@ -50,23 +53,24 @@ public class UserService {
     }
 
     public UserModel updateUsername(String username, Long userId) {
-        try {
-            UserModel user = userRepository.findOne(userId);
-            if(user != null){
-                user.setUsername(username);
-                return userRepository.save(user);
-            }else {
-                throw new NoSearchResultException(
-                        String.format("user with id: %d do not exist.", userId));
-            }
-        }catch (DataAccessException e){
-            throw new DatabaseException(
-                    String.format("Failed to update user with id: %d", userId));
+        if(username != null){
+            return execute(userRepository1 -> {
+                UserModel user = userRepository.findOne(userId);
+                if(user != null){
+                    user.setUsername(username);
+                    return userRepository.save(user);
+                }else {
+                    throw new NoSearchResultException(
+                            String.format("user with id: %d do not exist.", userId));
+                }
+            }, String.format("Failed to update user with id: %d", userId));
+        }else {
+            throw new InvalidInputException("Username can't be null");
         }
     }
 
     public UserModel deleteUser(Long userId) {
-        try {
+        return execute(userRepository1 -> {
             UserModel user = userRepository.findOne(userId);
             if(user != null){
                 userRepository.delete(user);
@@ -75,17 +79,14 @@ public class UserService {
                 throw new NoSearchResultException(
                         String.format("user with id: %d do not exist.", userId));
             }
-        }catch (DataAccessException e){
-            throw new DatabaseException(
-                    String.format("Failed to delete user with id: %d", userId));
-        }
+        }, String.format("Failed to remove user with id: %d", userId));
     }
 
     public Iterable<PostModel> getAllPostsFromUser(Long userId){
         try {
             UserModel user = userRepository.findOne(userId);
             if(user != null){
-                return user.getPosts();
+                return postRepository.findByUserId(userId);
             }else {
                 throw new NoSearchResultException(
                         String.format("user with id: %d do not exist.", userId));
