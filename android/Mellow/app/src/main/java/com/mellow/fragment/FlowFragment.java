@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
-import com.mellow.CustomArrayAdapter;
+import com.mellow.FlowArrayAdapter;
 import com.mellow.client.adapter.PostAdapter;
 import com.mellow.mellow.R;
 import com.mellow.model.Post;
@@ -39,7 +39,11 @@ public class FlowFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         postListView = (ListView) view.findViewById(R.id.post_listview);
         postAdapter = new PostAdapter();
-        adapter = new CustomArrayAdapter(getActivity().getApplicationContext(), postAdapter.getAllPosts());
+        List<Post> posts = new ArrayList<>();
+        posts.add(new Post("This is some dummy content", "martin", "Söderstrand"));
+        posts.add(new Post("This is some dummy content", "ok", "ok"));
+        //adapter = new FlowArrayAdapter(getActivity().getApplicationContext(), postAdapter.getAllPosts());
+        adapter = new FlowArrayAdapter(getActivity().getApplicationContext(), posts);
         postListView.setAdapter(adapter);
     }
 }

@@ -35,7 +35,8 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Test"
-                android:id="@+id/firstname" />
+                android:id="@+id/firstname"
+                android:textColor="#615e5e" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -43,7 +44,8 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Testsson"
                 android:id="@+id/lastname"
-                android:layout_marginLeft="5dp" />
+                android:layout_marginLeft="5dp"
+                android:textColor="#615e5e" />
         </LinearLayout>
 
     </LinearLayout>

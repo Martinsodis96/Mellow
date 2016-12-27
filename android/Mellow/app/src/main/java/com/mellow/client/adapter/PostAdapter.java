@@ -18,7 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PostAdapter {
 
-    private final String MELLOW_BASE_URL = "http://192.168.0.18:8080/mellow/";
+    private final String MELLOW_BASE_URL = "http://192.168.1.95:8080/mellow/";
     private PostApi postApi;
     private Retrofit retrofit;
     private ExecutorService executor = Executors.newCachedThreadPool();

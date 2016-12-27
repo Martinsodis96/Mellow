@@ -4,27 +4,16 @@
     android:layout_height="match_parent"
     tools:context="com.mellow.fragment.ChatFragment"
     android:background="#efeeee"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/main_container">
 
 
-    <TextView
-        android:layout_width="wrap_content"
+    <ListView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="404"
-        android:id="@+id/textView"
-        android:textColor="#5d5d5d"
-        android:textSize="42dp"
+        android:id="@+id/contact_list"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="150dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="NOT FOUND"
-        android:id="@+id/textView2"
-        android:layout_gravity="center_horizontal"
-        android:textColor="#5d5d5d"
-        android:textSize="42dp" />
+        android:smoothScrollbar="false"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp" />
 </LinearLayout>

@@ -14,7 +14,7 @@ import com.mellow.model.Post;
 
 import java.util.List;
 
-public class CustomArrayAdapter extends ArrayAdapter<Post> {
+public class FlowArrayAdapter extends ArrayAdapter<Post> {
 
     private List<Post> posts;
     ImageView profilePicture;
@@ -25,17 +25,15 @@ public class CustomArrayAdapter extends ArrayAdapter<Post> {
     TextView firstName;
     TextView lastName;
 
-
-
-    public CustomArrayAdapter(Context context, List<Post> posts) {
-        super(context, R.layout.activity_custom_adapter, posts);
+    public FlowArrayAdapter(Context context, List<Post> posts) {
+        super(context, R.layout.activity_flow_adapter, posts);
         this.posts=posts;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(getContext());
-        View customView = inflater.inflate(R.layout.activity_custom_adapter, parent, false);
+        View customView = inflater.inflate(R.layout.activity_flow_adapter, parent, false);
         initializePalettes(customView);
 
         Post post = posts.get(position);

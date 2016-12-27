@@ -3,30 +3,29 @@ package com.mellow.model;
 public class Post {
 
     private String contentText;
-    private String Firstname;
-    private String Lastname;
-
+    private String firstname;
+    private String lastname;
 
     public Post(String contentText, String firstname, String lastname) {
         this.contentText = contentText;
-        Firstname = firstname;
-        Lastname = lastname;
+        this.firstname = firstname;
+        this.lastname = lastname;
     }
 
     public String getFirstname() {
-        return Firstname;
+        return firstname;
     }
 
     public void setFirstname(String firstname) {
-        Firstname = firstname;
+        this.firstname = firstname;
     }
 
     public String getLastname() {
-        return Lastname;
+        return lastname;
     }
 
     public void setLastname(String lastname) {
-        Lastname = lastname;
+        this.lastname = lastname;
     }
 
     public String getContentText() {
