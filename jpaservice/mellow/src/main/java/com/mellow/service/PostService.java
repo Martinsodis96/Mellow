@@ -1,7 +1,9 @@
 package com.mellow.service;
 
+import com.mellow.model.CommentModel;
 import com.mellow.model.PostModel;
 import com.mellow.model.UserModel;
+import com.mellow.repository.CommentRepository;
 import com.mellow.repository.PostRepository;
 import com.mellow.repository.UserRepository;
 import com.mellow.service.exception.DatabaseException;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.function.Function;
 
 @Service
@@ -17,11 +20,14 @@ public class PostService {
 
     private PostRepository postRepository;
     private UserRepository userRepository;
+    private CommentRepository commentRepository;
 
     @Autowired
-    public PostService(PostRepository postRepository, UserRepository userRepository) {
+    public PostService(PostRepository postRepository, UserRepository userRepository,
+                       CommentRepository commentRepository) {
         this.postRepository = postRepository;
         this.userRepository = userRepository;
+        this.commentRepository = commentRepository;
     }
 
     public PostModel getPostById(Long postId) {
@@ -61,6 +67,21 @@ public class PostService {
             return postRepository.save(post.setContent(content));
         } else {
             throw new NoSearchResultException("Could not find post with id: " + postId);
+        }
+    }
+
+
+    public List<CommentModel> getAllCommentsFromPost(Long postId) {
+        PostModel postModel = postRepository.findOne(postId);
+        try {
+            if(postModel != null){
+                return commentRepository.findByPostId(postId);
+            }else{
+                throw new NoSearchResultException("Could not find post" +
+                        " with id: " + postId);
+            }
+        } catch (DataAccessException e) {
+            throw new DatabaseException("Failed to get all comments");
         }
     }
 
