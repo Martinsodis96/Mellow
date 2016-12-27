@@ -49,7 +49,7 @@ public class UserService {
                 String.format("Failed to get User with username: %s", username));
     }
 
-    public UserModel updateUser(String username, Long userId) {
+    public UserModel updateUsername(String username, Long userId) {
         try {
             UserModel user = userRepository.findOne(userId);
             if(user != null){
