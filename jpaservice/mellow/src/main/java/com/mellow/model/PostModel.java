@@ -1,6 +1,7 @@
 package com.mellow.model;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import java.util.HashSet;
@@ -17,7 +18,7 @@ public class PostModel extends AbstractModel {
     @OneToMany(mappedBy = "post")
     private Set<LikeModel> likes;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private UserModel user;
 
     protected PostModel() {

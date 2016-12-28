@@ -36,7 +36,7 @@ public class CommentService {
             return execute(commentRepository1 -> {
                 PostModel post = postRepository.findOne(postId);
                 if(post != null){
-                    return commentRepository.save(new CommentModel(content, post));
+                    return commentRepository1.save(new CommentModel(content, post));
                 }else {
                     throw new NoSearchResultException("Could not find comment with id: " + postId);
                 }

@@ -1,9 +1,11 @@
 package com.mellow.service;
 
 import com.mellow.model.CommentModel;
+import com.mellow.model.LikeModel;
 import com.mellow.model.PostModel;
 import com.mellow.model.UserModel;
 import com.mellow.repository.CommentRepository;
+import com.mellow.repository.LikeRepository;
 import com.mellow.repository.PostRepository;
 import com.mellow.repository.UserRepository;
 import com.mellow.service.exception.DatabaseException;
@@ -23,12 +25,14 @@ public class PostService {
     private PostRepository postRepository;
     private UserRepository userRepository;
     private CommentRepository commentRepository;
+    private LikeRepository likeRepository;
 
     @Autowired
     public PostService(PostRepository postRepository, UserRepository userRepository,
-                       CommentRepository commentRepository) {
+                       CommentRepository commentRepository, LikeRepository likeRepository) {
         this.postRepository = postRepository;
         this.userRepository = userRepository;
+        this.likeRepository = likeRepository;
         this.commentRepository = commentRepository;
     }
 
@@ -98,6 +102,51 @@ public class PostService {
             }
         } catch (DataAccessException e) {
             throw new DatabaseException("Failed to get all comments");
+        }
+    }
+
+    public List<LikeModel> getAllLikesFromPost(Long postId) {
+        try {
+            PostModel postModel = postRepository.findOne(postId);
+            if(postModel != null){
+                return likeRepository.findByPostId(postId);
+            }else{
+                throw new NoSearchResultException("Could not find post" +
+                        " with id: " + postId);
+            }
+        } catch (DataAccessException e) {
+            throw new DatabaseException("Failed to get all likes");
+        }
+    }
+
+    public PostModel addLikeToPost(Long postId){
+        try {
+            PostModel postModel = postRepository.findOne(postId);
+            if(postModel != null){
+                LikeModel like = new LikeModel(postModel, postModel.getUser());
+                likeRepository.save(like);
+                return postModel.addLike(like);
+            }else{
+                throw new NoSearchResultException("Could not find post" +
+                        " with id: " + postId);
+            }
+        } catch (DataAccessException e) {
+            throw new DatabaseException("Failed to add like to post");
+        }
+    }
+
+    public LikeModel removeLikeToPost(Long postId, Long userId){
+        try {
+            PostModel post = postRepository.findOne(postId);
+            UserModel user = userRepository.findOne(userId);
+            if(post != null && user != null){
+                return likeRepository.deleteByUserIdAndPostId(userId, postId);
+            }else{
+                throw new NoSearchResultException("Could not find post" +
+                        " with id: " + postId + "or user with id: " + userId);
+            }
+        } catch (DataAccessException e) {
+            throw new DatabaseException("Failed to add like to post");
         }
     }
 
