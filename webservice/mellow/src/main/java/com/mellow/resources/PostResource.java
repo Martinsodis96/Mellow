@@ -1,15 +1,15 @@
 package com.mellow.resources;
 
 import com.mellow.model.Post;
+import com.mellow.model.PostModel;
 import com.mellow.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,13 +18,32 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 public class PostResource {
 
+    private UriInfo uriInfo;
+
+    private final PostService postService;
+
     @Autowired
-    PostService postService;
+    public PostResource(PostService postService) {
+        this.postService = postService;
+    }
 
     @GET
-    public Response getAllPosts(){
-        List<Post> posts = new ArrayList<>();
-        postService.getAllPosts().forEach(postDao -> posts.add(new Post(postDao)));
-        return Response.ok(posts).build();
+    @Path("{postId}")
+    public Post getPostById(@PathParam("postId") Long postId){
+        return new Post(postService.getPostById(postId));
     }
+
+    @GET
+    public List<Post> getAllPosts(){
+        List<Post> posts = new ArrayList<>();
+        postService.getAllPosts().forEach(postModel -> posts.add(new Post(postModel)));
+        return posts;
+    }
+
+    /*@POST
+    @Path("")
+    public Response createPost(PostModel postModel){
+        postModel createdPostModel = postService.createPost()
+        return Response.created(URI.create(uriInfo.getPath() + "/" + createdUserModel.getId()));
+    }*/
 }

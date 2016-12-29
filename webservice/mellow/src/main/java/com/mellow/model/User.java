@@ -5,6 +5,6 @@ public class User {
     protected User() {
     }
 
-    public User(UserDao userDao) {
+    public User(UserModel userModel) {
     }
 }

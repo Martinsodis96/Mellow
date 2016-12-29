@@ -5,7 +5,7 @@ public class Post {
     private Long id;
     private String contentText;
 
-    public Post(PostDao post) {
+    public Post(PostModel post) {
         this.id = post.getId();
         this.contentText = post.getContent();
     }

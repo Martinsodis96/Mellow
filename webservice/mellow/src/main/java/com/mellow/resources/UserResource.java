@@ -1,10 +1,10 @@
 package com.mellow.resources;
 
+import com.mellow.model.Post;
 import com.mellow.model.User;
-import com.mellow.model.UserDao;
+import com.mellow.model.UserModel;
 import com.mellow.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.parsing.Location;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
@@ -20,14 +20,11 @@ public class UserResource {
     @Context
     private UriInfo uriInfo;
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
-    @GET
-    public Iterable<User> getAllUsers(@QueryParam("username") String username){
-        List<User> users = new ArrayList<>();
-        userService.getAllUsers().forEach(userDao -> users.add(new User(userDao)));
-        return users;
+    @Autowired
+    public UserResource(UserService userService) {
+        this.userService = userService;
     }
 
     @GET
@@ -36,24 +33,38 @@ public class UserResource {
         return new User(userService.getById(userId));
     }
 
+    @GET
+    public Iterable<User> getAllUsers(@QueryParam("username") String username){
+        List<User> users = new ArrayList<>();
+        userService.getAllUsers().forEach(userDao -> users.add(new User(userDao)));
+        //TODO make a method in jpa to filter all users by username.
+        return users;
+    }
+
     @POST
-    public Response createUser(UserDao userDao){
-        UserDao createdUserDao = userService.createUser(userDao);
-        return Response.created(URI.create(uriInfo.getPath() + "/" + userDao.getId())).build();
+    public Response createUser(UserModel userModel){
+        UserModel createdUserModel = userService.createUser(userModel);
+        return Response.created(URI.create(uriInfo.getPath() + "/" + createdUserModel.getId())).build();
     }
 
     @PUT
     @Path("{userId}")
-    public Response updateUsername(UserDao userDao){
-        //TODO update only username and ignore the rest.
-        return null;
+    public Response updateUsername(@PathParam("userId") Long userId, UserModel userModel){
+        userService.updateUsername(userModel.getUsername(), userId);
+        return Response.noContent().location(URI.create(uriInfo.getPath() + "/" + userId)).build();
     }
 
     @DELETE
     @Path("{userId}")
-    public User removeUser(){
-        return null;
+    public User removeUser(@PathParam("userId") Long userId){
+        return new User(userService.deleteUser(userId));
     }
 
-
+    @GET
+    @Path("{userId}/posts")
+    public List<Post> getAllPostsFromUser(@PathParam("userId") Long userId){
+        List<Post> posts = new ArrayList<>();
+        userService.getAllPostsFromUser(userId).forEach(postModel -> posts.add(new Post(postModel)));
+        return posts;
+    }
 }
