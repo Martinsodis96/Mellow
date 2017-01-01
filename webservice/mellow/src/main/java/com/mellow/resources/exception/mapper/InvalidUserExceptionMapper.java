@@ -1,4 +1,4 @@
-package com.mellow.resources;
+package com.mellow.resources.exception.mapper;
 
 import com.mellow.exception.InvalidUserException;
 

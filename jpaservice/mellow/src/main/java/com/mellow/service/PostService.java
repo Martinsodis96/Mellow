@@ -11,6 +11,7 @@ import com.mellow.repository.UserRepository;
 import com.mellow.service.exception.DatabaseException;
 import com.mellow.service.exception.InvalidInputException;
 import com.mellow.service.exception.NoSearchResultException;
+import org.hibernate.id.PostInsertIdentifierGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Pageable;
@@ -49,32 +50,32 @@ public class PostService {
         }
     }
 
-    public PostModel createPost(Long userId, String content) {
-        if(content != null){
+    public PostModel createPost(Long userId, PostModel postModel) {
+        if (postModel.getContent() != null) {
             return execute(postRepository1 -> {
                 UserModel user = userRepository.findOne(userId);
                 if (user != null) {
-                    return postRepository1.save(new PostModel(content, user));
+                    return postRepository1.save(new PostModel(postModel.getContent(), user));
                 } else {
                     throw new NoSearchResultException("Could not find user with id: " + userId);
                 }
             }, "Failed to create post");
-        }else {
+        } else {
             throw new InvalidInputException("Post content can't be null");
         }
     }
 
-    public PostModel updatePost(Long postId, String content) {
-        if(content != null){
+    public PostModel updatePost(Long postId, PostModel postModel) {
+        if (postModel.getContent() != null) {
             return execute(postRepository1 -> {
                 PostModel post = postRepository1.findOne(postId);
                 if (post != null) {
-                    return postRepository.save(post.setContent(content));
+                    return postRepository.save(post.setContent(postModel.getContent()));
                 } else {
                     throw new NoSearchResultException("Could not find post with id: " + postId);
                 }
             }, "Failed to update post with id: " + postId);
-        }else {
+        } else {
             throw new InvalidInputException("Post content can't be null");
         }
     }
@@ -94,9 +95,9 @@ public class PostService {
     public List<CommentModel> getAllCommentsFromPost(Long postId) {
         try {
             PostModel postModel = postRepository.findOne(postId);
-            if(postModel != null){
+            if (postModel != null) {
                 return commentRepository.findByPostId(postId);
-            }else{
+            } else {
                 throw new NoSearchResultException("Could not find post" +
                         " with id: " + postId);
             }
@@ -108,9 +109,9 @@ public class PostService {
     public List<LikeModel> getAllLikesFromPost(Long postId) {
         try {
             PostModel postModel = postRepository.findOne(postId);
-            if(postModel != null){
+            if (postModel != null) {
                 return likeRepository.findByPostId(postId);
-            }else{
+            } else {
                 throw new NoSearchResultException("Could not find post" +
                         " with id: " + postId);
             }
@@ -119,14 +120,16 @@ public class PostService {
         }
     }
 
-    public PostModel addLikeToPost(Long postId){
+    public LikeModel addLikeToPost(Long postId, LikeModel likeModel) {
         try {
             PostModel postModel = postRepository.findOne(postId);
-            if(postModel != null){
-                LikeModel like = new LikeModel(postModel, postModel.getUser());
-                likeRepository.save(like);
-                return postModel.addLike(like);
-            }else{
+            if (postModel != null) {
+                if (likeModel.getUser() != null) {
+                    return likeRepository.save(new LikeModel(postModel, likeModel.getUser()));
+                } else {
+                    throw new InvalidInputException("likeModel must have a user.");
+                }
+            } else {
                 throw new NoSearchResultException("Could not find post" +
                         " with id: " + postId);
             }
@@ -135,18 +138,18 @@ public class PostService {
         }
     }
 
-    public LikeModel removeLikeToPost(Long postId, Long userId){
+    public LikeModel removeLikeFromPost(Long likeId) {
         try {
-            PostModel post = postRepository.findOne(postId);
-            UserModel user = userRepository.findOne(userId);
-            if(post != null && user != null){
-                return likeRepository.deleteByUserIdAndPostId(userId, postId);
-            }else{
-                throw new NoSearchResultException("Could not find post" +
-                        " with id: " + postId + "or user with id: " + userId);
+            LikeModel like = likeRepository.findOne(likeId);
+            if (like != null) {
+                likeRepository.delete(likeId);
+                return like;
+            } else {
+                throw new NoSearchResultException("Could not find like" +
+                        " with id: " + likeId);
             }
         } catch (DataAccessException e) {
-            throw new DatabaseException("Failed to add like to post");
+            throw new DatabaseException("Failed to remove like from post");
         }
     }
 

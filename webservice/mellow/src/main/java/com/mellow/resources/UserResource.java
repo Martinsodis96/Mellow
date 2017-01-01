@@ -1,8 +1,8 @@
 package com.mellow.resources;
 
-import com.mellow.model.Post;
 import com.mellow.model.User;
 import com.mellow.model.UserModel;
+import com.mellow.service.PostService;
 import com.mellow.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -21,10 +21,12 @@ public class UserResource {
     private UriInfo uriInfo;
 
     private final UserService userService;
+    private final PostService postService;
 
     @Autowired
-    public UserResource(UserService userService) {
+    public UserResource(UserService userService, PostService postService) {
         this.userService = userService;
+        this.postService = postService;
     }
 
     @GET
@@ -60,11 +62,4 @@ public class UserResource {
         return new User(userService.deleteUser(userId));
     }
 
-    @GET
-    @Path("{userId}/posts")
-    public List<Post> getAllPostsFromUser(@PathParam("userId") Long userId){
-        List<Post> posts = new ArrayList<>();
-        userService.getAllPostsFromUser(userId).forEach(postModel -> posts.add(new Post(postModel)));
-        return posts;
-    }
 }

@@ -1,10 +1,9 @@
 package com.mellow.config;
 
 import com.mellow.resources.*;
+import com.mellow.resources.exception.mapper.InvalidUserExceptionMapper;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.stereotype.Component;
-
-import javax.ws.rs.ApplicationPath;
 
 @Component
 public final class JerseyConfig extends ResourceConfig {

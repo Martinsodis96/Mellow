@@ -3,9 +3,11 @@ package com.mellow.resources;
 import com.mellow.model.Post;
 import com.mellow.model.PostModel;
 import com.mellow.service.PostService;
+import com.mellow.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
@@ -13,18 +15,24 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
-@Path("posts")
+@Path("users/{userId}posts")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class PostResource {
 
+    @Context
     private UriInfo uriInfo;
 
     private final PostService postService;
+    private final UserService userService;
+
+    @PathParam("userId")
+    private Long userId;
 
     @Autowired
-    public PostResource(PostService postService) {
+    public PostResource(PostService postService, UserService userService) {
         this.postService = postService;
+        this.userService = userService;
     }
 
     @GET
@@ -36,14 +44,27 @@ public class PostResource {
     @GET
     public List<Post> getAllPosts(){
         List<Post> posts = new ArrayList<>();
-        postService.getAllPosts().forEach(postModel -> posts.add(new Post(postModel)));
+        userService.getAllPostsFromUser(userId).forEach(postModel -> posts.add(new Post(postModel)));
         return posts;
     }
 
-    /*@POST
-    @Path("")
+    @POST
     public Response createPost(PostModel postModel){
-        postModel createdPostModel = postService.createPost()
-        return Response.created(URI.create(uriInfo.getPath() + "/" + createdUserModel.getId()));
-    }*/
+        PostModel createdPostModel = postService.createPost(userId, postModel);
+        return Response.created(URI.create(uriInfo.getPath() + "/" + createdPostModel.getId())).build();
+    }
+
+    @POST
+    @Path("{postId}")
+    public Response updatePost(@PathParam("postId") Long postId, PostModel postModel){
+        PostModel createdPostModel = postService.updatePost(postId, postModel);
+        return Response.noContent().location(URI.create(uriInfo.getPath() + "/" + createdPostModel.getId())).build();
+    }
+
+    @DELETE
+    @Path("{postId}")
+    public Response updatePost(@PathParam("postId") Long postId){
+        postService.removePost(postId);
+        return Response.noContent().build();
+    }
 }
