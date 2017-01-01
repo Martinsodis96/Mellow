@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.mellow.mellow.R;
 import com.mellow.model.Chat;
 import com.mellow.model.Post;
+import com.mellow.model.User;
 
 import java.util.List;
 
@@ -31,8 +32,15 @@ public class ChatArrayAdapter extends ArrayAdapter<Chat> {
         initializePalettes(customView);
 
         Chat chat = chats.get(position);
-        messageContent.setText(chat.getMessages().get(position).getContent());
-        username.setText(chat.getUsers().get(position).getUsername());
+        messageContent.setText(chat.getMessages().get(chat.getMessages().size()-1).getContent());
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < chat.getUsers().size(); i++) {
+            stringBuilder.append(chat.getUsers().get(i).getUsername());
+            if(chat.getUsers().size() > 1 && i != chat.getUsers().size()){
+                stringBuilder.append(", ");
+            }
+        }
+        username.setText(stringBuilder);
         return customView;
     }
 

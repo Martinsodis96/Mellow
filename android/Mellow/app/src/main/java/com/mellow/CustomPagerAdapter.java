@@ -18,9 +18,9 @@ public class CustomPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position){
             case 0:
-                return new FlowFragment();
-            case 1:
                 return new ChatFragment();
+            case 1:
+                return new FlowFragment();
             case 2:
                 return new ProfileFragment();
             default:
@@ -37,9 +37,9 @@ public class CustomPagerAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         switch (position) {
             case 0:
-                return "Flow";
-            case 1:
                 return "Chat";
+            case 1:
+                return "Flow";
             case 2:
                 return "Profile";
             default:

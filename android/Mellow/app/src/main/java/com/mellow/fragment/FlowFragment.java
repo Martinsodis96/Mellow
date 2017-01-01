@@ -40,8 +40,9 @@ public class FlowFragment extends Fragment {
         postListView = (ListView) view.findViewById(R.id.post_listview);
         postAdapter = new PostAdapter();
         List<Post> posts = new ArrayList<>();
-        posts.add(new Post("This is some dummy content", "martin", "Söderstrand"));
-        posts.add(new Post("This is some dummy content", "ok", "ok"));
+        posts.add(new Post("This is just some dummy text to show how it will look in the future :) I'll make this a long one just to try.", "Martin", "Söderstrand"));
+        posts.add(new Post("I'm bored.", "Oskar", "Rosengård"));
+        posts.add(new Post("I'm trying to be able to scroll and that's why i made this post.", "Olle", "Falcon"));
         //adapter = new FlowArrayAdapter(getActivity().getApplicationContext(), postAdapter.getAllPosts());
         adapter = new FlowArrayAdapter(getActivity().getApplicationContext(), posts);
         postListView.setAdapter(adapter);

@@ -12,8 +12,6 @@
         android:layout_alignParentEnd="true"
         android:scrollbars="none"
         android:smoothScrollbar="false"
-        android:layout_marginRight="15dp"
-        android:layout_marginLeft="15dp"
         android:divider="#efeeee"
         android:dividerHeight="15dp"
         android:headerDividersEnabled="false"
@@ -23,6 +21,8 @@
         android:clipToPadding="false"
         android:drawSelectorOnTop="false"
         android:paddingTop="10dp"
-        android:paddingBottom="10dp" />
+        android:paddingBottom="10dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp" />
 
 </FrameLayout>
