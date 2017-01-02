@@ -55,7 +55,7 @@
         android:layout_height="wrap_content"
         android:text="This is just a temp text to show how it will look in the future!"
         android:id="@+id/content_text"
-        android:layout_marginBottom="5dp"
+        android:layout_marginBottom="15dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="25dp"
         android:textColor="#333131"
@@ -64,47 +64,53 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/top_shadow"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"></LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:id="@+id/button_container"
-        android:layout_marginBottom="5dp"
-        android:layout_margin="10dp">
+        android:baselineAligned="false"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="4dp">
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:text="@string/like_string"
             android:id="@+id/like_button"
-            android:background="#ffffff"
             android:layout_weight="1"
             android:textColor="#ff8400"
             android:textSize="15dp"
-            android:textStyle="bold"
-            android:textAlignment="gravity" />
+            android:textAlignment="gravity"
+            android:background="#ffffff" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:text="@string/comment_string"
             android:id="@+id/comment_button"
-            android:background="#ffffff"
             android:layout_weight="1"
             android:textColor="#ff8400"
             android:textSize="15dp"
-            android:textStyle="bold" />
+            android:background="#ffffff" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:text="@string/share_string"
             android:id="@+id/share_button"
-            android:background="#ffffff"
             android:layout_weight="1"
             android:textColor="#ff8400"
             android:textSize="15dp"
-            android:textStyle="bold" />
+            android:background="#ffffff" />
     </LinearLayout>
 
 </LinearLayout>
