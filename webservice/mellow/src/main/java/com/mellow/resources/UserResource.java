@@ -44,8 +44,8 @@ public class UserResource {
     }
 
     @POST
-    public Response createUser(UserModel userModel){
-        UserModel createdUserModel = userService.createUser(userModel);
+    public Response createUser(User user){
+        UserModel createdUserModel = userService.createUser(user.getUsername());
         return Response.created(URI.create(uriInfo.getPath() + "/" + createdUserModel.getId())).build();
     }
 

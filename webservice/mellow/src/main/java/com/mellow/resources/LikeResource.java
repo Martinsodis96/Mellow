@@ -17,7 +17,7 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
-@Path("users/{userId}/posts/{postId}/likes")
+@Path("posts/{postId}/likes")
 public class LikeResource {
 
     @Context
@@ -25,10 +25,6 @@ public class LikeResource {
 
     @PathParam("postId")
     private Long postId;
-
-    @PathParam("userId")
-    private Long userId;
-
     private final PostService postService;
 
     @Autowired

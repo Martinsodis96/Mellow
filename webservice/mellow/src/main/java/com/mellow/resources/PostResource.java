@@ -15,7 +15,7 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
-@Path("users/{userId}posts")
+@Path("posts")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class PostResource {
@@ -25,9 +25,6 @@ public class PostResource {
 
     private final PostService postService;
     private final UserService userService;
-
-    @PathParam("userId")
-    private Long userId;
 
     @Autowired
     public PostResource(PostService postService, UserService userService) {
@@ -44,26 +41,26 @@ public class PostResource {
     @GET
     public List<Post> getAllPosts(){
         List<Post> posts = new ArrayList<>();
-        userService.getAllPostsFromUser(userId).forEach(postModel -> posts.add(new Post(postModel)));
+        postService.getAllPosts().forEach(postModel -> posts.add(new Post(postModel)));
         return posts;
     }
 
     @POST
-    public Response createPost(PostModel postModel){
-        PostModel createdPostModel = postService.createPost(userId, postModel);
+    public Response createPost(Post post){
+        PostModel createdPostModel = postService.createPost(post.getUserModel().getId(), post.getContentText());
         return Response.created(URI.create(uriInfo.getPath() + "/" + createdPostModel.getId())).build();
     }
 
-    @POST
+    @PUT
     @Path("{postId}")
-    public Response updatePost(@PathParam("postId") Long postId, PostModel postModel){
-        PostModel createdPostModel = postService.updatePost(postId, postModel);
+    public Response updatePost(@PathParam("postId") Long postId, Post post){
+        PostModel createdPostModel = postService.updatePost(postId, post.getContentText());
         return Response.noContent().location(URI.create(uriInfo.getPath() + "/" + createdPostModel.getId())).build();
     }
 
     @DELETE
     @Path("{postId}")
-    public Response updatePost(@PathParam("postId") Long postId){
+    public Response remove(@PathParam("postId") Long postId){
         postService.removePost(postId);
         return Response.noContent().build();
     }
