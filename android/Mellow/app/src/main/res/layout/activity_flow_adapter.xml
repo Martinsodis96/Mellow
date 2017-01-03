@@ -23,30 +23,14 @@
             android:id="@+id/profile_picture"
             android:src="@drawable/images" />
 
-        <LinearLayout
-            android:orientation="horizontal"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:id="@+id/name_container">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Test"
-                android:id="@+id/firstname"
-                android:textColor="#333131" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Testsson"
-                android:id="@+id/lastname"
-                android:layout_marginLeft="5dp"
-                android:textColor="#181818" />
-        </LinearLayout>
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Test"
+            android:id="@+id/username"
+            android:textColor="#333131"
+            android:layout_marginLeft="10dp" />
 
     </LinearLayout>
 

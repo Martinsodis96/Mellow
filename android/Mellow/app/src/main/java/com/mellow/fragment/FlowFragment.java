@@ -18,6 +18,7 @@ import com.mellow.client.adapter.PostAdapter;
 import com.mellow.mellow.R;
 import com.mellow.model.Like;
 import com.mellow.model.Post;
+import com.mellow.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,10 +51,10 @@ public class FlowFragment extends Fragment {
         List<Like> likes = new ArrayList<>();
         likes.add(new Like(1L, 4L));
         likes.add(new Like(1L, 4L));
-        posts.add(new Post("This is just some dummy text to show how it will look in the future :) I'll make this a long one just to try.", "Martin", "Söderstrand"));
-        posts.add(new Post("I'm bored.", "Oskar", "Rosengård"));
-        posts.add(new Post("I'm trying to be able to scroll and that's why i made this post.", "Olle", "Falcon")
-        .setLikes(likes));
+        posts.add(new Post("This is just some dummy text to show how it will look in the future :) I'll make this a long one just to try.", new User("BestGuy10")));
+        posts.add(new Post("I'm bored.", new User("something")));
+        posts.add(new Post("I'm trying to be able to scroll and that's why i made this post.", new User("username"))
+                .setLikes(likes));
         //adapter = new FlowArrayAdapter(getActivity().getApplicationContext(), postAdapter.getAllPosts());
         adapter = new FlowArrayAdapter(getActivity().getApplicationContext(), posts);
         postListView.setAdapter(adapter);

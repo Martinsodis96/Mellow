@@ -5,30 +5,20 @@ import java.util.List;
 public class Post {
 
     private String contentText;
-    private String firstname;
-    private String lastname;
+    private User user;
     private List<Like> likes;
 
-    public Post(String contentText, String firstname, String lastname) {
+    public Post(String contentText, User user) {
         this.contentText = contentText;
-        this.firstname = firstname;
-        this.lastname = lastname;
+        this.user = user;
     }
 
-    public String getFirstname() {
-        return firstname;
+    public User getUser() {
+        return user;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getContentText() {

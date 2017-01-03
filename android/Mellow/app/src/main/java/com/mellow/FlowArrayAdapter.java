@@ -23,8 +23,7 @@ public class FlowArrayAdapter extends ArrayAdapter<Post> {
     Button commentButton;
     Button shareButton;
     TextView contentText;
-    TextView firstName;
-    TextView lastName;
+    TextView usernameTextView;
     TextView amountOfLikes;
     LinearLayout informationContainer;
 
@@ -41,8 +40,9 @@ public class FlowArrayAdapter extends ArrayAdapter<Post> {
 
         Post post = posts.get(position);
         contentText.setText(post.getContentText());
-        firstName.setText(post.getFirstname());
-        lastName.setText(post.getLastname());
+        if(post.getUser() != null){
+            this.usernameTextView.setText(post.getUser().getUsername());
+        }
         if(post.getLikes() != null && !post.getLikes().isEmpty()){
             informationContainer.setVisibility(View.VISIBLE);
             amountOfLikes.setText(String.valueOf(post.getLikes().size()));
@@ -57,8 +57,7 @@ public class FlowArrayAdapter extends ArrayAdapter<Post> {
         this.commentButton = (Button) view.findViewById(R.id.comment_button);
         this.shareButton = (Button) view.findViewById(R.id.share_button);
         this.contentText = (TextView) view.findViewById(R.id.content_text);
-        this.firstName = (TextView) view.findViewById(R.id.firstname);
-        this.lastName = (TextView) view.findViewById(R.id.lastname);
+        this.usernameTextView = (TextView) view.findViewById(R.id.username);
         this.informationContainer = (LinearLayout) view.findViewById(R.id.information_container);
         this.amountOfLikes = (TextView) view.findViewById(R.id.amount_of_likes);
     }
