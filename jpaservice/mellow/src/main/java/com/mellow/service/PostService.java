@@ -50,33 +50,33 @@ public class PostService {
         }
     }
 
-    public PostModel createPost(Long userId, PostModel postModel) {
-        if (postModel.getContent() != null) {
+    public PostModel createPost(Long userId, String content) {
+        if (content != null || userId != null) {
             return execute(postRepository1 -> {
                 UserModel user = userRepository.findOne(userId);
                 if (user != null) {
-                    return postRepository1.save(new PostModel(postModel.getContent(), user));
+                    return postRepository1.save(new PostModel(content, user));
                 } else {
                     throw new NoSearchResultException("Could not find user with id: " + userId);
                 }
             }, "Failed to create post");
         } else {
-            throw new InvalidInputException("Post content can't be null");
+            throw new InvalidInputException("Post content or userId can't be null");
         }
     }
 
-    public PostModel updatePost(Long postId, PostModel postModel) {
-        if (postModel.getContent() != null) {
+    public PostModel updatePost(Long postId, String content) {
+        if (content != null || postId != null) {
             return execute(postRepository1 -> {
                 PostModel post = postRepository1.findOne(postId);
                 if (post != null) {
-                    return postRepository.save(post.setContent(postModel.getContent()));
+                    return postRepository.save(post.setContent(content));
                 } else {
                     throw new NoSearchResultException("Could not find post with id: " + postId);
                 }
             }, "Failed to update post with id: " + postId);
         } else {
-            throw new InvalidInputException("Post content can't be null");
+            throw new InvalidInputException("Post content or id can't be null");
         }
     }
 

@@ -38,10 +38,10 @@ public class UserService {
         }
     }
 
-    public UserModel createUser(UserModel user) {
-        if (user.getUsername().length() > 3) {
-            return execute(userRepository1 -> userRepository1.save(user),
-                    String.format("Failed to create User with username: %s", user.getUsername()));
+    public UserModel createUser(String username) {
+        if (username != null && username.length() > 3) {
+            return execute(userRepository1 -> userRepository.save(new UserModel(username)),
+                    String.format("Failed to create User with username: %s", username));
         } else {
             throw new InvalidInputException("Username has to be at least 3 characters long.");
         }

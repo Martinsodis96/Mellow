@@ -1,13 +1,11 @@
 package com.mellow.model;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Table(name = "`post`")
 public class PostModel extends AbstractModel {
 
     private String content;
@@ -15,7 +13,7 @@ public class PostModel extends AbstractModel {
     @OneToMany(mappedBy = "post")
     private Set<CommentModel> comments;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER)
     private Set<LikeModel> likes;
 
     @ManyToOne(fetch = FetchType.EAGER)

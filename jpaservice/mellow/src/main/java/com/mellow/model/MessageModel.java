@@ -2,8 +2,10 @@ package com.mellow.model;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "`message`")
 public class MessageModel extends AbstractModel {
 
     private String message;

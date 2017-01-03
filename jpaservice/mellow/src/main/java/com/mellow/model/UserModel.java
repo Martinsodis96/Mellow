@@ -4,12 +4,11 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@Table(name = "`user`")
 public class UserModel extends AbstractModel {
 
     @Column(unique = true, nullable = false)
     private String username;
-    private String firstname;
-    private String lastname;
 
     @OneToMany(mappedBy = "user")
     private List<CommentModel> comments;
@@ -29,10 +28,8 @@ public class UserModel extends AbstractModel {
     protected UserModel() {
     }
 
-    public UserModel(String username, String firstname, String lastname) {
+    public UserModel(String username) {
         this.username = username;
-        this.firstname = firstname;
-        this.lastname = lastname;
     }
 
     public String getUsername() {
@@ -42,14 +39,6 @@ public class UserModel extends AbstractModel {
     public UserModel setUsername(String username) {
         this.username = username;
         return this;
-    }
-
-    public String getFirstname() {
-        return firstname;
-    }
-
-    public String getLastname() {
-        return lastname;
     }
 
     public List<CommentModel> getComments() {

@@ -3,9 +3,11 @@ package com.mellow.model;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.List;
 
 @Entity
+@Table(name = "`chat`")
 public class ChatModel extends AbstractModel {
 
     @OneToMany(mappedBy = "chat")
