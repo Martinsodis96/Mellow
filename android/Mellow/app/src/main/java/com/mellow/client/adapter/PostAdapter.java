@@ -49,4 +49,18 @@ public class PostAdapter {
             return new ArrayList<>();
         }
     }
+
+    public void createPost(final Post post){
+        executor.submit(new Callable<Post>() {
+            @Override
+            public Post call() throws Exception {
+                try {
+                    Response response = postApi.createPost(post).execute();
+                    return (Post) response.body();
+                } catch (IOException e) {
+                    throw new IOException(e);
+                }
+            }
+        });
+    }
 }

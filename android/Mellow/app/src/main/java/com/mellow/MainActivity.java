@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         customPagerAdapter = new CustomPagerAdapter(getSupportFragmentManager());
         setUpViewPager();
         setUpTabLayout();
+        mViewPager.setCurrentItem(1);
     }
 
     @Override

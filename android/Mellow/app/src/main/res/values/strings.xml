@@ -6,4 +6,5 @@
     <string name="search_title">search</string>
     <string name="settings_title">settings</string>
     <string name="options">optins</string>
+    <string name="title_activity_create_post">CreatePostActivity</string>
 </resources>

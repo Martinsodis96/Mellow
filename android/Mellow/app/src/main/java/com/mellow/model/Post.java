@@ -1,10 +1,13 @@
 package com.mellow.model;
 
+import java.util.List;
+
 public class Post {
 
     private String contentText;
     private String firstname;
     private String lastname;
+    private List<Like> likes;
 
     public Post(String contentText, String firstname, String lastname) {
         this.contentText = contentText;
@@ -34,5 +37,14 @@ public class Post {
 
     public void setContentText(String contentText) {
         this.contentText = contentText;
+    }
+
+    public List<Like> getLikes() {
+        return likes;
+    }
+
+    public Post setLikes(List<Like> likes) {
+        this.likes = likes;
+        return this;
     }
 }
