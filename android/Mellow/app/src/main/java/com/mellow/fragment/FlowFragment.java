@@ -12,8 +12,8 @@ import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
-import com.mellow.CreatePostActivity;
-import com.mellow.FlowArrayAdapter;
+import com.mellow.activity.CreatePostActivity;
+import com.mellow.adapter.FlowArrayAdapter;
 import com.mellow.client.adapter.PostAdapter;
 import com.mellow.mellow.R;
 import com.mellow.model.Like;
@@ -58,6 +58,7 @@ public class FlowFragment extends Fragment {
         //adapter = new FlowArrayAdapter(getActivity().getApplicationContext(), postAdapter.getAllPosts());
         adapter = new FlowArrayAdapter(getActivity().getApplicationContext(), posts);
         postListView.setAdapter(adapter);
+        System.out.println("Updating posts");
     }
 
     public void makeFloatingActionButtonClickable(FloatingActionButton floatingActionButton, final Context context){
@@ -68,4 +69,6 @@ public class FlowFragment extends Fragment {
             }
         });
     }
+
+
 }

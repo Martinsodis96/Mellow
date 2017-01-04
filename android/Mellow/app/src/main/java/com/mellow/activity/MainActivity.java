@@ -1,4 +1,4 @@
-package com.mellow;
+package com.mellow.activity;
 
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.Menu;
 
+import com.mellow.adapter.CustomPagerAdapter;
 import com.mellow.mellow.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -21,11 +22,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setUpToolBar();
         customPagerAdapter = new CustomPagerAdapter(getSupportFragmentManager());
+        setUpToolBar();
         setUpViewPager();
         setUpTabLayout();
-        mViewPager.setCurrentItem(1);
     }
 
     @Override
@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         this.mViewPager = (ViewPager) findViewById(R.id.view_pager);
         if (mViewPager != null) {
             mViewPager.setAdapter(customPagerAdapter);
+            mViewPager.setCurrentItem(1);
         }
     }
 

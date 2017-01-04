@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.mellow.MainActivity"
+            android:name="com.mellow.activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,9 +20,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.mellow.CreatePostActivity"
+            android:name="com.mellow.activity.CreatePostActivity"
             android:label="@string/title_activity_create_post"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme"
+            android:parentActivityName="com.mellow.activity.MainActivity">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.mellow.activity.MainActivity"/>
+
+        </activity>
     </application>
 
 </manifest>

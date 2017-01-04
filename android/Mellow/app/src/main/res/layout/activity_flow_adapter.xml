@@ -30,7 +30,8 @@
             android:text="Test"
             android:id="@+id/username"
             android:textColor="#333131"
-            android:layout_marginLeft="10dp" />
+            android:layout_marginLeft="10dp"
+            android:textSize="18sp" />
 
     </LinearLayout>
 
@@ -43,7 +44,7 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="25dp"
         android:textColor="#333131"
-        android:textSize="17sp" />
+        android:textSize="15sp" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -116,7 +117,7 @@
             android:id="@+id/like_button"
             android:layout_weight="1"
             android:textColor="#ff8400"
-            android:textSize="15dp"
+            android:textSize="14dp"
             android:textAlignment="gravity"
             android:background="#ffffff" />
 
@@ -127,7 +128,7 @@
             android:id="@+id/comment_button"
             android:layout_weight="1"
             android:textColor="#ff8400"
-            android:textSize="15dp"
+            android:textSize="14dp"
             android:background="#ffffff" />
 
         <Button
@@ -137,7 +138,7 @@
             android:id="@+id/share_button"
             android:layout_weight="1"
             android:textColor="#ff8400"
-            android:textSize="15dp"
+            android:textSize="14dp"
             android:background="#ffffff" />
     </LinearLayout>
 

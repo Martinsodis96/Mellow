@@ -1,4 +1,4 @@
-package com.mellow;
+package com.mellow.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

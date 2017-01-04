@@ -2,9 +2,10 @@
     <string name="app_name">Mellow</string>
     <string name="like_string">Like</string>
     <string name="comment_string">Comment</string>
-    <string name="share_string">Share</string>
+    <string name="share_string">Follow</string>
     <string name="search_title">search</string>
+    <string name="post_title">post</string>
     <string name="settings_title">settings</string>
-    <string name="options">optins</string>
-    <string name="title_activity_create_post">CreatePostActivity</string>
+    <string name="options">options</string>
+    <string name="title_activity_create_post">Post</string>
 </resources>

@@ -9,13 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
-import com.mellow.ChatArrayAdapter;
-import com.mellow.FlowArrayAdapter;
-import com.mellow.client.adapter.PostAdapter;
+import com.mellow.adapter.ChatArrayAdapter;
 import com.mellow.mellow.R;
 import com.mellow.model.Chat;
 import com.mellow.model.Message;
-import com.mellow.model.Post;
 import com.mellow.model.User;
 
 import java.util.ArrayList;
