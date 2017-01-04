@@ -39,7 +39,7 @@ public class FlowArrayAdapter extends ArrayAdapter<Post> {
         initializePalettes(customView);
 
         Post post = posts.get(position);
-        contentText.setText(post.getContentText());
+        contentText.setText(post.getContent());
         if(post.getUser() != null){
             this.usernameTextView.setText(post.getUser().getUsername());
         }

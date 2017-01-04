@@ -2,6 +2,7 @@ package com.mellow.client.adapter;
 
 import com.mellow.client.api.PostApi;
 import com.mellow.model.Post;
+import com.mellow.model.User;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PostAdapter {
 
-    private final String MELLOW_BASE_URL = "http://192.168.1.95:8080/mellow/";
+    private final String MELLOW_BASE_URL = "http://192.168.1.95:8080/";
     private PostApi postApi;
     private Retrofit retrofit;
     private ExecutorService executor = Executors.newCachedThreadPool();
@@ -35,6 +36,7 @@ public class PostAdapter {
             public List<Post> call() throws Exception {
                 try {
                     Response response = postApi.getAllPosts().execute();
+                    System.out.println(response.message());
                     return (List<Post>) response.body();
                 } catch (IOException e) {
                     throw new IOException(e);
@@ -50,13 +52,14 @@ public class PostAdapter {
         }
     }
 
-    public void createPost(final Post post){
+    public void createPost(final Post post, final Long userId){
         executor.submit(new Callable<Post>() {
             @Override
             public Post call() throws Exception {
                 try {
-                    Response response = postApi.createPost(post).execute();
-                    return (Post) response.body();
+                    Response response = postApi.createPost(userId, post).execute();
+                    System.out.println(response.code());
+                    return new Post("This is a new post");
                 } catch (IOException e) {
                     throw new IOException(e);
                 }

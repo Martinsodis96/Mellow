@@ -8,11 +8,15 @@ import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.EditText;
 
+import com.mellow.client.adapter.PostAdapter;
 import com.mellow.mellow.R;
+import com.mellow.model.Post;
+import com.mellow.model.User;
 
 public class CreatePostActivity extends AppCompatActivity {
 
     EditText postInput;
+    private PostAdapter postAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +25,7 @@ public class CreatePostActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         this.postInput = (EditText) findViewById(R.id.post_input);
+        this.postAdapter = new PostAdapter();
         postInput.requestFocus();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
     }
@@ -42,6 +47,7 @@ public class CreatePostActivity extends AppCompatActivity {
 
             case R.id.post:{
                 //TODO store post in the database.
+                postAdapter.createPost(new Post(postInput.getText().toString()), 1L);
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
             }

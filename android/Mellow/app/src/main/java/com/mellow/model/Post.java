@@ -4,13 +4,13 @@ import java.util.List;
 
 public class Post {
 
-    private String contentText;
+    private String content;
     private User user;
     private List<Like> likes;
+    private Comment comment;
 
-    public Post(String contentText, User user) {
-        this.contentText = contentText;
-        this.user = user;
+    public Post(String content) {
+        this.content = content;
     }
 
     public User getUser() {
@@ -21,12 +21,12 @@ public class Post {
         this.user = user;
     }
 
-    public String getContentText() {
-        return contentText;
+    public String getContent() {
+        return content;
     }
 
-    public void setContentText(String contentText) {
-        this.contentText = contentText;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public List<Like> getLikes() {
@@ -36,5 +36,13 @@ public class Post {
     public Post setLikes(List<Like> likes) {
         this.likes = likes;
         return this;
+    }
+
+    public Comment getComment() {
+        return comment;
+    }
+
+    public void setComment(Comment comment) {
+        this.comment = comment;
     }
 }

@@ -21,6 +21,8 @@ import com.mellow.model.Post;
 import com.mellow.model.User;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class FlowFragment extends Fragment {
@@ -47,16 +49,9 @@ public class FlowFragment extends Fragment {
         makeFloatingActionButtonClickable((FloatingActionButton) view.findViewById(R.id.floating_action_button),
                 view.getContext());
         postAdapter = new PostAdapter();
-        List<Post> posts = new ArrayList<>();
-        List<Like> likes = new ArrayList<>();
-        likes.add(new Like(1L, 4L));
-        likes.add(new Like(1L, 4L));
-        posts.add(new Post("This is just some dummy text to show how it will look in the future :) I'll make this a long one just to try.", new User("BestGuy10")));
-        posts.add(new Post("I'm bored.", new User("something")));
-        posts.add(new Post("I'm trying to be able to scroll and that's why i made this post.", new User("username"))
-                .setLikes(likes));
-        //adapter = new FlowArrayAdapter(getActivity().getApplicationContext(), postAdapter.getAllPosts());
-        adapter = new FlowArrayAdapter(getActivity().getApplicationContext(), posts);
+        List<Post> posts = postAdapter.getAllPosts();
+        Collections.reverse(posts);
+        adapter = new FlowArrayAdapter(getActivity().getApplicationContext(),posts);
         postListView.setAdapter(adapter);
         System.out.println("Updating posts");
     }
