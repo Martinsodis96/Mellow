@@ -10,7 +10,7 @@ public class PostModel extends AbstractModel {
 
     private String content;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER)
     private Set<CommentModel> comments;
 
     @OneToMany(mappedBy = "post", fetch = FetchType.EAGER)

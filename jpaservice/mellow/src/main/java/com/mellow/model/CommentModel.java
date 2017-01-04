@@ -36,4 +36,8 @@ public class CommentModel extends AbstractModel {
         this.content = content;
         return this;
     }
+
+    public UserModel getUser() {
+        return user;
+    }
 }
