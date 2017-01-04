@@ -45,16 +45,10 @@ public class PostResource {
         return posts;
     }
 
-    @POST
-    public Response createPost(Post post){
-        PostModel createdPostModel = postService.createPost(post.getUserModel().getId(), post.getContentText());
-        return Response.created(URI.create(uriInfo.getPath() + "/" + createdPostModel.getId())).build();
-    }
-
     @PUT
     @Path("{postId}")
     public Response updatePost(@PathParam("postId") Long postId, Post post){
-        PostModel createdPostModel = postService.updatePost(postId, post.getContentText());
+        PostModel createdPostModel = postService.updatePost(postId, post.getContent());
         return Response.noContent().location(URI.create(uriInfo.getPath() + "/" + createdPostModel.getId())).build();
     }
 

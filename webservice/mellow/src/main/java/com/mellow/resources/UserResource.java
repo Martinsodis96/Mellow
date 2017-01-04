@@ -1,5 +1,7 @@
 package com.mellow.resources;
 
+import com.mellow.model.Post;
+import com.mellow.model.PostModel;
 import com.mellow.model.User;
 import com.mellow.model.UserModel;
 import com.mellow.service.PostService;
@@ -47,6 +49,13 @@ public class UserResource {
     public Response createUser(User user){
         UserModel createdUserModel = userService.createUser(user.getUsername());
         return Response.created(URI.create(uriInfo.getPath() + "/" + createdUserModel.getId())).build();
+    }
+
+    @POST
+    @Path("/{userId}/posts")
+    public Response createPost(@PathParam("userId") Long userId, Post post){
+        PostModel createdPostModel = postService.createPost(userId, post.getContent());
+        return Response.created(URI.create(uriInfo.getPath() + "/" + createdPostModel.getId())).build();
     }
 
     @PUT
