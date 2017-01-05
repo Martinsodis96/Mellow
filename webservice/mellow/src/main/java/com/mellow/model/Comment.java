@@ -2,18 +2,19 @@ package com.mellow.model;
 
 public class Comment {
 
+    private Long id;
     private String content;
-    private PostModel post;
-    private UserModel user;
+    private Long postId;
+    private Long userId;
 
     public Comment(CommentModel commentModel) {
+        this.id = commentModel.getId();
         this.content = commentModel.getContent();
-        if(commentModel.getUser() != null){
-            this.user = commentModel.getUser();
-        }
-        if(commentModel.getPost() != null){
-            this.post = commentModel.getPost();
-        }
+        this.postId = commentModel.getPost().getId();
+        this.userId = commentModel.getUser().getId();
+    }
+
+    protected Comment() {
     }
 
     public String getContent() {
@@ -24,19 +25,15 @@ public class Comment {
         this.content = content;
     }
 
-    public PostModel getPost() {
-        return post;
+    public Long getId() {
+        return id;
     }
 
-    public void setPost(PostModel post) {
-        this.post = post;
+    public Long getPostId() {
+        return postId;
     }
 
-    public UserModel getUser() {
-        return user;
-    }
-
-    public void setUser(UserModel user) {
-        this.user = user;
+    public Long getUserId() {
+        return userId;
     }
 }

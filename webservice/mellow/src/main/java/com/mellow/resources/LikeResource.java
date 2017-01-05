@@ -41,14 +41,15 @@ public class LikeResource {
     }
 
     @POST
-    public Response addLikeToPost(LikeModel likeModel){
-        LikeModel createdLike = postService.addLikeToPost(postId, likeModel);
+    public Response addLikeToPost(Like like){
+        LikeModel createdLike = postService.addLikeToPost(postId, like.getUserId());
         return Response.created(URI.create(uriInfo.getAbsolutePath() + "/" + createdLike.getId())).build();
     }
-/*
+
     @DELETE
-    public Response deleteLikeToPost(LikeModel likeModel){
-        postService.removeLikeToPost(postId);
-        return Response.created(uriInfo.getAbsolutePath()).build();
-    }*/
+    @Path("{likeId}")
+    public Response removeLikeFromPost(@PathParam("likeId") Long likeId){
+        postService.removeLikeFromPost(likeId);
+        return Response.noContent().build();
+    }
 }

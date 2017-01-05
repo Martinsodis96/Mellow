@@ -1,5 +1,6 @@
 package com.mellow.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Post {
@@ -20,9 +21,11 @@ public class Post {
             this.user = new User(post.getUser());
         }
         if (post.getLikes() != null){
+            likes = new ArrayList<>();
             post.getLikes().forEach(likeModel -> this.likes.add(new Like(likeModel)));
         }
         if (post.getComments() != null){
+            comments = new ArrayList<>();
             post.getComments().forEach(commentModel -> this.comments.add(new Comment(commentModel)));
         }
     }
@@ -43,7 +46,15 @@ public class Post {
         return likes;
     }
 
+    public void setLikes(List<Like> likes) {
+        this.likes = likes;
+    }
+
     public List<Comment> getComments() {
         return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 }
