@@ -1,6 +1,5 @@
 package com.mellow.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
@@ -13,7 +12,6 @@ import com.mellow.adapter.CustomDialogClass;
 import com.mellow.client.adapter.PostAdapter;
 import com.mellow.mellow.R;
 import com.mellow.model.Post;
-import com.mellow.model.User;
 
 public class CreatePostActivity extends AppCompatActivity {
 
@@ -49,8 +47,10 @@ public class CreatePostActivity extends AppCompatActivity {
             }
 
             case R.id.post:{
-                postAdapter.createPost(new Post(postInput.getText().toString()), 1L);
-                NavUtils.navigateUpFromSameTask(this);
+                if(!postInput.getText().toString().isEmpty()){
+                    postAdapter.createPost(new Post(postInput.getText().toString()), 1L);
+                    NavUtils.navigateUpFromSameTask(this);
+                }
                 return true;
             }
         }

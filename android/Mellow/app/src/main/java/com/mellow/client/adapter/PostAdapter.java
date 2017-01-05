@@ -66,4 +66,19 @@ public class PostAdapter {
             }
         });
     }
+
+    /*public void addLikeToPost(){
+        executor.submit(new Callable<Post>() {
+            @Override
+            public Post call() throws Exception {
+                try {
+                    Response response = postApi.createPost(userId, post).execute();
+                    System.out.println(response.code());
+                    return new Post("This is a new post");
+                } catch (IOException e) {
+                    throw new IOException(e);
+                }
+            }
+        });
+    }*/
 }

@@ -1,5 +1,6 @@
 package com.mellow.client.api;
 
+import com.mellow.model.Like;
 import com.mellow.model.Post;
 
 import java.util.List;
@@ -19,4 +20,7 @@ public interface PostApi {
 
     @POST("users/{userId}/posts")
     Call<Post> createPost(@Path("userId") Long userId, @Body Post post);
+
+    @POST("posts/{postId}/likes")
+    Call<Like> addLikeToPost(@Path("userId") Long userId, @Body Like like);
 }

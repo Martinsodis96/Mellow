@@ -53,7 +53,6 @@ public class FlowFragment extends Fragment {
         Collections.reverse(posts);
         adapter = new FlowArrayAdapter(getActivity().getApplicationContext(),posts);
         postListView.setAdapter(adapter);
-        System.out.println("Updating posts");
     }
 
     public void makeFloatingActionButtonClickable(FloatingActionButton floatingActionButton, final Context context){
