@@ -1,6 +1,7 @@
 package com.mellow.model;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -11,7 +12,7 @@ public class LikeModel extends AbstractModel {
     @ManyToOne
     private PostModel post;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private UserModel user;
 
     protected LikeModel() {
@@ -22,11 +23,19 @@ public class LikeModel extends AbstractModel {
         this.user = user;
     }
 
+    public PostModel getPost() {
+        return post;
+    }
+
+    public void setPost(PostModel post) {
+        this.post = post;
+    }
+
     public UserModel getUser() {
         return user;
     }
 
-    public PostModel getPost() {
-        return post;
+    public void setUser(UserModel user) {
+        this.user = user;
     }
 }

@@ -120,14 +120,16 @@ public class PostService {
         }
     }
 
-    public LikeModel addLikeToPost(Long postId, LikeModel likeModel) {
+    public LikeModel addLikeToPost(Long postId, Long userId) {
         try {
             PostModel postModel = postRepository.findOne(postId);
+            UserModel userModel = userRepository.findOne(userId);
             if (postModel != null) {
-                if (likeModel.getUser() != null) {
-                    return likeRepository.save(new LikeModel(postModel, likeModel.getUser()));
+                if (userModel != null) {
+                    return likeRepository.save(new LikeModel(postModel, userModel));
                 } else {
-                    throw new InvalidInputException("likeModel must have a user.");
+                    throw new NoSearchResultException("Could not find user" +
+                            " with id: " + userId);
                 }
             } else {
                 throw new NoSearchResultException("Could not find post" +
