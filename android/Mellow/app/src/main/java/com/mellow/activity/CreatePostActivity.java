@@ -1,5 +1,6 @@
 package com.mellow.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +9,7 @@ import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.EditText;
 
+import com.mellow.adapter.CustomDialogClass;
 import com.mellow.client.adapter.PostAdapter;
 import com.mellow.mellow.R;
 import com.mellow.model.Post;
@@ -40,18 +42,32 @@ public class CreatePostActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:{
-                //TODO create an alert box that asks the user if it really wants to discard the post.
-                NavUtils.navigateUpFromSameTask(this);
+                CustomDialogClass customDialogClass = new CustomDialogClass(this);
+                customDialogClass.show();
+                customDialogClass.getWindow().setAttributes(getNewWidthParam(customDialogClass));
                 return true;
             }
 
             case R.id.post:{
-                //TODO store post in the database.
                 postAdapter.createPost(new Post(postInput.getText().toString()), 1L);
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
             }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private WindowManager.LayoutParams getNewWidthParam(CustomDialogClass customDialogClass){
+        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+        layoutParams.copyFrom(customDialogClass.getWindow().getAttributes());
+        layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+        return layoutParams;
+    }
+
+    @Override
+    public void onBackPressed() {
+        CustomDialogClass customDialogClass = new CustomDialogClass(this);
+        customDialogClass.show();
+        customDialogClass.getWindow().setAttributes(getNewWidthParam(customDialogClass));
     }
 }
