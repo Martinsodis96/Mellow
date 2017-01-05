@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Post {
 
+    private Long id;
     private String content;
     private User user;
     private List<Like> likes;
@@ -44,5 +45,13 @@ public class Post {
 
     public void setComment(Comment comment) {
         this.comment = comment;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

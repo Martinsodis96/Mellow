@@ -2,27 +2,33 @@ package com.mellow.model;
 
 public class Like {
 
-    private Long PostId;
+    private Long id;
     private Long userId;
+    private Long postId;
 
-    public Like(Long postId, Long userId) {
-        PostId = postId;
+    public Like(Long userId) {
         this.userId = userId;
     }
 
     public Long getPostId() {
-        return PostId;
+        return postId;
     }
 
-    public void setPostId(Long postId) {
-        PostId = postId;
+    public Like setPostId(Long postId) {
+        this.postId = postId;
+        return this;
     }
 
     public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public Like setUserId(Long userId) {
         this.userId = userId;
+        return this;
+    }
+
+    public Long getId() {
+        return id;
     }
 }

@@ -10,14 +10,22 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.mellow.client.adapter.PostAdapter;
 import com.mellow.mellow.R;
+import com.mellow.model.Like;
 import com.mellow.model.Post;
+import com.mellow.model.User;
 
 import java.util.List;
+
+import retrofit2.Response;
 
 public class FlowArrayAdapter extends ArrayAdapter<Post> {
 
     private List<Post> posts;
+    private PostAdapter postAdapter;
+    private Long userId = 1L;
+    private Like userLike;
     ImageView profilePicture;
     Button likeButton;
     Button commentButton;
@@ -37,18 +45,67 @@ public class FlowArrayAdapter extends ArrayAdapter<Post> {
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View customView = inflater.inflate(R.layout.activity_flow_adapter, parent, false);
         initializePalettes(customView);
-
+        this.postAdapter = new PostAdapter();
         Post post = posts.get(position);
         contentText.setText(post.getContent());
-        if(post.getUser() != null){
-            this.usernameTextView.setText(post.getUser().getUsername());
+        setUsernameTextView(post);
+        showLikes(post);
+        setLikeOnClick(likeButton, post, amountOfLikes);
+        return customView;
+    }
+
+    private void setLikeOnClick(Button likeButton, final Post post, final TextView amountOfLikes){
+        final LinearLayout informationContainer = this.informationContainer;
+        likeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (likedByUser(post, userId)) {
+                    System.out.println(userLike.getId());
+                    postAdapter.removeLikeFromPost(post.getId(), userLike.getId());
+                    post.getLikes().remove(userLike);
+                    amountOfLikes.setText(String.valueOf(post.getLikes().size()));
+                    if (post.getLikes().isEmpty()) {
+                        informationContainer.setVisibility(View.GONE);
+                    }
+                } else {
+                    Like newLike = new Like(userId);
+                    postAdapter.addLikeToPost(post.getId(), newLike);
+                    //TODO get the new like from the database.
+                    post.getLikes().add(newLike);
+                    amountOfLikes.setText(String.valueOf(post.getLikes().size()));
+                    if (!informationContainer.isShown()) {
+                        informationContainer.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+        });
+    }
+
+    private boolean likedByUser(Post post, Long userId){
+        for (Like like : post.getLikes()) {
+            if(like.getUserId() != null && userId.equals(like.getUserId())){
+                this.userLike = like;
+                return true;
+            }
         }
-        if(post.getLikes() != null && !post.getLikes().isEmpty()){
+        return false;
+    }
+
+    private boolean hasLikes(Post post){
+        return post.getLikes() != null && !post.getLikes().isEmpty();
+    }
+
+    private void showLikes(Post post){
+        if(hasLikes(post)){
             informationContainer.setVisibility(View.VISIBLE);
             amountOfLikes.setText(String.valueOf(post.getLikes().size()));
         }
-        setLikeOnClick(likeButton, position, amountOfLikes);
-        return customView;
+    }
+
+    private void setUsernameTextView(Post post){
+        if(post.getUser() != null){
+            this.usernameTextView.setText(post.getUser().getUsername());
+        }
     }
 
     private void initializePalettes(View view){
@@ -60,21 +117,5 @@ public class FlowArrayAdapter extends ArrayAdapter<Post> {
         this.usernameTextView = (TextView) view.findViewById(R.id.username);
         this.informationContainer = (LinearLayout) view.findViewById(R.id.information_container);
         this.amountOfLikes = (TextView) view.findViewById(R.id.amount_of_likes);
-    }
-
-    private void setLikeOnClick(Button likeButton, final int position, final TextView amountOfLikes){
-        final LinearLayout informationContainer = this.informationContainer;
-        likeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                if(!informationContainer.isShown()){
-                    informationContainer.setVisibility(View.VISIBLE);
-                }
-                int newAmountOfLikes = Integer.valueOf(amountOfLikes.getText().toString()) + 1;
-                amountOfLikes.setText(String.valueOf(newAmountOfLikes));
-                //TODO Try to save like in the database and don't update gui if like already exist.
-            }
-        });
     }
 }

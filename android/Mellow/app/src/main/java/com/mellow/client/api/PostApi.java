@@ -6,7 +6,6 @@ import com.mellow.model.Post;
 import java.util.List;
 
 import retrofit2.Call;
-import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
@@ -22,5 +21,8 @@ public interface PostApi {
     Call<Post> createPost(@Path("userId") Long userId, @Body Post post);
 
     @POST("posts/{postId}/likes")
-    Call<Like> addLikeToPost(@Path("userId") Long userId, @Body Like like);
+    Call<Like> addLikeToPost(@Path("postId") Long postId, @Body Like like);
+
+    @DELETE("posts/{postId}/likes/{likeId}")
+    Call<Like> removeLikeFromPost(@Path("postId") Long postId, @Path("likeId") Long likeId);
 }
