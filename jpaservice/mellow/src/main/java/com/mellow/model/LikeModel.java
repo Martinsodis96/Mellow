@@ -9,7 +9,7 @@ import javax.persistence.Table;
 @Table(name = "`like`")
 public class LikeModel extends AbstractModel {
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private PostModel post;
 
     @ManyToOne(fetch = FetchType.EAGER)
