@@ -1,6 +1,8 @@
 package com.mellow.activity;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -17,6 +19,7 @@ public class CreatePostActivity extends AppCompatActivity {
 
     EditText postInput;
     private PostAdapter postAdapter;
+    private Long userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +29,7 @@ public class CreatePostActivity extends AppCompatActivity {
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         this.postInput = (EditText) findViewById(R.id.post_input);
         this.postAdapter = new PostAdapter();
+        this.userId = getUserId(this);
         postInput.requestFocus();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
     }
@@ -48,7 +52,7 @@ public class CreatePostActivity extends AppCompatActivity {
 
             case R.id.post:{
                 if(!postInput.getText().toString().isEmpty()){
-                    postAdapter.createPost(new Post(postInput.getText().toString()), 1L);
+                    postAdapter.createPost(new Post(postInput.getText().toString()), userId);
                     NavUtils.navigateUpFromSameTask(this);
                 }
                 return true;
@@ -69,5 +73,9 @@ public class CreatePostActivity extends AppCompatActivity {
         CustomDialogClass customDialogClass = new CustomDialogClass(this);
         customDialogClass.show();
         customDialogClass.getWindow().setAttributes(getNewWidthParam(customDialogClass));
+    }
+
+    private Long getUserId(Context context){
+        return PreferenceManager.getDefaultSharedPreferences(context).getLong("userId", 1L);
     }
 }

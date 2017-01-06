@@ -8,4 +8,5 @@
     <string name="settings_title">settings</string>
     <string name="options">options</string>
     <string name="title_activity_create_post">Post</string>
+    <string name="MELLOW_BASE_URL">http://192.168.0.16:8080/</string>
 </resources>

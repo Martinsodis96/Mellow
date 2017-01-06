@@ -1,6 +1,7 @@
 package com.mellow.adapter;
 
 import android.content.Context;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +27,7 @@ public class FlowArrayAdapter extends ArrayAdapter<Post> {
     private List<Post> posts;
     private PostAdapter postAdapter;
     private LikeAdapter likeAdapter;
-    private Long userId = 1L;
+    private Long userId;
     private Like userLike;
     ImageView profilePicture;
     Button likeButton;
@@ -49,6 +50,7 @@ public class FlowArrayAdapter extends ArrayAdapter<Post> {
         initializePalettes(customView);
         this.postAdapter = new PostAdapter();
         this.likeAdapter = new LikeAdapter();
+        this.userId = getUserId(customView.getContext());
         Post post = posts.get(position);
         contentText.setText(post.getContent());
         setUsernameTextView(post);
@@ -118,5 +120,9 @@ public class FlowArrayAdapter extends ArrayAdapter<Post> {
         this.usernameTextView = (TextView) view.findViewById(R.id.username);
         this.informationContainer = (LinearLayout) view.findViewById(R.id.information_container);
         this.amountOfLikes = (TextView) view.findViewById(R.id.amount_of_likes);
+    }
+
+    private Long getUserId(Context context){
+        return PreferenceManager.getDefaultSharedPreferences(context).getLong("userId", 1L);
     }
 }
