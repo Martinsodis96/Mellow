@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.mellow.client.adapter.LikeAdapter;
 import com.mellow.client.adapter.PostAdapter;
 import com.mellow.mellow.R;
 import com.mellow.model.Like;
@@ -24,6 +25,7 @@ public class FlowArrayAdapter extends ArrayAdapter<Post> {
 
     private List<Post> posts;
     private PostAdapter postAdapter;
+    private LikeAdapter likeAdapter;
     private Long userId = 1L;
     private Like userLike;
     ImageView profilePicture;
@@ -46,6 +48,7 @@ public class FlowArrayAdapter extends ArrayAdapter<Post> {
         View customView = inflater.inflate(R.layout.activity_flow_adapter, parent, false);
         initializePalettes(customView);
         this.postAdapter = new PostAdapter();
+        this.likeAdapter = new LikeAdapter();
         Post post = posts.get(position);
         contentText.setText(post.getContent());
         setUsernameTextView(post);
@@ -60,7 +63,6 @@ public class FlowArrayAdapter extends ArrayAdapter<Post> {
             @Override
             public void onClick(View v) {
                 if (likedByUser(post, userId)) {
-                    System.out.println(userLike.getId());
                     postAdapter.removeLikeFromPost(post.getId(), userLike.getId());
                     post.getLikes().remove(userLike);
                     amountOfLikes.setText(String.valueOf(post.getLikes().size()));
@@ -68,10 +70,9 @@ public class FlowArrayAdapter extends ArrayAdapter<Post> {
                         informationContainer.setVisibility(View.GONE);
                     }
                 } else {
-                    Like newLike = new Like(userId);
-                    postAdapter.addLikeToPost(post.getId(), newLike);
-                    //TODO get the new like from the database.
-                    post.getLikes().add(newLike);
+                    Response response = postAdapter.addLikeToPost(post.getId(), new Like(userId));
+                    Like like = likeAdapter.getLike(response.headers().get("location"));
+                    post.getLikes().add(like);
                     amountOfLikes.setText(String.valueOf(post.getLikes().size()));
                     if (!informationContainer.isShown()) {
                         informationContainer.setVisibility(View.VISIBLE);

@@ -18,6 +18,7 @@ import com.mellow.client.adapter.PostAdapter;
 import com.mellow.mellow.R;
 import com.mellow.model.Post;
 
+import java.util.Collections;
 import java.util.List;
 
 public class FlowFragment extends Fragment {
@@ -45,6 +46,7 @@ public class FlowFragment extends Fragment {
                 view.getContext());
         postAdapter = new PostAdapter();
         List<Post> posts = postAdapter.getAllPosts();
+        Collections.reverse(posts);
         adapter = new FlowArrayAdapter(getActivity().getApplicationContext(),posts);
         postListView.setAdapter(adapter);
     }

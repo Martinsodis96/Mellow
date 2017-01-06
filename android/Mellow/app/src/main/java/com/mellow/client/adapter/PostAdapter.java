@@ -57,15 +57,15 @@ public class PostAdapter {
         }
     }
 
-    public void createPost(final Post post, final Long userId) {
-        executor.submit(new Callable<Response>() {
+    public Response createPost(final Post post, final Long userId) {
+        Future<Response> future = executor.submit(new Callable<Response>() {
             @Override
             public Response call() throws Exception {
                 try {
                     Response response = postApi.createPost(userId, post).execute();
-                    if(response.isSuccessful()){
+                    if (response.isSuccessful()) {
                         return response;
-                    }else{
+                    } else {
                         //TODO display to the user that there is something wrong
                         throw new IOException();
                     }
@@ -75,20 +75,40 @@ public class PostAdapter {
                 }
             }
         });
+
+        try {
+            return future.get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
-    public void addLikeToPost(final Long postId, final Like like) {
-        executor.submit(new Callable<Response>() {
+    public Response addLikeToPost(final Long postId, final Like like) {
+        Future<Response> future = executor.submit(new Callable<Response>() {
             @Override
             public Response call() throws Exception {
                 try {
-                    return postApi.addLikeToPost(postId, like).execute();
+                    Response response = postApi.addLikeToPost(postId, like).execute();
+                    if (response.isSuccessful()) {
+                        return response;
+                    } else {
+                        //TODO display to the user that there is something wrong
+                        throw new IOException();
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                     throw new IOException(e);
                 }
             }
         });
+
+        try {
+            return future.get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public void removeLikeFromPost(final Long postId, final Long likeId) {
