@@ -44,7 +44,7 @@ public class FlowFragment extends Fragment {
         postListView = (ListView) view.findViewById(R.id.post_listview);
         makeFloatingActionButtonClickable((FloatingActionButton) view.findViewById(R.id.floating_action_button),
                 view.getContext());
-        postAdapter = new PostAdapter();
+        postAdapter = new PostAdapter(view.getContext());
         List<Post> posts = postAdapter.getAllPosts();
         Collections.reverse(posts);
         adapter = new FlowArrayAdapter(getActivity().getApplicationContext(),posts);

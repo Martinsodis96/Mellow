@@ -48,8 +48,8 @@ public class FlowArrayAdapter extends ArrayAdapter<Post> {
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View customView = inflater.inflate(R.layout.activity_flow_adapter, parent, false);
         initializePalettes(customView);
-        this.postAdapter = new PostAdapter();
-        this.likeAdapter = new LikeAdapter();
+        this.postAdapter = new PostAdapter(customView.getContext());
+        this.likeAdapter = new LikeAdapter(customView.getContext());
         this.userId = getUserId(customView.getContext());
         Post post = posts.get(position);
         contentText.setText(post.getContent());

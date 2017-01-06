@@ -1,5 +1,6 @@
 package com.mellow.client.adapter;
 
+import android.content.Context;
 import android.content.res.Resources;
 
 import com.mellow.client.api.UserApi;
@@ -19,12 +20,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class UserAdapter {
 
-    private final String MELLOW_BASE_URL = Resources.getSystem().getString(R.string.MELLOW_BASE_URL);
+    private final String MELLOW_BASE_URL;
     private UserApi userApi;
     private Retrofit retrofit;
     private ExecutorService executor = Executors.newCachedThreadPool();
 
-    public UserAdapter() {
+    public UserAdapter(Context context) {
+        this.MELLOW_BASE_URL = context.getResources().getString(R.string.MELLOW_BASE_URL);
         retrofit = new Retrofit.Builder().baseUrl(MELLOW_BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
         userApi = retrofit.create(UserApi.class);
     }

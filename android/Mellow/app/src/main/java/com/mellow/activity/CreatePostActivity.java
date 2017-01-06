@@ -28,7 +28,7 @@ public class CreatePostActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         this.postInput = (EditText) findViewById(R.id.post_input);
-        this.postAdapter = new PostAdapter();
+        this.postAdapter = new PostAdapter(this);
         this.userId = getUserId(this);
         postInput.requestFocus();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);

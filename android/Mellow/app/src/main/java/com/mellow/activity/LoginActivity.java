@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
         this.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         this.loginButton = (Button) findViewById(R.id.login_button);
         this.usernameInput = (EditText) findViewById(R.id.username_input);
-        this.userAdapter = new UserAdapter();
+        this.userAdapter = new UserAdapter(this);
     }
 
     public void onLoginClicked(View view) {
