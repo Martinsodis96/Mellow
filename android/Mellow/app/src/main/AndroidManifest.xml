@@ -13,22 +13,25 @@
         <activity
             android:name="com.mellow.activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name="com.mellow.activity.CreatePostActivity"
+            android:label="@string/title_activity_create_post"
+            android:parentActivityName="com.mellow.activity.MainActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.mellow.activity.MainActivity" />
+        </activity>
+        <activity android:name="com.mellow.activity.LoginActivity">
+        </activity>
+        <activity android:name="com.mellow.activity.LoadingActivity"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name="com.mellow.activity.CreatePostActivity"
-            android:label="@string/title_activity_create_post"
-            android:theme="@style/AppTheme"
-            android:parentActivityName="com.mellow.activity.MainActivity">
-
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.mellow.activity.MainActivity"/>
-
         </activity>
     </application>
 
