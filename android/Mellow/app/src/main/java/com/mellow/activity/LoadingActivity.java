@@ -10,21 +10,20 @@ import android.os.Bundle;
 
 public class LoadingActivity extends AppCompatActivity {
 
-    private final int SPLASH_TIME_OUT = 1000;
     private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        showSplashScreen(this);
+        forwardBasedOnLoginValue(this);
     }
 
     private boolean isLoggedIn() {
         return sharedPreferences.getBoolean("isLoggedIn", false);
     }
 
-    private void showSplashScreen(final Context context){
+    private void forwardBasedOnLoginValue(final Context context){
         if(isLoggedIn()){
             Intent home_activity = new Intent(context, MainActivity.class);
             startActivity(home_activity);

@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
@@ -23,7 +23,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.mellow.activity.MainActivity" />
         </activity>
-        <activity android:name="com.mellow.activity.LoginActivity">
+        <activity android:name="com.mellow.activity.LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity android:name="com.mellow.activity.LoadingActivity"
             android:theme="@style/SplashTheme">
