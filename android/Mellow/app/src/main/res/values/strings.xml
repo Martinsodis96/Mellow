@@ -10,4 +10,5 @@
     <string name="title_activity_create_post">Post</string>
     <string name="MELLOW_BASE_URL">http://188.166.66.165:8080/mellow/</string>
     <string name="username_already_taken">That username is already taken, please choose another one.</string>
+    <string name="username_too_short">Username must be at least 4 characters long.</string>
 </resources>

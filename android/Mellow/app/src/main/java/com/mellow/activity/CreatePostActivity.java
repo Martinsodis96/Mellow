@@ -42,16 +42,20 @@ public class CreatePostActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case android.R.id.home:{
-                CustomDialogClass customDialogClass = new CustomDialogClass(this);
-                customDialogClass.show();
-                customDialogClass.getWindow().setAttributes(getNewWidthParam(customDialogClass));
-                return true;
+        switch (item.getItemId()) {
+            case android.R.id.home: {
+                if(!postInput.getText().toString().isEmpty()){
+                    CustomDialogClass customDialogClass = new CustomDialogClass(this);
+                    customDialogClass.show();
+                    customDialogClass.getWindow().setAttributes(getNewWidthParam(customDialogClass));
+                } else {
+                    NavUtils.navigateUpFromSameTask(this);
+                }
+            return true;
             }
 
-            case R.id.post:{
-                if(!postInput.getText().toString().isEmpty()){
+            case R.id.post: {
+                if (!postInput.getText().toString().isEmpty()) {
                     postAdapter.createPost(new Post(postInput.getText().toString()), userId);
                     NavUtils.navigateUpFromSameTask(this);
                 }
@@ -61,7 +65,7 @@ public class CreatePostActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private WindowManager.LayoutParams getNewWidthParam(CustomDialogClass customDialogClass){
+    private WindowManager.LayoutParams getNewWidthParam(CustomDialogClass customDialogClass) {
         WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
         layoutParams.copyFrom(customDialogClass.getWindow().getAttributes());
         layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
@@ -70,12 +74,16 @@ public class CreatePostActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        CustomDialogClass customDialogClass = new CustomDialogClass(this);
-        customDialogClass.show();
-        customDialogClass.getWindow().setAttributes(getNewWidthParam(customDialogClass));
+        if (!postInput.getText().toString().isEmpty()) {
+            CustomDialogClass customDialogClass = new CustomDialogClass(this);
+            customDialogClass.show();
+            customDialogClass.getWindow().setAttributes(getNewWidthParam(customDialogClass));
+        } else {
+            NavUtils.navigateUpFromSameTask(this);
+        }
     }
 
-    private Long getUserId(Context context){
+    private Long getUserId(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getLong("userId", 1L);
     }
 }

@@ -34,17 +34,25 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onLoginClicked(View view) {
         if (!usernameInput.getText().toString().isEmpty()) {
-            Response response = userAdapter.createUser(new User(usernameInput.getText().toString()));
-            if(response.isSuccessful()){
-                saveLoggedIn(true, response.headers().get("location"));
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
-                errorMessage.setText("");
-                finish();
-            }else {
-                errorMessage.setText(R.string.username_already_taken);
+            if (!usernameTooShort()) {
+                Response response = userAdapter.createUser(new User(usernameInput.getText().toString()));
+                if (response.isSuccessful()) {
+                    saveLoggedIn(true, response.headers().get("location"));
+                    Intent intent = new Intent(this, MainActivity.class);
+                    startActivity(intent);
+                    errorMessage.setText("");
+                    finish();
+                } else {
+                    errorMessage.setText(R.string.username_already_taken);
+                }
+            } else {
+                errorMessage.setText(R.string.username_too_short);
             }
         }
+    }
+
+    private boolean usernameTooShort() {
+        return usernameInput.getText().toString().length() < 4;
     }
 
     private void saveLoggedIn(boolean value, String url) {
