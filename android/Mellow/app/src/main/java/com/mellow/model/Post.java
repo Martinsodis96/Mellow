@@ -2,7 +2,7 @@ package com.mellow.model;
 
 import java.util.List;
 
-public class Post {
+public class Post{
 
     private Long id;
     private String content;
@@ -18,16 +18,18 @@ public class Post {
         return user;
     }
 
-    public void setUser(User user) {
+    public Post setUser(User user) {
         this.user = user;
+        return this;
     }
 
     public String getContent() {
         return content;
     }
 
-    public void setContent(String content) {
+    public Post setContent(String content) {
         this.content = content;
+        return this;
     }
 
     public List<Like> getLikes() {
@@ -43,15 +45,17 @@ public class Post {
         return comment;
     }
 
-    public void setComment(Comment comment) {
+    public Post setComment(Comment comment) {
         this.comment = comment;
+        return this;
     }
 
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public Post setId(Long id) {
         this.id = id;
+        return this;
     }
 }

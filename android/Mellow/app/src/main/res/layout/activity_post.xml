@@ -11,7 +11,7 @@
     android:orientation="vertical">
 
     <include
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         layout="@layout/activity_flow_adapter"
         android:layout_gravity="center_horizontal" />
@@ -21,5 +21,45 @@
         android:layout_height="wrap_content"
         android:scrollbars="none"
         android:id="@+id/comment_listview"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="1"
+        android:backgroundTint="#ffffff" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/top_shadow">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp">
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:inputType="textMultiLine"
+                android:ems="10"
+                android:id="@+id/editText2"
+                android:layout_weight="1"
+                android:backgroundTint="#00ffffff"
+                android:textColorHint="#747474"
+                android:hint="Write a comment.."
+                android:textSize="15dp" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Comment"
+                android:id="@+id/button"
+                android:textColor="@color/colorPrimary"
+                android:background="#00ffffff"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </FrameLayout>
+
 </LinearLayout>

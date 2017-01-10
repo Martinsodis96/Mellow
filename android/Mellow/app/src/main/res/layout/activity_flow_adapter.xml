@@ -94,7 +94,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@drawable/top_shadow"
+        android:background="@drawable/bottom_shadow"
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"></LinearLayout>
 

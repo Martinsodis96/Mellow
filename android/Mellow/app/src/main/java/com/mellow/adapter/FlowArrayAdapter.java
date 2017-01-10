@@ -60,16 +60,19 @@ public class FlowArrayAdapter extends ArrayAdapter<Post> {
         setUsernameTextView(post);
         showLikes(post);
         setLikeOnClick(likeButton, post, amountOfLikes);
-        setCommentOnClick(commentButton, customView.getContext());
+        setCommentOnClick(commentButton, customView.getContext(), post);
         return customView;
     }
 
-    private void setCommentOnClick(Button commentButton, final Context context){
+    private void setCommentOnClick(Button commentButton, final Context context, final Post post){
         commentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent startPostActivity = new Intent(context, PostActivity.class);
                 startPostActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startPostActivity.putExtra("postId", post.getId());
+                startPostActivity.putExtra("username", post.getUser().getUsername());
+                startPostActivity.putExtra("post_content", post.getContent());
                 context.startActivity(startPostActivity);
             }
         });

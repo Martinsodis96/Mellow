@@ -80,4 +80,30 @@ public class UserAdapter {
         }
     }
 
+    //TODO add serious exception handling
+    public User getUserById(final Long id) {
+        Future<User> future = executor.submit(new Callable<User>() {
+            @Override
+            public User call() throws Exception {
+                try {
+                    Response response = userApi.getUserById(id).execute();
+                    if(response.isSuccessful()){
+                        return (User) response.body();
+                    }else{
+                        throw new IOException();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    throw new IOException(e);
+                }
+            }
+        });
+
+        try {
+            return future.get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
