@@ -2,12 +2,13 @@ package com.mellow.service;
 
 import com.mellow.model.CommentModel;
 import com.mellow.model.PostModel;
+import com.mellow.model.UserModel;
 import com.mellow.repository.CommentRepository;
 import com.mellow.repository.PostRepository;
+import com.mellow.repository.UserRepository;
 import com.mellow.service.exception.DatabaseException;
 import com.mellow.service.exception.InvalidInputException;
 import com.mellow.service.exception.NoSearchResultException;
-import org.omg.PortableServer.POA;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -19,11 +20,13 @@ public class CommentService {
 
     private CommentRepository commentRepository;
     private PostRepository postRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    public CommentService(CommentRepository commentRepository, PostRepository postRepository) {
+    public CommentService(CommentRepository commentRepository, PostRepository postRepository, UserRepository userRepository) {
         this.commentRepository = commentRepository;
         this.postRepository = postRepository;
+        this.userRepository = userRepository;
     }
 
     public CommentModel getCommentById(Long commentId) {
@@ -31,12 +34,13 @@ public class CommentService {
                 "Failed to get comment with id: " + commentId);
     }
 
-    public CommentModel createComment(String content, Long postId){
+    public CommentModel createComment(String content, Long postId, Long userId){
         if(content != null){
             return execute(commentRepository1 -> {
                 PostModel post = postRepository.findOne(postId);
-                if(post != null){
-                    return commentRepository1.save(new CommentModel(content, post));
+                UserModel user = userRepository.findOne(userId);
+                if(post != null && user != null){
+                    return commentRepository1.save(new CommentModel(content, post).setUser(user));
                 }else {
                     throw new NoSearchResultException("Could not find comment with id: " + postId);
                 }

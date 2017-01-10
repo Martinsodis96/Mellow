@@ -40,4 +40,14 @@ public class CommentModel extends AbstractModel {
     public UserModel getUser() {
         return user;
     }
+
+    public CommentModel setPost(PostModel post) {
+        this.post = post;
+        return this;
+    }
+
+    public CommentModel setUser(UserModel user) {
+        this.user = user;
+        return this;
+    }
 }
