@@ -22,6 +22,7 @@ public class PostActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
+        setTitle(R.string.title_activity_post);
         //TODO get comments from the database using CommentAdapter and CommentAPI
         setUpCommentListView(new ArrayList<Comment>());
     }

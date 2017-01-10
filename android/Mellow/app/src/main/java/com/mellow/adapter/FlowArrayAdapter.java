@@ -31,6 +31,7 @@ public class FlowArrayAdapter extends ArrayAdapter<Post> {
     private LikeAdapter likeAdapter;
     private Long userId;
     private Like userLike;
+    Context context;
     ImageView profilePicture;
     Button likeButton;
     Button commentButton;
@@ -43,6 +44,7 @@ public class FlowArrayAdapter extends ArrayAdapter<Post> {
     public FlowArrayAdapter(Context context, List<Post> posts) {
         super(context, R.layout.activity_flow_adapter, posts);
         this.posts=posts;
+        this.context = context;
     }
 
     @Override
@@ -58,6 +60,7 @@ public class FlowArrayAdapter extends ArrayAdapter<Post> {
         setUsernameTextView(post);
         showLikes(post);
         setLikeOnClick(likeButton, post, amountOfLikes);
+        setCommentOnClick(commentButton, customView.getContext());
         return customView;
     }
 
@@ -66,6 +69,7 @@ public class FlowArrayAdapter extends ArrayAdapter<Post> {
             @Override
             public void onClick(View v) {
                 Intent startPostActivity = new Intent(context, PostActivity.class);
+                startPostActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(startPostActivity);
             }
         });
