@@ -1,6 +1,7 @@
 package com.mellow.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.mellow.activity.PostActivity;
 import com.mellow.client.adapter.LikeAdapter;
 import com.mellow.client.adapter.PostAdapter;
 import com.mellow.mellow.R;
@@ -57,6 +59,16 @@ public class FlowArrayAdapter extends ArrayAdapter<Post> {
         showLikes(post);
         setLikeOnClick(likeButton, post, amountOfLikes);
         return customView;
+    }
+
+    private void setCommentOnClick(Button commentButton, final Context context){
+        commentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent startPostActivity = new Intent(context, PostActivity.class);
+                context.startActivity(startPostActivity);
+            }
+        });
     }
 
     private void setLikeOnClick(Button likeButton, final Post post, final TextView amountOfLikes){
