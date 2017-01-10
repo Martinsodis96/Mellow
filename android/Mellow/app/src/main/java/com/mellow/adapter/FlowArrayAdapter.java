@@ -39,7 +39,10 @@ public class FlowArrayAdapter extends ArrayAdapter<Post> {
     TextView contentText;
     TextView usernameTextView;
     TextView amountOfLikes;
+    TextView amountOfComments;
     LinearLayout informationContainer;
+    LinearLayout likesContainer;
+    LinearLayout commentsContainer;
 
     public FlowArrayAdapter(Context context, List<Post> posts) {
         super(context, R.layout.activity_flow_adapter, posts);
@@ -59,6 +62,7 @@ public class FlowArrayAdapter extends ArrayAdapter<Post> {
         contentText.setText(post.getContent());
         setUsernameTextView(post);
         showLikes(post);
+        showComments(post);
         setLikeOnClick(likeButton, post, amountOfLikes);
         setCommentOnClick(commentButton, customView.getContext(), post);
         return customView;
@@ -80,6 +84,7 @@ public class FlowArrayAdapter extends ArrayAdapter<Post> {
 
     private void setLikeOnClick(Button likeButton, final Post post, final TextView amountOfLikes){
         final LinearLayout informationContainer = this.informationContainer;
+        final LinearLayout likesContainer = this.likesContainer;
         likeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,14 +92,18 @@ public class FlowArrayAdapter extends ArrayAdapter<Post> {
                     postAdapter.removeLikeFromPost(post.getId(), userLike.getId());
                     post.getLikes().remove(userLike);
                     amountOfLikes.setText(String.valueOf(post.getLikes().size()));
-                    if (post.getLikes().isEmpty()) {
-                        informationContainer.setVisibility(View.GONE);
+                    if (!hasLikes(post)) {
+                        likesContainer.setVisibility(View.INVISIBLE);
+                        if(!hasComments(post)){
+                            informationContainer.setVisibility(View.GONE);
+                        }
                     }
                 } else {
                     Response response = postAdapter.addLikeToPost(post.getId(), new Like(userId));
                     Like like = likeAdapter.getLike(response.headers().get("location"));
                     post.getLikes().add(like);
                     amountOfLikes.setText(String.valueOf(post.getLikes().size()));
+                    likesContainer.setVisibility(View.VISIBLE);
                     if (!informationContainer.isShown()) {
                         informationContainer.setVisibility(View.VISIBLE);
                     }
@@ -117,10 +126,23 @@ public class FlowArrayAdapter extends ArrayAdapter<Post> {
         return post.getLikes() != null && !post.getLikes().isEmpty();
     }
 
+    private boolean hasComments(Post post){
+        return post.getComments() != null && !post.getComments().isEmpty();
+    }
+
     private void showLikes(Post post){
         if(hasLikes(post)){
             informationContainer.setVisibility(View.VISIBLE);
+            likesContainer.setVisibility(View.VISIBLE);
             amountOfLikes.setText(String.valueOf(post.getLikes().size()));
+        }
+    }
+
+    private void showComments(Post post){
+        if(hasComments(post)){
+            informationContainer.setVisibility(View.VISIBLE);
+            commentsContainer.setVisibility(View.VISIBLE);
+            amountOfComments.setText(String.valueOf(post.getComments().size()));
         }
     }
 
@@ -139,6 +161,9 @@ public class FlowArrayAdapter extends ArrayAdapter<Post> {
         this.usernameTextView = (TextView) view.findViewById(R.id.username);
         this.informationContainer = (LinearLayout) view.findViewById(R.id.information_container);
         this.amountOfLikes = (TextView) view.findViewById(R.id.amount_of_likes);
+        this.amountOfComments = (TextView) view.findViewById(R.id.amount_of_comments);
+        this.likesContainer = (LinearLayout) view.findViewById(R.id.likes_container);
+        this.commentsContainer = (LinearLayout) view.findViewById(R.id.comments_container);
     }
 
     private Long getUserId(Context context){

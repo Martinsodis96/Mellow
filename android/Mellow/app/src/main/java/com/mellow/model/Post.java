@@ -8,7 +8,7 @@ public class Post{
     private String content;
     private User user;
     private List<Like> likes;
-    private Comment comment;
+    private List<Comment> comments;
 
     public Post(String content) {
         this.content = content;
@@ -41,12 +41,12 @@ public class Post{
         return this;
     }
 
-    public Comment getComment() {
-        return comment;
+    public List<Comment> getComments() {
+        return comments;
     }
 
-    public Post setComment(Comment comment) {
-        this.comment = comment;
+    public Post setComments(List<Comment> comments) {
+        this.comments = comments;
         return this;
     }
 
