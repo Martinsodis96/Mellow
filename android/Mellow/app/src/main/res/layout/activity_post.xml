@@ -44,7 +44,7 @@
                 android:layout_height="match_parent"
                 android:inputType="textMultiLine"
                 android:ems="10"
-                android:id="@+id/editText2"
+                android:id="@+id/comment_content"
                 android:layout_weight="1"
                 android:backgroundTint="#00ffffff"
                 android:textColorHint="#747474"
@@ -58,7 +58,8 @@
                 android:id="@+id/button"
                 android:textColor="@color/colorPrimary"
                 android:background="#00ffffff"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:onClick="onCommentClicked" />
         </LinearLayout>
     </FrameLayout>
 

@@ -34,7 +34,9 @@ public class CommentArrayAdapter extends ArrayAdapter<Comment> {
 
         Comment comment = comments.get(position);
         commentTextView.setText(comment.getContent());
-        usernameTextView.setText(comment.getUser().getUsername());
+        if(comment.getUser() != null){
+            usernameTextView.setText(comment.getUser().getUsername());
+        }
         return customView;
     }
 }

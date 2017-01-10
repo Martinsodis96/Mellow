@@ -7,39 +7,44 @@ public class Comment {
     private User user;
     private Long postId;
 
-    public Comment(String content) {
+    public Comment(String content, User user) {
         this.content = content;
+        this.user = user;
     }
 
     public String getContent() {
         return content;
     }
 
-    public void setContent(String content) {
+    public Comment setContent(String content) {
         this.content = content;
+        return this;
     }
 
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public Comment setId(Long id) {
         this.id = id;
+        return this;
     }
 
     public Long getPostId() {
         return postId;
     }
 
-    public void setPostId(Long postId) {
+    public Comment setPostId(Long postId) {
         this.postId = postId;
+        return this;
     }
 
     public User getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public Comment setUser(User user) {
         this.user = user;
+        return this;
     }
 }
