@@ -5,13 +5,13 @@ public class Comment {
     private Long id;
     private String content;
     private Long postId;
-    private Long userId;
+    private User user;
 
     public Comment(CommentModel commentModel) {
         this.id = commentModel.getId();
         this.content = commentModel.getContent();
         this.postId = commentModel.getPost().getId();
-        this.userId = commentModel.getUser().getId();
+        this.user = new User(commentModel.getUser());
     }
 
     protected Comment() {
@@ -33,7 +33,7 @@ public class Comment {
         return postId;
     }
 
-    public Long getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 }
