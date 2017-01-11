@@ -10,20 +10,15 @@
     tools:context="com.mellow.activity.PostActivity"
     android:orientation="vertical">
 
-    <include
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/activity_flow_adapter"
-        android:layout_gravity="center_horizontal" />
-
     <ListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:isScrollContainer="false"
         android:scrollbars="none"
         android:id="@+id/comment_listview"
         android:layout_gravity="center_horizontal"
-        android:layout_weight="1"
-        android:backgroundTint="#ffffff" />
+        android:backgroundTint="#ffffff"
+        android:layout_weight="1" />
 
     <FrameLayout
         android:layout_width="match_parent"

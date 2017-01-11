@@ -16,7 +16,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:id="@+id/imageView"
-        android:src="@drawable/images"
+        android:src="@drawable/profile_picture"
         android:layout_marginTop="15dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="5dp"

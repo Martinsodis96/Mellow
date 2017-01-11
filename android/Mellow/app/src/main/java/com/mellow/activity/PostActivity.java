@@ -1,18 +1,17 @@
 package com.mellow.activity;
 
-import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.mellow.adapter.CommentArrayAdapter;
-import com.mellow.adapter.FlowArrayAdapter;
 import com.mellow.client.adapter.CommentAdapter;
 import com.mellow.client.adapter.UserAdapter;
 import com.mellow.mellow.R;
@@ -20,7 +19,6 @@ import com.mellow.model.Comment;
 import com.mellow.model.Post;
 import com.mellow.model.User;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class PostActivity extends AppCompatActivity {
@@ -34,6 +32,7 @@ public class PostActivity extends AppCompatActivity {
     private CommentAdapter commentAdapter;
     private UserAdapter userAdapter;
     private List<Comment> comments;
+    private ViewGroup header;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +45,10 @@ public class PostActivity extends AppCompatActivity {
         this.post = new Post(getIntent().getStringExtra("post_content"))
                 .setId(getIntent().getLongExtra("postId", 1L))
                 .setUser(new User(getIntent().getStringExtra("username")));
-        setUpUsernameLayout();
-        setUpContentTextLayout();
         this.comments = commentAdapter.getAllComments(post.getId());
         setUpCommentListView(comments);
+        setUpUsernameLayout();
+        setUpContentTextLayout();
     }
 
     public void onCommentClicked(View view){
@@ -68,11 +67,13 @@ public class PostActivity extends AppCompatActivity {
         this.commentListView = (ListView) findViewById(R.id.comment_listview);
         adapter = new CommentArrayAdapter(this, comments);
         commentListView.setAdapter(adapter);
-        commentListView.setSelection(commentListView.getCount() - 1);
+        LayoutInflater infalter = getLayoutInflater();
+        header = (ViewGroup) infalter.inflate(R.layout.activity_flow_adapter, commentListView, false);
+        commentListView.addHeaderView(header);
     }
 
     private void setUpUsernameLayout(){
-        this.username = (TextView) findViewById(R.id.username);
+        this.username = (TextView) header.findViewById(R.id.username);
         if (username != null) {
             username.setText(post.getUser().getUsername());
             username.setTextSize(21);
@@ -80,7 +81,7 @@ public class PostActivity extends AppCompatActivity {
     }
 
     private void setUpContentTextLayout(){
-        this.contentText = (TextView) findViewById(R.id.content_text);
+        this.contentText = (TextView) header.findViewById(R.id.content_text);
         if(contentText != null){
             contentText.setText(post.getContent());
             contentText.setTextSize(17);

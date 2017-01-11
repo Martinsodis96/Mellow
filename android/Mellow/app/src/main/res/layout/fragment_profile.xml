@@ -6,16 +6,12 @@
     android:background="#efeeee"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <ListView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="NOT YET IMPLEMENTED"
-        android:id="@+id/textView4"
-        android:textColor="#5d5d5d"
-        android:textSize="42dp"
-        android:layout_marginTop="150dp"
-        android:layout_gravity="center_horizontal"
-        android:textAlignment="center" />
-
+        android:id="@+id/profile_list_view"
+        android:dividerHeight="15dp"
+        android:divider="#efeeee"
+        android:scrollbars="none"
+        android:paddingBottom="10dp" />
 </LinearLayout>

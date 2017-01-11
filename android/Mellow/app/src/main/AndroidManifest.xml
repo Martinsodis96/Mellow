@@ -34,7 +34,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.mellow.activity.PostActivity"></activity>
+        <activity android:name="com.mellow.activity.PostActivity"
+            android:windowSoftInputMode="adjustResize"> ></activity>
     </application>
 
 </manifest>
