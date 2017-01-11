@@ -1,13 +1,14 @@
 package com.mellow.client.adapter;
 
 import android.content.Context;
-import android.content.res.Resources;
 
 import com.mellow.client.api.UserApi;
 import com.mellow.mellow.R;
+import com.mellow.model.Post;
 import com.mellow.model.User;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -89,6 +90,33 @@ public class UserAdapter {
                     Response response = userApi.getUserById(id).execute();
                     if(response.isSuccessful()){
                         return (User) response.body();
+                    }else{
+                        throw new IOException();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    throw new IOException(e);
+                }
+            }
+        });
+
+        try {
+            return future.get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    //TODO add serious exception handling
+    public List<Post> getPostsFromUser(final Long userId) {
+        Future<List<Post>> future = executor.submit(new Callable<List<Post>>() {
+            @Override
+            public List<Post> call() throws Exception {
+                try {
+                    Response response = userApi.getPostsFromUsers(userId).execute();
+                    if(response.isSuccessful()){
+                        return (List<Post>) response.body();
                     }else{
                         throw new IOException();
                     }

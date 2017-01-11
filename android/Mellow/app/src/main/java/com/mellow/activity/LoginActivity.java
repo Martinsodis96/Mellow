@@ -60,6 +60,7 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean("isLoggedIn", value);
         editor.putLong("userId", createUser.getId());
+        editor.putString("username", createUser.getUsername());
         editor.commit();
     }
 }

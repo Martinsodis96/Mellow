@@ -1,6 +1,9 @@
 package com.mellow.client.api;
 
+import com.mellow.model.Post;
 import com.mellow.model.User;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -18,5 +21,8 @@ public interface UserApi {
     Call<User> getUserByUrl(@Url String url);
 
     @GET("users/{userId}")
-    Call<User> getUserById(@Path("userId") Long userid);
+    Call<User> getUserById(@Path("userId") Long userId);
+
+    @GET("users/{userId}/posts")
+    Call<List<Post>> getPostsFromUsers(@Path("userId") Long userId);
 }
