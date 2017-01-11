@@ -58,6 +58,15 @@ public class UserResource {
         return Response.created(URI.create(uriInfo.getPath() + "/" + createdPostModel.getId())).build();
     }
 
+    @GET
+    @Path("/{userId}/posts")
+    public List<Post> getAllPostsFromUser(@PathParam("userId") Long userId){
+        List<Post> posts = new ArrayList<>();
+        userService.getAllPostsFromUser(userId)
+                .forEach(postModel -> posts.add(new Post(postModel)));
+        return posts;
+    }
+
     @PUT
     @Path("{userId}")
     public Response updateUsername(@PathParam("userId") Long userId, UserModel userModel){
