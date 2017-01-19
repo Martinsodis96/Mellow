@@ -46,12 +46,6 @@ public class UserResource {
     }
 
     @POST
-    public Response createUser(User user){
-        UserModel createdUserModel = userService.createUser(user.getUsername());
-        return Response.created(URI.create(uriInfo.getPath() + "/" + createdUserModel.getId())).build();
-    }
-
-    @POST
     @Path("/{userId}/posts")
     public Response createPost(@PathParam("userId") Long userId, Post post){
         PostModel createdPostModel = postService.createPost(userId, post.getContent());
