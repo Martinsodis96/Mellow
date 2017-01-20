@@ -6,10 +6,14 @@ import com.mellow.service.exception.DatabaseException;
 import com.mellow.service.exception.InvalidInputException;
 import com.mellow.service.exception.NoSearchResultException;
 import com.mellow.service.exception.UnAuthorizedException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.impl.crypto.MacProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import java.security.Key;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -27,13 +31,15 @@ public class AuthenticationService {
         this.userRepository = userRepository;
     }
 
-    public UserModel createUser(String username, String password) {
+    public String createUser(String username, String password) {
         validateCredentials(username, password);
         String salt = generateSalt();
         String hashedPassword = hashPassword(password, salt);
-        return execute(userRepository1 -> userRepository.save(new UserModel(username,
+        execute(userRepository1 -> userRepository.save(new UserModel(username,
                         hashedPassword, salt, hashingIterations)),
                 String.format("Failed to create User with username: %s", username));
+
+        return createJwtToken(username);
     }
 
     public String authenticateUser(String username, String password){
@@ -49,6 +55,14 @@ public class AuthenticationService {
             throw new NoSearchResultException(String.format("Could not find user with username %s", username));
     }
 
+
+    private String createJwtToken(String username){
+        Key key = MacProvider.generateKey();
+        return Jwts.builder()
+                .setSubject(username)
+                .signWith(SignatureAlgorithm.HS512, key)
+                .compact();
+    }
     private boolean passwordMatches(String password, String salt, String storedPassword) {
         return storedPassword.equals(hashPassword(password, salt));
     }
