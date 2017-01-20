@@ -1,7 +1,6 @@
 package com.mellow.resources;
 
 import com.mellow.model.User;
-import com.mellow.model.UserModel;
 import com.mellow.service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -13,7 +12,6 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-import java.net.URI;
 
 @Path("/")
 @Produces(MediaType.APPLICATION_JSON)
@@ -34,8 +32,8 @@ public class AuthenticationResource {
     @Path("register")
     public Response createUser(User user){
         //TODO Create a new User and return a token from the service
-        UserModel createdUserModel = authenticationService.createUser(user.getUsername(), user.getPassword());
-        return Response.created(URI.create(uriInfo.getPath() + "/" + createdUserModel.getId())).build();
+        String string = authenticationService.createUser(user.getUsername(), user.getPassword());
+        return Response.ok(string).build();
     }
 
     @POST
