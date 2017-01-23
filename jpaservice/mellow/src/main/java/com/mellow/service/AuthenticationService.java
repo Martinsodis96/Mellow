@@ -13,11 +13,13 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.impl.crypto.MacProvider;
 
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
+import java.util.Date;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -78,6 +80,9 @@ public class AuthenticationService {
     //TODO how to generate/store a key
     private String createJwtToken(String username){
         return Jwts.builder()
+                .setHeaderParam("typ", "JWT")
+                .setIssuer("jjwt")
+                .setExpiration(DateUtils.addHours(new Date(), 2))
                 .setSubject(username)
                 .claim("username", username)
                 .signWith(SignatureAlgorithm.HS256, "secret")

@@ -43,4 +43,10 @@ public final class TestUserService {
             assertTrue(postsInDb.contains(post));
         });
     }
+
+    @Test
+    public void name() throws Exception {
+        
+
+    }
 }
