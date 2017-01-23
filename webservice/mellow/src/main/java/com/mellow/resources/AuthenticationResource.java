@@ -1,6 +1,6 @@
 package com.mellow.resources;
 
-import com.mellow.model.User;
+import com.mellow.model.Credentials;
 import com.mellow.service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -30,16 +30,15 @@ public class AuthenticationResource {
 
     @POST
     @Path("register")
-    public Response createUser(User user){
-        //TODO Create a new User and return a token from the service
-        String string = authenticationService.createUser(user.getUsername(), user.getPassword());
-        return Response.ok(string).build();
+    public Response createUser(Credentials credentials){
+        String jwt = authenticationService.createUser(credentials);
+        return Response.ok(jwt).build();
     }
 
     @POST
     @Path("login")
-    public Response authenticateUser(User user){
-        String token = authenticationService.authenticateUser(user.getUsername(), user.getPassword());
+    public Response authenticateUser(Credentials credentials){
+        String token = authenticationService.authenticateUser(credentials);
         return Response.ok(token).build();
     }
 }
