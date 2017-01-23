@@ -1,14 +1,18 @@
 package com.mellow.service;
 
+import com.mellow.model.Credentials;
 import com.mellow.model.UserModel;
 import com.mellow.repository.UserRepository;
 import com.mellow.service.exception.DatabaseException;
 import com.mellow.service.exception.InvalidInputException;
 import com.mellow.service.exception.NoSearchResultException;
 import com.mellow.service.exception.UnAuthorizedException;
+
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.impl.crypto.MacProvider;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -25,64 +29,81 @@ import static com.mellow.service.SecurityHelper.hashingIterations;
 public class AuthenticationService {
 
     private UserRepository userRepository;
+    private Key key;
 
     @Autowired
     public AuthenticationService(UserRepository userRepository) {
         this.userRepository = userRepository;
+        this.key = MacProvider.generateKey();
     }
 
-    public String createUser(String username, String password) {
-        validateCredentials(username, password);
+    public String createUser(Credentials credentials) {
+        validateCredentials(credentials);
         String salt = generateSalt();
-        String hashedPassword = hashPassword(password, salt);
-        execute(userRepository1 -> userRepository.save(new UserModel(username,
+        String hashedPassword = hashPassword(credentials.getPassword(), salt);
+        execute(userRepository1 -> userRepository.save(new UserModel(credentials.getUsername(),
                         hashedPassword, salt, hashingIterations)),
-                String.format("Failed to create User with username: %s", username));
+                String.format("Failed to create User with username: %s", credentials.getUsername()));
 
-        return createJwtToken(username);
+        return createJwtToken(credentials.getUsername());
     }
 
-    public String authenticateUser(String username, String password){
-        checkCredentialsPresence(username, password);
-        if(usernameExists(username)){
-            UserModel user = userRepository.findByUsername(username);
-            if(passwordMatches(password, user.getSalt(), user.getPassword())){
-                //TODO return token
-                return "Token";
+    public String authenticateUser(Credentials credentials){
+        checkCredentialsPresence(credentials);
+        if(usernameExist(credentials.getUsername())){
+            UserModel user = userRepository.findByUsername(credentials.getUsername());
+            if(passwordMatches(credentials.getPassword(), user.getSalt(), user.getPassword())){
+                return createJwtToken(credentials.getUsername());
             }
             throw new UnAuthorizedException("Wrong password");
         }
-            throw new NoSearchResultException(String.format("Could not find user with username %s", username));
+            throw new NoSearchResultException(String.format("Could not find user with username %s", credentials.getUsername()));
     }
 
+    public void validateToken(String token){
+        if(token != null) {
+            try{
+                Jwts.parser()
+                    .setSigningKey("secret")
+                    .parseClaimsJws(token)
+                    .getBody();
+            }catch (SignatureException e) {
+                throw new UnAuthorizedException();
+            }
+        }else{
+            throw new NoSearchResultException("?");
+        }
+    }
 
+    //TODO how to generate/store a key
     private String createJwtToken(String username){
-        Key key = MacProvider.generateKey();
         return Jwts.builder()
                 .setSubject(username)
-                .signWith(SignatureAlgorithm.HS512, key)
+                .claim("username", username)
+                .signWith(SignatureAlgorithm.HS256, "secret")
                 .compact();
     }
+
     private boolean passwordMatches(String password, String salt, String storedPassword) {
         return storedPassword.equals(hashPassword(password, salt));
     }
 
-    private void validateCredentials(String username, String password) {
-        checkCredentialsPresence(username, password);
-        if (username.length() < 4)
+    private void validateCredentials(Credentials credentials) {
+        checkCredentialsPresence(credentials);
+        if (credentials.getUsername().length() < 3)
             throw new InvalidInputException("Username has to be at least 3 characters long");
-        else if (usernameExists(username))
+        else if (usernameExist(credentials.getUsername()))
             throw new InvalidInputException("Username is already taken");
     }
 
-    private void checkCredentialsPresence(String username, String password){
-        if (!Optional.ofNullable(username).isPresent())
+    private void checkCredentialsPresence(Credentials credentials){
+        if (!Optional.ofNullable(credentials.getUsername()).isPresent())
             throw new InvalidInputException("Missing username in body");
-        else if (!Optional.ofNullable(password).isPresent())
+        else if (!Optional.ofNullable(credentials.getPassword()).isPresent())
             throw new InvalidInputException("Missing password in body");
     }
 
-    private boolean usernameExists(String username) {
+    private boolean usernameExist(String username) {
         return Optional.ofNullable(userRepository.findByUsername(username)).isPresent();
     }
 

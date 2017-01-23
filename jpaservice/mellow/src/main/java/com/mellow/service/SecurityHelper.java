@@ -12,17 +12,7 @@ import java.security.spec.InvalidKeySpecException;
 public final class SecurityHelper {
 
     public static final int hashingIterations = 10000;
-    public static final int hashSize = 2048;
-
-    public static String generateToken(int length) {
-        StringBuilder builder = new StringBuilder();
-        SecureRandom random = new SecureRandom();
-        final String characters = "0123456789abcdfghijklmopqrstuvwxyzABCDEFGHIJKLMOPQRSTUVWXYZ";
-        for (int i = 0; i < length; i++) {
-            builder.append(characters.charAt(random.nextInt(characters.length())));
-        }
-        return builder.toString();
-    }
+    private static final int hashSize = 2048;
 
     public static String generateSalt() {
         SecureRandom secureRandom = new SecureRandom();
