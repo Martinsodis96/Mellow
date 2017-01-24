@@ -1,5 +1,6 @@
 package com.mellow.service;
 
+import com.mellow.config.ConfigHelper;
 import com.mellow.model.Credentials;
 import com.mellow.model.UserModel;
 import com.mellow.repository.UserRepository;
@@ -31,12 +32,12 @@ import static com.mellow.service.SecurityHelper.hashingIterations;
 public class AuthenticationService {
 
     private UserRepository userRepository;
-    private Key key;
+    private ConfigHelper configHelper;
 
     @Autowired
     public AuthenticationService(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.key = MacProvider.generateKey();
+        this.configHelper = new ConfigHelper("config.properties");
     }
 
     public String createUser(Credentials credentials) {
@@ -66,7 +67,7 @@ public class AuthenticationService {
         if(token != null) {
             try{
                 Jwts.parser()
-                    .setSigningKey("secret")
+                    .setSigningKey(configHelper.getJwtSecretValue())
                     .parseClaimsJws(token)
                     .getBody();
             }catch (SignatureException e) {
@@ -85,7 +86,7 @@ public class AuthenticationService {
                 .setExpiration(DateUtils.addHours(new Date(), 2))
                 .setSubject(username)
                 .claim("username", username)
-                .signWith(SignatureAlgorithm.HS256, "secret")
+                .signWith(SignatureAlgorithm.HS256, configHelper.getJwtSecretValue())
                 .compact();
     }
 

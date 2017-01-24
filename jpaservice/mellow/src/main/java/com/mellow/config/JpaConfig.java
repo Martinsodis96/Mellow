@@ -24,11 +24,12 @@ public class JpaConfig {
 
     @Bean
     public DataSource dataSource() {
+        ConfigHelper configHelper = new ConfigHelper("config.properties");
         HikariConfig config = new HikariConfig();
         config.setDriverClassName("com.mysql.jdbc.Driver");
-        config.setJdbcUrl("jdbc:mysql://localhost:3306/mellow");
-        config.setUsername("root");
-        config.setPassword("root");
+        config.setJdbcUrl(configHelper.getMySqlUrlValue());
+        config.setUsername(configHelper.getMySqlUserValue());
+        config.setPassword(configHelper.getMySqlPasswordValue());
         return new HikariDataSource(config);
     }
 

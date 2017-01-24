@@ -46,7 +46,6 @@ public final class TestUserService {
 
     @Test
     public void name() throws Exception {
-        
-
+        System.out.println(SecurityHelper.generateSalt());
     }
 }
