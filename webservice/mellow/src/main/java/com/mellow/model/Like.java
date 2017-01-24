@@ -1,6 +1,6 @@
 package com.mellow.model;
 
-public class Like {
+public final class Like {
 
     private Long id;
     private Long userId;

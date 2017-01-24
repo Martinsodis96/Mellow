@@ -3,7 +3,7 @@ package com.mellow.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Post {
+public final class Post {
 
     private Long id;
     private String content;

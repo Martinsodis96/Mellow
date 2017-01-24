@@ -3,7 +3,7 @@ package com.mellow.model;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.QueryParam;
 
-public class PageRequestBean {
+public final class PageRequestBean {
 
     @QueryParam("page")
     private int page;

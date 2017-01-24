@@ -51,6 +51,7 @@ public class CommentResource {
 
     @POST
     public Response createComment(Comment comment){
+        //TODO move null checks to the service layer.
         if(comment.getContent() != null && comment.getUser() != null){
             CommentModel createdComment = commentService.createComment(comment.getContent(), postId, comment.getUser().getId());
             return Response.created(URI.create(uriInfo.getAbsolutePath() + "/" + createdComment.getId())).build();

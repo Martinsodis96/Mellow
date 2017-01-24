@@ -1,6 +1,6 @@
 package com.mellow.model;
 
-public class Comment {
+public final class Comment {
 
     private Long id;
     private String content;
