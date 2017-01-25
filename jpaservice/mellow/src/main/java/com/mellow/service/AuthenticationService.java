@@ -48,7 +48,7 @@ public class AuthenticationService {
                         hashedPassword, salt, hashingIterations)),
                 String.format("Failed to create User with username: %s", credentials.getUsername()));
 
-        return createJwtToken(credentials.getUsername());
+        return createJwtToken();
     }
 
     public String authenticateUser(Credentials credentials) {
@@ -56,17 +56,17 @@ public class AuthenticationService {
         if (usernameExist(credentials.getUsername())) {
             UserModel user = userRepository.findByUsername(credentials.getUsername());
             if (passwordMatches(credentials.getPassword(), user.getSalt(), user.getPassword())) {
-                return createJwtToken(credentials.getUsername());
+                return createJwtToken();
             }
             throw new UnAuthorizedException("Wrong password");
         }
         throw new NoSearchResultException(String.format("Could not find user with username %s", credentials.getUsername()));
     }
 
-    public void validateToken(String token) {
+    public String validateToken(String token) {
         if (Optional.ofNullable(token).isPresent()) {
-            Claims claims = parseToken(token);
-            //TODO return a new token.
+            parseToken(token);
+            return createJwtToken();
         } else {
             throw new UnAuthorizedException("Authorization header must be provided");
         }
@@ -87,13 +87,12 @@ public class AuthenticationService {
         }
     }
 
-    private String createJwtToken(String username) {
+    private String createJwtToken() {
         return Jwts.builder()
                 .setHeaderParam("typ", "JWT")
                 .setIssuer("https://stormpath.com/")
                 .setExpiration(DateUtils.addDays(new Date(), 1))
                 .setSubject("user")
-                .claim("username", username)
                 .signWith(SignatureAlgorithm.HS512, configHelper.getJwtSecretValue())
                 .compact();
     }
