@@ -9,17 +9,17 @@ import com.mellow.service.exception.InvalidInputException;
 import com.mellow.service.exception.NoSearchResultException;
 import com.mellow.service.exception.UnAuthorizedException;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.SignatureException;
-import io.jsonwebtoken.impl.crypto.MacProvider;
 
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
-import java.security.Key;
 import java.util.Date;
 import java.util.Optional;
 import java.util.function.Function;
@@ -51,42 +51,50 @@ public class AuthenticationService {
         return createJwtToken(credentials.getUsername());
     }
 
-    public String authenticateUser(Credentials credentials){
+    public String authenticateUser(Credentials credentials) {
         checkCredentialsPresence(credentials);
-        if(usernameExist(credentials.getUsername())){
+        if (usernameExist(credentials.getUsername())) {
             UserModel user = userRepository.findByUsername(credentials.getUsername());
-            if(passwordMatches(credentials.getPassword(), user.getSalt(), user.getPassword())){
+            if (passwordMatches(credentials.getPassword(), user.getSalt(), user.getPassword())) {
                 return createJwtToken(credentials.getUsername());
             }
             throw new UnAuthorizedException("Wrong password");
         }
-            throw new NoSearchResultException(String.format("Could not find user with username %s", credentials.getUsername()));
+        throw new NoSearchResultException(String.format("Could not find user with username %s", credentials.getUsername()));
     }
 
-    public void validateToken(String token){
-        if(token != null) {
-            try{
-                Jwts.parser()
-                    .setSigningKey(configHelper.getJwtSecretValue())
-                    .parseClaimsJws(token)
-                    .getBody();
-            }catch (SignatureException e) {
-                throw new UnAuthorizedException();
-            }
-        }else{
-            throw new NoSearchResultException("?");
+    public void validateToken(String token) {
+        if (Optional.ofNullable(token).isPresent()) {
+            Claims claims = parseToken(token);
+            //TODO return a new token.
+        } else {
+            throw new UnAuthorizedException("Authorization header must be provided");
         }
     }
 
-    //TODO how to generate/store a key
-    private String createJwtToken(String username){
+    private Claims parseToken(String token){
+        try {
+            return Jwts.parser()
+                    .requireIssuer("https://stormpath.com/")
+                    .requireSubject("user")
+                    .setSigningKey(configHelper.getJwtSecretValue())
+                    .parseClaimsJws(token)
+                    .getBody();
+        } catch (SignatureException e) {
+            throw new UnAuthorizedException("Invalid token");
+        } catch (ExpiredJwtException e){
+            throw new UnAuthorizedException("Token expired");
+        }
+    }
+
+    private String createJwtToken(String username) {
         return Jwts.builder()
                 .setHeaderParam("typ", "JWT")
-                .setIssuer("jjwt")
-                .setExpiration(DateUtils.addHours(new Date(), 2))
-                .setSubject(username)
+                .setIssuer("https://stormpath.com/")
+                .setExpiration(DateUtils.addDays(new Date(), 1))
+                .setSubject("user")
                 .claim("username", username)
-                .signWith(SignatureAlgorithm.HS256, configHelper.getJwtSecretValue())
+                .signWith(SignatureAlgorithm.HS512, configHelper.getJwtSecretValue())
                 .compact();
     }
 
@@ -102,7 +110,7 @@ public class AuthenticationService {
             throw new InvalidInputException("Username is already taken");
     }
 
-    private void checkCredentialsPresence(Credentials credentials){
+    private void checkCredentialsPresence(Credentials credentials) {
         if (!Optional.ofNullable(credentials.getUsername()).isPresent())
             throw new InvalidInputException("Missing username in body");
         else if (!Optional.ofNullable(credentials.getPassword()).isPresent())
