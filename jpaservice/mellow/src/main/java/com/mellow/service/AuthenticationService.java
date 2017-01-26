@@ -9,7 +9,6 @@ import com.mellow.service.exception.InvalidInputException;
 import com.mellow.service.exception.NoSearchResultException;
 import com.mellow.service.exception.UnAuthorizedException;
 
-import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -40,60 +39,82 @@ public class AuthenticationService {
         this.configHelper = new ConfigHelper("config.properties");
     }
 
-    public String createUser(Credentials credentials) {
+    public UserModel createUser(Credentials credentials) {
         validateCredentials(credentials);
         String salt = generateSalt();
         String hashedPassword = hashPassword(credentials.getPassword(), salt);
-        execute(userRepository1 -> userRepository.save(new UserModel(credentials.getUsername(),
+        return execute(userRepository1 -> userRepository.save(new UserModel(credentials.getUsername(),
                         hashedPassword, salt, hashingIterations)),
                 String.format("Failed to create User with username: %s", credentials.getUsername()));
-
-        return createJwtToken();
     }
 
-    public String authenticateUser(Credentials credentials) {
+    public UserModel authenticateUser(Credentials credentials) {
         checkCredentialsPresence(credentials);
         if (usernameExist(credentials.getUsername())) {
             UserModel user = userRepository.findByUsername(credentials.getUsername());
             if (passwordMatches(credentials.getPassword(), user.getSalt(), user.getPassword())) {
-                return createJwtToken();
+                return user;
             }
             throw new UnAuthorizedException("Wrong password");
         }
         throw new NoSearchResultException(String.format("Could not find user with username %s", credentials.getUsername()));
     }
 
-    public String validateToken(String token) {
+    public void validateAccessToken(String token) {
         if (Optional.ofNullable(token).isPresent()) {
-            parseToken(token);
-            return createJwtToken();
+            try {
+                Jwts.parser()
+                        .requireIssuer("https://stormpath.com/")
+                        .requireSubject("Access Token")
+                        .setSigningKey(configHelper.getJwtAccessSecretValue())
+                        .parseClaimsJws(token)
+                        .getBody();
+            } catch (SignatureException e) {
+                throw new UnAuthorizedException("Invalid access token");
+            } catch (ExpiredJwtException e){
+                throw new UnAuthorizedException("Access token expired");
+            }
         } else {
             throw new UnAuthorizedException("Authorization header must be provided");
         }
     }
 
-    private Claims parseToken(String token){
-        try {
-            return Jwts.parser()
+    public void validateRefreshToken(String token) {
+        if (Optional.ofNullable(token).isPresent()) {
+            try {
+                Jwts.parser()
                     .requireIssuer("https://stormpath.com/")
-                    .requireSubject("user")
-                    .setSigningKey(configHelper.getJwtSecretValue())
+                    .requireSubject("Refresh Token")
+                    .setSigningKey(configHelper.getJwtRefreshSecretValue())
                     .parseClaimsJws(token)
                     .getBody();
-        } catch (SignatureException e) {
-            throw new UnAuthorizedException("Invalid token");
-        } catch (ExpiredJwtException e){
-            throw new UnAuthorizedException("Token expired");
+            } catch (SignatureException e) {
+                throw new UnAuthorizedException("Invalid refresh token");
+            } catch (ExpiredJwtException e){
+                throw new UnAuthorizedException("Refresh token expired");
+            }
+        } else {
+            throw new UnAuthorizedException("Authorization header must be provided");
         }
     }
 
-    private String createJwtToken() {
+    public String createAccessToken() {
         return Jwts.builder()
                 .setHeaderParam("typ", "JWT")
                 .setIssuer("https://stormpath.com/")
-                .setExpiration(DateUtils.addDays(new Date(), 1))
-                .setSubject("user")
-                .signWith(SignatureAlgorithm.HS512, configHelper.getJwtSecretValue())
+                .setExpiration(DateUtils.addHours(new Date(), 3))
+                .setSubject("Access Token")
+                .signWith(SignatureAlgorithm.HS512, configHelper.getJwtAccessSecretValue())
+                .compact();
+    }
+
+    public String createRefreshToken() {
+        return Jwts.builder()
+                .setHeaderParam("typ", "JWT")
+                .setIssuer("https://stormpath.com/")
+                .setExpiration(DateUtils.addDays(new Date(), 14))
+                .setSubject("Refresh Token")
+                .signWith(SignatureAlgorithm.HS512, configHelper.getJwtRefreshSecretValue())
                 .compact();
     }
 

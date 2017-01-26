@@ -41,11 +41,19 @@ public final class ConfigHelper {
         }
     }
 
-    public String getJwtSecretValue(){
+    public String getJwtAccessSecretValue(){
         try {
-            return getValueFromInputStream("secret");
+            return getValueFromInputStream("access_secret");
         } catch (IOException e) {
-            throw new DatabaseException("Failed to read secret.");
+            throw new DatabaseException("Failed to read access secret.");
+        }
+    }
+
+    public String getJwtRefreshSecretValue(){
+        try {
+            return getValueFromInputStream("refresh_secret");
+        } catch (IOException e) {
+            throw new DatabaseException("Failed to read refresh secret.");
         }
     }
 
