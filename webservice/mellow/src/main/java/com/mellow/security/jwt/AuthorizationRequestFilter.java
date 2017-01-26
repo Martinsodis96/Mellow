@@ -21,7 +21,11 @@ public class AuthorizationRequestFilter implements ContainerRequestFilter {
         if(uriRequiresToken(requestContext)){
             if (authenticationHeaderIsPresent(requestContext)) {
                 String token = authorizationHeader.substring("Bearer".length()).trim();
-                authenticationService.validateToken(token);
+                if(refreshToken()){
+                    authenticationService.validateRefreshToken(token);
+                }else {
+                    authenticationService.validateAccessToken(token);
+                }
             }else{
                 throw new UnAuthorizedException("Authorization header must be provided");
             }
@@ -31,6 +35,10 @@ public class AuthorizationRequestFilter implements ContainerRequestFilter {
     private boolean uriRequiresToken(ContainerRequestContext containerRequestContext){
         this.uriInfo = containerRequestContext.getUriInfo();
         return !"register".equals(uriInfo.getPath()) && !"login".equals(uriInfo.getPath());
+    }
+
+    private boolean refreshToken(){
+        return "auth".equals(uriInfo.getPath());
     }
 
     private boolean authenticationHeaderIsPresent(ContainerRequestContext containerRequestContext){

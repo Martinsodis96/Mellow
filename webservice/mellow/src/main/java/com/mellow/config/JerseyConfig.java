@@ -5,6 +5,7 @@ import com.mellow.resources.exception.mapper.InvalidInputExceptionMapper;
 import com.mellow.resources.exception.mapper.NoSearchResultExceptionMapper;
 import com.mellow.resources.exception.mapper.UnAuthorizedExceptionMapper;
 import com.mellow.security.jwt.AuthorizationRequestFilter;
+import com.mellow.security.jwt.AuthorizationResponseFilter;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.stereotype.Component;
 
@@ -25,6 +26,7 @@ public final class JerseyConfig extends ResourceConfig {
 		register(PostResource.class);
 
 		register(AuthorizationRequestFilter.class);
+		register(AuthorizationResponseFilter.class);
 	}
 	
 }
