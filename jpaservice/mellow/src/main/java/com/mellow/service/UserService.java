@@ -44,18 +44,18 @@ public class UserService {
     }
 
     public UserModel updateUsername(String username, Long userId) {
-        if(username != null){
+        if (username != null) {
             return execute(userRepository1 -> {
                 UserModel user = userRepository.findOne(userId);
-                if(user != null){
+                if (user != null) {
                     user.setUsername(username);
                     return userRepository.save(user);
-                }else {
+                } else {
                     throw new NoSearchResultException(
                             String.format("user with id: %d do not exist.", userId));
                 }
             }, String.format("Failed to update user with id: %d", userId));
-        }else {
+        } else {
             throw new InvalidInputException("Username can't be null");
         }
     }
@@ -63,26 +63,26 @@ public class UserService {
     public UserModel deleteUser(Long userId) {
         return execute(userRepository1 -> {
             UserModel user = userRepository.findOne(userId);
-            if(user != null){
+            if (user != null) {
                 userRepository.delete(user);
                 return user;
-            }else {
+            } else {
                 throw new NoSearchResultException(
                         String.format("user with id: %d do not exist.", userId));
             }
         }, String.format("Failed to remove user with id: %d", userId));
     }
 
-    public Iterable<PostModel> getAllPostsFromUser(Long userId){
+    public Iterable<PostModel> getAllPostsFromUser(Long userId) {
         try {
             UserModel user = userRepository.findOne(userId);
-            if(user != null){
+            if (user != null) {
                 return postRepository.findByUserId(userId);
-            }else {
+            } else {
                 throw new NoSearchResultException(
                         String.format("user with id: %d do not exist.", userId));
             }
-        }catch (DataAccessException e){
+        } catch (DataAccessException e) {
             throw new DatabaseException(
                     String.format("Failed to delete user with id: %d", userId));
         }

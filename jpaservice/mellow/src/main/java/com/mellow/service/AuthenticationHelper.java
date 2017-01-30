@@ -9,14 +9,14 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 
-public final class SecurityHelper {
+public final class AuthenticationHelper {
 
-    public static final int hashingIterations = 10000;
+    public static final int hashingIterations = 100000;
     private static final int hashSize = 2048;
 
     public static String generateSalt() {
         SecureRandom secureRandom = new SecureRandom();
-        byte[] salt = new byte[hashSize/8];
+        byte[] salt = new byte[hashSize / 8];
         secureRandom.nextBytes(salt);
         return new String(salt);
     }

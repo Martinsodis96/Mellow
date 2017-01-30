@@ -11,10 +11,8 @@ import com.mellow.repository.UserRepository;
 import com.mellow.service.exception.DatabaseException;
 import com.mellow.service.exception.InvalidInputException;
 import com.mellow.service.exception.NoSearchResultException;
-import org.hibernate.id.PostInsertIdentifierGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

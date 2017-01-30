@@ -17,7 +17,7 @@ public final class ConfigHelper {
         this.fileName = fileName;
     }
 
-    public String getMySqlUserValue(){
+    public String getMySqlUserValue() {
         try {
             return getValueFromInputStream("user");
         } catch (IOException e) {
@@ -25,7 +25,7 @@ public final class ConfigHelper {
         }
     }
 
-    public String getMySqlPasswordValue(){
+    public String getMySqlPasswordValue() {
         try {
             return getValueFromInputStream("password");
         } catch (IOException e) {
@@ -33,7 +33,7 @@ public final class ConfigHelper {
         }
     }
 
-    public String getMySqlUrlValue(){
+    public String getMySqlUrlValue() {
         try {
             return getValueFromInputStream("mysqlUrl");
         } catch (IOException e) {
@@ -41,7 +41,7 @@ public final class ConfigHelper {
         }
     }
 
-    public String getJwtAccessSecretValue(){
+    public String getJwtAccessSecretValue() {
         try {
             return getValueFromInputStream("access_secret");
         } catch (IOException e) {
@@ -49,7 +49,7 @@ public final class ConfigHelper {
         }
     }
 
-    public String getJwtRefreshSecretValue(){
+    public String getJwtRefreshSecretValue() {
         try {
             return getValueFromInputStream("refresh_secret");
         } catch (IOException e) {
@@ -58,13 +58,13 @@ public final class ConfigHelper {
     }
 
     private String getValueFromInputStream(String property) throws IOException {
-        try{
+        try {
             this.inputStream = getClass().getClassLoader().getResourceAsStream(fileName);
             properties.load(inputStream);
             return properties.getProperty(property);
-        }catch (IOException e){
+        } catch (IOException e) {
             throw new DatabaseException(String.format("Failed to read from file %s", fileName));
-        }finally{
+        } finally {
             inputStream.close();
         }
     }

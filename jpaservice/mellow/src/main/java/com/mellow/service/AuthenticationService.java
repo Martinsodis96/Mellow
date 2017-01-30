@@ -23,15 +23,16 @@ import java.util.Date;
 import java.util.Optional;
 import java.util.function.Function;
 
-import static com.mellow.service.SecurityHelper.generateSalt;
-import static com.mellow.service.SecurityHelper.hashPassword;
-import static com.mellow.service.SecurityHelper.hashingIterations;
+import static com.mellow.service.AuthenticationHelper.generateSalt;
+import static com.mellow.service.AuthenticationHelper.hashPassword;
+import static com.mellow.service.AuthenticationHelper.hashingIterations;
 
 @Service
 public class AuthenticationService {
 
     private UserRepository userRepository;
     private ConfigHelper configHelper;
+    private final String issuer = "https://stormpath.com/";
 
     @Autowired
     public AuthenticationService(UserRepository userRepository) {
@@ -61,60 +62,48 @@ public class AuthenticationService {
     }
 
     public void validateAccessToken(String token) {
-        if (Optional.ofNullable(token).isPresent()) {
-            try {
-                Jwts.parser()
-                        .requireIssuer("https://stormpath.com/")
-                        .requireSubject("Access Token")
-                        .setSigningKey(configHelper.getJwtAccessSecretValue())
-                        .parseClaimsJws(token)
-                        .getBody();
-            } catch (SignatureException e) {
-                throw new UnAuthorizedException("Invalid access token");
-            } catch (ExpiredJwtException e){
-                throw new UnAuthorizedException("Access token expired");
-            }
-        } else {
-            throw new UnAuthorizedException("Authorization header must be provided");
-        }
+        validateToken(token, "Access Token", issuer, configHelper.getJwtAccessSecretValue());
     }
 
     public void validateRefreshToken(String token) {
+        validateToken(token, "Refresh Token", issuer, configHelper.getJwtRefreshSecretValue());
+    }
+
+
+    public String createAccessToken() {
+        return createToken("Access Token", DateUtils.addHours(new Date(), 3), configHelper.getJwtAccessSecretValue());
+    }
+
+    public String createRefreshToken() {
+        return createToken("Refresh Token", DateUtils.addDays(new Date(), 14), configHelper.getJwtRefreshSecretValue());
+    }
+
+    private void validateToken(String token, String subject, String issuer, String secret) {
         if (Optional.ofNullable(token).isPresent()) {
             try {
                 Jwts.parser()
-                    .requireIssuer("https://stormpath.com/")
-                    .requireSubject("Refresh Token")
-                    .setSigningKey(configHelper.getJwtRefreshSecretValue())
-                    .parseClaimsJws(token)
-                    .getBody();
+                        .requireIssuer(issuer)
+                        .requireSubject(subject)
+                        .setSigningKey(secret)
+                        .parseClaimsJws(token)
+                        .getBody();
             } catch (SignatureException e) {
-                throw new UnAuthorizedException("Invalid refresh token");
-            } catch (ExpiredJwtException e){
-                throw new UnAuthorizedException("Refresh token expired");
+                throw new UnAuthorizedException(String.format("Invalid %s", subject));
+            } catch (ExpiredJwtException e) {
+                throw new UnAuthorizedException(String.format("%s expired", subject));
             }
         } else {
             throw new UnAuthorizedException("Authorization header must be provided");
         }
     }
 
-    public String createAccessToken() {
+    private String createToken(String subject, Date expirationDate, String secret) {
         return Jwts.builder()
                 .setHeaderParam("typ", "JWT")
                 .setIssuer("https://stormpath.com/")
-                .setExpiration(DateUtils.addHours(new Date(), 3))
-                .setSubject("Access Token")
-                .signWith(SignatureAlgorithm.HS512, configHelper.getJwtAccessSecretValue())
-                .compact();
-    }
-
-    public String createRefreshToken() {
-        return Jwts.builder()
-                .setHeaderParam("typ", "JWT")
-                .setIssuer("https://stormpath.com/")
-                .setExpiration(DateUtils.addDays(new Date(), 14))
-                .setSubject("Refresh Token")
-                .signWith(SignatureAlgorithm.HS512, configHelper.getJwtRefreshSecretValue())
+                .setExpiration(expirationDate)
+                .setSubject(subject)
+                .signWith(SignatureAlgorithm.HS512, secret)
                 .compact();
     }
 

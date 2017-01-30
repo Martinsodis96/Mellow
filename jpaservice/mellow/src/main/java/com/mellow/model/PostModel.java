@@ -55,6 +55,7 @@ public class PostModel extends AbstractModel {
         this.likes.add(like);
         return this;
     }
+
     public PostModel removeLike(LikeModel like) {
         this.likes.remove(like);
         return this;

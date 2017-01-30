@@ -17,7 +17,7 @@ public class LikeService {
         this.likeRepository = likeRepository;
     }
 
-    public LikeModel getLikeById(Long likeId){
+    public LikeModel getLikeById(Long likeId) {
         try {
             return likeRepository.findOne(likeId);
         } catch (DataAccessException e) {

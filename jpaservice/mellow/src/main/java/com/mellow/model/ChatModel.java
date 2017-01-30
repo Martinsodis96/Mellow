@@ -37,6 +37,7 @@ public class ChatModel extends AbstractModel {
         this.users.add(user);
         return this;
     }
+
     public ChatModel removeUser(UserModel user) {
         this.users.remove(user);
         return this;

@@ -1,6 +1,6 @@
 package com.mellow.service.exception;
 
-public abstract class ServiceException extends RuntimeException { 
+public abstract class ServiceException extends RuntimeException {
 
     private static final long serialVersionUID = 1529570775397439370L;
 

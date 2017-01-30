@@ -34,44 +34,44 @@ public class CommentService {
                 "Failed to get comment with id: " + commentId);
     }
 
-    public CommentModel createComment(String content, Long postId, Long userId){
-        if(content != null){
+    public CommentModel createComment(String content, Long postId, Long userId) {
+        if (content != null) {
             return execute(commentRepository1 -> {
                 PostModel post = postRepository.findOne(postId);
                 UserModel user = userRepository.findOne(userId);
-                if(post != null && user != null){
+                if (post != null && user != null) {
                     return commentRepository1.save(new CommentModel(content, post).setUser(user));
-                }else {
+                } else {
                     throw new NoSearchResultException("Could not find comment with id: " + postId);
                 }
             }, "Failed to create comment");
-        }else {
+        } else {
             throw new InvalidInputException("Comment content can't be null");
         }
     }
 
-    public CommentModel updateCommentContent(Long commentId, String content){
-        if(content != null){
+    public CommentModel updateCommentContent(Long commentId, String content) {
+        if (content != null) {
             return execute(commentRepository1 -> {
                 CommentModel comment = commentRepository1.findOne(commentId);
-                if(comment != null){
+                if (comment != null) {
                     return commentRepository1.save(comment.setContent(content));
-                }else {
+                } else {
                     throw new NoSearchResultException("Could not find comment with id: " + commentId);
                 }
             }, "Failed to update comment");
-        }else {
+        } else {
             throw new InvalidInputException("Comment content can't be null");
         }
     }
 
-    public CommentModel deleteComment(Long commentId){
+    public CommentModel deleteComment(Long commentId) {
         return execute(commentRepository1 -> {
             CommentModel comment = commentRepository1.findOne(commentId);
-            if(comment != null){
+            if (comment != null) {
                 commentRepository1.delete(comment);
                 return comment;
-            }else {
+            } else {
                 throw new NoSearchResultException("Could not find comment with id: " + commentId);
             }
         }, "Failed to delete comment");
