@@ -32,21 +32,21 @@ public class AuthenticationResource {
 
     @POST
     @Path("register")
-    public Response createUser(Credentials credentials){
-        User user  = new User(authenticationService.createUser(credentials));
+    public Response createUser(Credentials credentials) {
+        User user = new User(authenticationService.createUser(credentials));
         return Response.created(URI.create("users/" + user.getId())).build();
     }
 
     @POST
     @Path("login")
-    public Response authenticateUser(Credentials credentials){
+    public Response authenticateUser(Credentials credentials) {
         User user = new User(authenticationService.authenticateUser(credentials));
         return Response.ok(user).build();
     }
 
     @POST
     @Path("auth")
-    public Response authenticateToken(){
+    public Response authenticateToken() {
         return Response.ok().build();
     }
 }

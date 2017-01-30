@@ -9,18 +9,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
 @RestController
-public class MellowApplication extends SpringBootServletInitializer{
-	public static void main(String[] args) {
-		SpringApplication.run(MellowApplication.class, args);
-	}
+public class MellowApplication extends SpringBootServletInitializer {
+    public static void main(String[] args) {
+        SpringApplication.run(MellowApplication.class, args);
+    }
 
-	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-		return builder.sources(MellowApplication.class);
-	}
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+        return builder.sources(MellowApplication.class);
+    }
 
-	@RequestMapping("/")
-	public String index() {
-		return "Greetings from Spring Boot!";
-	}
+    @RequestMapping("/")
+    public String index() {
+        return "Greetings from Spring Boot!";
+    }
 }

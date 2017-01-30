@@ -15,7 +15,7 @@ public class MessageResource {
     private String userId;
 
     @GET
-    public Response getAllMessages(){
+    public Response getAllMessages() {
         return null;
     }
 }

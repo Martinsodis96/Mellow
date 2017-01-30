@@ -42,7 +42,7 @@ public class CommentResource {
     }
 
     @GET
-    public List<Comment> getAllComments(){
+    public List<Comment> getAllComments() {
         List<Comment> comments = new ArrayList<>();
         postService.getAllCommentsFromPost(postId)
                 .forEach(commentModel -> comments.add(new Comment(commentModel)));
@@ -50,11 +50,11 @@ public class CommentResource {
     }
 
     @POST
-    public Response createComment(Comment comment){
+    public Response createComment(Comment comment) {
         //TODO move null checks to the service layer.
-        if(comment.getContent() != null && comment.getUser() != null){
+        if (comment.getContent() != null && comment.getUser() != null) {
             CommentModel createdComment = commentService.createComment(comment.getContent(), postId, comment.getUser().getId());
             return Response.created(URI.create(uriInfo.getAbsolutePath() + "/" + createdComment.getId())).build();
-        }else throw new BadRequestException();
+        } else throw new BadRequestException();
     }
 }

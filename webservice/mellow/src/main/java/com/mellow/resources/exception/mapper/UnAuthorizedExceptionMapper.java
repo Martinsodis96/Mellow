@@ -9,7 +9,7 @@ import javax.ws.rs.ext.Provider;
 import static javax.ws.rs.core.Response.Status.UNAUTHORIZED;
 
 @Provider
-public final class UnAuthorizedExceptionMapper implements ExceptionMapper<UnAuthorizedException>{
+public final class UnAuthorizedExceptionMapper implements ExceptionMapper<UnAuthorizedException> {
 
     @Override
     public Response toResponse(UnAuthorizedException e) {

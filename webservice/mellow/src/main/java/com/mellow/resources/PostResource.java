@@ -34,12 +34,12 @@ public class PostResource {
 
     @GET
     @Path("{postId}")
-    public Post getPostById(@PathParam("postId") Long postId){
+    public Post getPostById(@PathParam("postId") Long postId) {
         return new Post(postService.getPostById(postId));
     }
 
     @GET
-    public List<Post> getAllPosts(){
+    public List<Post> getAllPosts() {
         List<Post> posts = new ArrayList<>();
         postService.getAllPosts().forEach(postModel -> posts.add(new Post(postModel)));
         return posts;
@@ -47,14 +47,14 @@ public class PostResource {
 
     @PUT
     @Path("{postId}")
-    public Response updatePost(@PathParam("postId") Long postId, Post post){
+    public Response updatePost(@PathParam("postId") Long postId, Post post) {
         PostModel createdPostModel = postService.updatePost(postId, post.getContent());
         return Response.noContent().location(URI.create(uriInfo.getPath() + "/" + createdPostModel.getId())).build();
     }
 
     @DELETE
     @Path("{postId}")
-    public Response remove(@PathParam("postId") Long postId){
+    public Response remove(@PathParam("postId") Long postId) {
         postService.removePost(postId);
         return Response.noContent().build();
     }

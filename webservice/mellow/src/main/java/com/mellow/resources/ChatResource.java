@@ -12,7 +12,7 @@ public class ChatResource {
     private String userId;
 
     @GET
-    public Response getAllChats(){
+    public Response getAllChats() {
         return null;
     }
 }

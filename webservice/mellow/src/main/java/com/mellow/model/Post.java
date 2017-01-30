@@ -17,14 +17,14 @@ public final class Post {
     public Post(PostModel post) {
         this.id = post.getId();
         this.content = post.getContent();
-        if (post.getUser() != null){
+        if (post.getUser() != null) {
             this.user = new User(post.getUser());
         }
-        if (post.getLikes() != null){
+        if (post.getLikes() != null) {
             likes = new ArrayList<>();
             post.getLikes().forEach(likeModel -> this.likes.add(new Like(likeModel)));
         }
-        if (post.getComments() != null){
+        if (post.getComments() != null) {
             comments = new ArrayList<>();
             post.getComments().forEach(commentModel -> this.comments.add(new Comment(commentModel)));
         }

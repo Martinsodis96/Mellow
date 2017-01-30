@@ -12,21 +12,21 @@ import org.springframework.stereotype.Component;
 @Component
 public final class JerseyConfig extends ResourceConfig {
 
-	public JerseyConfig() {
-		register(InvalidInputExceptionMapper.class);
-		register(NoSearchResultExceptionMapper.class);
-		register(UnAuthorizedExceptionMapper.class);
+    public JerseyConfig() {
+        register(InvalidInputExceptionMapper.class);
+        register(NoSearchResultExceptionMapper.class);
+        register(UnAuthorizedExceptionMapper.class);
 
-		register(UserResource.class);
-		register(ChatResource.class);
-		register(AuthenticationResource.class);
-		register(CommentResource.class);
-		register(LikeResource.class);
-		register(MessageResource.class);
-		register(PostResource.class);
+        register(UserResource.class);
+        register(ChatResource.class);
+        register(AuthenticationResource.class);
+        register(CommentResource.class);
+        register(LikeResource.class);
+        register(MessageResource.class);
+        register(PostResource.class);
 
-		register(AuthorizationRequestFilter.class);
-		register(AuthorizationResponseFilter.class);
-	}
-	
+        register(AuthorizationRequestFilter.class);
+        register(AuthorizationResponseFilter.class);
+    }
+
 }

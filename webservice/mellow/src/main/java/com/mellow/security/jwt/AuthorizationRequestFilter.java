@@ -9,39 +9,43 @@ import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.core.UriInfo;
 import java.io.IOException;
 
-public class AuthorizationRequestFilter implements ContainerRequestFilter {
+public final class AuthorizationRequestFilter implements ContainerRequestFilter {
 
-    @Autowired
-    private AuthenticationService authenticationService;
+    private final AuthenticationService authenticationService;
     private UriInfo uriInfo;
     private String authorizationHeader;
 
+    @Autowired
+    public AuthorizationRequestFilter(AuthenticationService authenticationService) {
+        this.authenticationService = authenticationService;
+    }
+
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
-        if(uriRequiresToken(requestContext)){
+        if (uriRequiresToken(requestContext)) {
             if (authenticationHeaderIsPresent(requestContext)) {
                 String token = authorizationHeader.substring("Bearer".length()).trim();
-                if(refreshToken()){
+                if (refreshToken()) {
                     authenticationService.validateRefreshToken(token);
-                }else {
+                } else {
                     authenticationService.validateAccessToken(token);
                 }
-            }else{
+            } else {
                 throw new UnAuthorizedException("Authorization header must be provided");
             }
         }
     }
 
-    private boolean uriRequiresToken(ContainerRequestContext containerRequestContext){
+    private boolean uriRequiresToken(ContainerRequestContext containerRequestContext) {
         this.uriInfo = containerRequestContext.getUriInfo();
         return !"register".equals(uriInfo.getPath()) && !"login".equals(uriInfo.getPath());
     }
 
-    private boolean refreshToken(){
+    private boolean refreshToken() {
         return "auth".equals(uriInfo.getPath());
     }
 
-    private boolean authenticationHeaderIsPresent(ContainerRequestContext containerRequestContext){
+    private boolean authenticationHeaderIsPresent(ContainerRequestContext containerRequestContext) {
         this.authorizationHeader = containerRequestContext.getHeaderString("Authorization");
         return authorizationHeader != null && authorizationHeader.startsWith("Bearer ");
     }

@@ -9,7 +9,7 @@ import javax.ws.rs.ext.Provider;
 import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
 
 @Provider
-public final class InvalidInputExceptionMapper implements ExceptionMapper<InvalidInputException>{
+public final class InvalidInputExceptionMapper implements ExceptionMapper<InvalidInputException> {
 
     @Override
     public Response toResponse(InvalidInputException e) {
