@@ -1,8 +1,9 @@
 package com.mellow.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "`post`")
@@ -10,11 +11,11 @@ public class PostModel extends AbstractModel {
 
     private String content;
 
-    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER)
-    private Set<CommentModel> comments;
+    @OneToMany(mappedBy = "post")
+    private List<CommentModel> comments;
 
-    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER)
-    private Set<LikeModel> likes;
+    @OneToMany(mappedBy = "post")
+    private List<LikeModel> likes;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private UserModel user;
@@ -25,28 +26,28 @@ public class PostModel extends AbstractModel {
     public PostModel(String content, UserModel user) {
         this.content = content;
         this.user = user;
-        this.likes = new HashSet<>();
-        this.comments = new HashSet<>();
+        this.likes = new ArrayList<>();
+        this.comments = new ArrayList<>();
     }
 
     public String getContent() {
         return content;
     }
 
-    public Set<CommentModel> getComments() {
+    public List<CommentModel> getComments() {
         return comments;
     }
 
-    public PostModel setComments(Set<CommentModel> comments) {
+    public PostModel setComments(List<CommentModel> comments) {
         this.comments = comments;
         return this;
     }
 
-    public Set<LikeModel> getLikes() {
+    public List<LikeModel> getLikes() {
         return likes;
     }
 
-    public PostModel setLikes(Set<LikeModel> likes) {
+    public PostModel setLikes(List<LikeModel> likes) {
         this.likes = likes;
         return this;
     }
@@ -60,7 +61,6 @@ public class PostModel extends AbstractModel {
         this.likes.remove(like);
         return this;
     }
-
 
     public UserModel getUser() {
         return user;

@@ -1,6 +1,7 @@
 package com.mellow.model;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -10,10 +11,10 @@ public class CommentModel extends AbstractModel {
 
     private String content;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private PostModel post;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private UserModel user;
 
     protected CommentModel() {

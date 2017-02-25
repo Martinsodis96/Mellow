@@ -69,13 +69,12 @@ public class AuthenticationService {
         validateToken(token, "Refresh Token", issuer, configHelper.getJwtRefreshSecretValue());
     }
 
-
     public String createAccessToken() {
-        return createToken("Access Token", DateUtils.addHours(new Date(), 3), configHelper.getJwtAccessSecretValue());
+        return createToken("Access Token", DateUtils.addHours(new Date(), 2), configHelper.getJwtAccessSecretValue());
     }
 
     public String createRefreshToken() {
-        return createToken("Refresh Token", DateUtils.addDays(new Date(), 14), configHelper.getJwtRefreshSecretValue());
+        return createToken("Refresh Token", DateUtils.addDays(new Date(), 12), configHelper.getJwtRefreshSecretValue());
     }
 
     private void validateToken(String token, String subject, String issuer, String secret) {
