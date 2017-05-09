@@ -1,4 +1,4 @@
-package com.mellow.model;
+package com.mellow.entity;
 
 public final class Credentials {
 

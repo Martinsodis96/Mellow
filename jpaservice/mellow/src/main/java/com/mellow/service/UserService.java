@@ -1,7 +1,7 @@
 package com.mellow.service;
 
-import com.mellow.model.PostModel;
-import com.mellow.model.UserModel;
+import com.mellow.entity.model.PostModel;
+import com.mellow.entity.model.UserModel;
 import com.mellow.repository.PostRepository;
 import com.mellow.repository.UserRepository;
 import com.mellow.service.exception.DatabaseException;
@@ -26,7 +26,7 @@ public class UserService {
     }
 
     public UserModel getById(Long userId) {
-        return execute(userRepository1 -> userRepository1.findOne(userId),
+        return execute(userRepository -> userRepository.findOne(userId),
                 String.format("Failed to get User with id: %d", userId));
     }
 
@@ -39,13 +39,13 @@ public class UserService {
     }
 
     public UserModel getByUsername(String username) {
-        return execute(userRepository1 -> userRepository1.findByUsername(username),
+        return execute(userRepository -> userRepository.findByUsername(username),
                 String.format("Failed to get User with username: %s", username));
     }
 
     public UserModel updateUsername(String username, Long userId) {
         if (username != null) {
-            return execute(userRepository1 -> {
+            return execute(userRepository -> {
                 UserModel user = userRepository.findOne(userId);
                 if (user != null) {
                     user.setUsername(username);
@@ -61,7 +61,7 @@ public class UserService {
     }
 
     public UserModel deleteUser(Long userId) {
-        return execute(userRepository1 -> {
+        return execute(userRepository -> {
             UserModel user = userRepository.findOne(userId);
             if (user != null) {
                 userRepository.delete(user);

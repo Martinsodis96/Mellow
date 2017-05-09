@@ -1,6 +1,6 @@
 package com.mellow.repository;
 
-import com.mellow.model.CommentModel;
+import com.mellow.entity.model.CommentModel;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

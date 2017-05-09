@@ -1,4 +1,4 @@
-package com.mellow.model;
+package com.mellow.entity.model;
 
 import javax.persistence.*;
 import java.util.List;

@@ -1,8 +1,8 @@
 package com.mellow.service;
 
-import com.mellow.model.CommentModel;
-import com.mellow.model.PostModel;
-import com.mellow.model.UserModel;
+import com.mellow.entity.model.CommentModel;
+import com.mellow.entity.model.PostModel;
+import com.mellow.entity.model.UserModel;
 import com.mellow.repository.CommentRepository;
 import com.mellow.repository.PostRepository;
 import com.mellow.repository.UserRepository;

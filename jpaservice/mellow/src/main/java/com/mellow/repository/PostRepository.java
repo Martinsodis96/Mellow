@@ -1,6 +1,6 @@
 package com.mellow.repository;
 
-import com.mellow.model.PostModel;
+import com.mellow.entity.model.PostModel;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

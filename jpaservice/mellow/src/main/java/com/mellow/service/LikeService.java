@@ -1,6 +1,6 @@
 package com.mellow.service;
 
-import com.mellow.model.LikeModel;
+import com.mellow.entity.model.LikeModel;
 import com.mellow.repository.LikeRepository;
 import com.mellow.service.exception.DatabaseException;
 import org.springframework.beans.factory.annotation.Autowired;

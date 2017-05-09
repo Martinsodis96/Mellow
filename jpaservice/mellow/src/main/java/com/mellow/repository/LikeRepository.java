@@ -1,6 +1,6 @@
 package com.mellow.repository;
 
-import com.mellow.model.LikeModel;
+import com.mellow.entity.model.LikeModel;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

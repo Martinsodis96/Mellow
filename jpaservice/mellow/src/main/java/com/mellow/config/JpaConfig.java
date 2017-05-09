@@ -51,7 +51,7 @@ public class JpaConfig {
         LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
         factory.setDataSource(dataSource());
         factory.setJpaVendorAdapter(jpaVendorAdapter());
-        factory.setPackagesToScan("com.mellow.model");
+        factory.setPackagesToScan("com.mellow.entity");
         return factory;
     }
 }

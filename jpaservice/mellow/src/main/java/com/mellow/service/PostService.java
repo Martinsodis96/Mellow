@@ -1,9 +1,9 @@
 package com.mellow.service;
 
-import com.mellow.model.CommentModel;
-import com.mellow.model.LikeModel;
-import com.mellow.model.PostModel;
-import com.mellow.model.UserModel;
+import com.mellow.entity.model.CommentModel;
+import com.mellow.entity.model.LikeModel;
+import com.mellow.entity.model.PostModel;
+import com.mellow.entity.model.UserModel;
 import com.mellow.repository.CommentRepository;
 import com.mellow.repository.LikeRepository;
 import com.mellow.repository.PostRepository;
@@ -50,10 +50,10 @@ public class PostService {
 
     public PostModel createPost(Long userId, String content) {
         if (content != null || userId != null) {
-            return execute(postRepository1 -> {
+            return execute(postRepository -> {
                 UserModel user = userRepository.findOne(userId);
                 if (user != null) {
-                    return postRepository1.save(new PostModel(content, user));
+                    return postRepository.save(new PostModel(content, user));
                 } else {
                     throw new NoSearchResultException("Could not find user with id: " + userId);
                 }
@@ -65,8 +65,8 @@ public class PostService {
 
     public PostModel updatePost(Long postId, String content) {
         if (content != null || postId != null) {
-            return execute(postRepository1 -> {
-                PostModel post = postRepository1.findOne(postId);
+            return execute(postRepository -> {
+                PostModel post = postRepository.findOne(postId);
                 if (post != null) {
                     return postRepository.save(post.setContent(content));
                 } else {
@@ -79,8 +79,8 @@ public class PostService {
     }
 
     public PostModel removePost(Long postId) {
-        return execute(postRepository1 -> {
-            PostModel post = postRepository1.findOne(postId);
+        return execute(postRepository -> {
+            PostModel post = postRepository.findOne(postId);
             if (post != null) {
                 postRepository.delete(postId);
                 return post;

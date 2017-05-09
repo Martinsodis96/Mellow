@@ -1,4 +1,4 @@
-package com.mellow.model;
+package com.mellow.entity.model;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;

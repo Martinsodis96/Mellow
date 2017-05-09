@@ -1,7 +1,7 @@
 package com.mellow.service;
 
-import com.mellow.model.ChatModel;
-import com.mellow.model.UserModel;
+import com.mellow.entity.model.ChatModel;
+import com.mellow.entity.model.UserModel;
 import com.mellow.repository.ChatRepository;
 import com.mellow.repository.UserRepository;
 import com.mellow.service.exception.DatabaseException;

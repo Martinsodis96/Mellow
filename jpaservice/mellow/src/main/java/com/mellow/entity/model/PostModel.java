@@ -1,8 +1,7 @@
-package com.mellow.model;
+package com.mellow.entity.model;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 @Entity

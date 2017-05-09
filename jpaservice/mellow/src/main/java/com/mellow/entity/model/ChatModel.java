@@ -1,4 +1,4 @@
-package com.mellow.model;
+package com.mellow.entity.model;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
@@ -18,6 +18,9 @@ public class ChatModel extends AbstractModel {
 
     public ChatModel(List<UserModel> users) {
         this.users = users;
+    }
+
+    protected ChatModel() {
     }
 
     public List<MessageModel> getMessages() {
