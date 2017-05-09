@@ -51,14 +51,17 @@ public class AuthenticationService {
 
     public UserModel authenticateUser(Credentials credentials) {
         checkCredentialsPresence(credentials);
-        if (usernameExist(credentials.getUsername())) {
-            UserModel user = userRepository.findByUsername(credentials.getUsername());
-            if (passwordMatches(credentials.getPassword(), user.getSalt(), user.getPassword())) {
-                return user;
+        if(Optional.ofNullable(credentials.getUsername()).isPresent() && Optional.ofNullable(credentials.getPassword()).isPresent()){
+            if (usernameExist(credentials.getUsername())) {
+                UserModel user = userRepository.findByUsername(credentials.getUsername());
+                if (passwordMatches(credentials.getPassword(), user.getSalt(), user.getPassword())) {
+                    return user;
+                }
+                throw new UnAuthorizedException("Wrong password");
             }
-            throw new UnAuthorizedException("Wrong password");
+            throw new NoSearchResultException(String.format("Could not find user with username %s", credentials.getUsername()));
         }
-        throw new NoSearchResultException(String.format("Could not find user with username %s", credentials.getUsername()));
+        throw new NoSearchResultException("Username or password can't be null");
     }
 
     public void validateAccessToken(String token) {
