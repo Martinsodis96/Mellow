@@ -1,7 +1,8 @@
 package com.mellow.model;
 
-public final class Comment {
+import com.mellow.entity.model.CommentModel;
 
+public final class Comment {
     private Long id;
     private String content;
     private Long postId;

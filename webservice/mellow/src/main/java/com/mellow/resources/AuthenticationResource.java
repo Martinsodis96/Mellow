@@ -1,6 +1,6 @@
 package com.mellow.resources;
 
-import com.mellow.model.Credentials;
+import com.mellow.entity.Credentials;
 import com.mellow.model.User;
 import com.mellow.service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;

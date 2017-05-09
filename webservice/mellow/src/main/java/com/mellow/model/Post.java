@@ -1,10 +1,11 @@
 package com.mellow.model;
 
+import com.mellow.entity.model.PostModel;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public final class Post {
-
     private Long id;
     private String content;
     private User user;

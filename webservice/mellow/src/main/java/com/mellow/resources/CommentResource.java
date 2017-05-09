@@ -1,7 +1,7 @@
 package com.mellow.resources;
 
 import com.mellow.model.Comment;
-import com.mellow.model.CommentModel;
+import com.mellow.entity.model.CommentModel;
 import com.mellow.service.CommentService;
 import com.mellow.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;

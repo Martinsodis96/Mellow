@@ -4,7 +4,6 @@ import javax.ws.rs.DefaultValue;
 import javax.ws.rs.QueryParam;
 
 public final class PageRequestBean {
-
     @QueryParam("page")
     private int page;
 

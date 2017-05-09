@@ -1,5 +1,6 @@
 package com.mellow.resources.exception.mapper;
 
+
 import com.mellow.service.exception.DatabaseException;
 
 import javax.ws.rs.core.Response;

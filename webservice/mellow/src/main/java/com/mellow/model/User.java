@@ -1,7 +1,8 @@
 package com.mellow.model;
 
-public final class User {
+import com.mellow.entity.model.UserModel;
 
+public final class User {
     private Long id;
     private String username;
 

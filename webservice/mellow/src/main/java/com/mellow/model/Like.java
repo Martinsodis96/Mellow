@@ -1,7 +1,8 @@
 package com.mellow.model;
 
-public final class Like {
+import com.mellow.entity.model.LikeModel;
 
+public final class Like {
     private Long id;
     private Long userId;
     private Long postId;

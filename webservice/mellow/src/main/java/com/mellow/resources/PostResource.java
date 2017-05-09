@@ -1,7 +1,7 @@
 package com.mellow.resources;
 
 import com.mellow.model.Post;
-import com.mellow.model.PostModel;
+import com.mellow.entity.model.PostModel;
 import com.mellow.service.PostService;
 import com.mellow.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
