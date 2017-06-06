@@ -1,4 +1,4 @@
-package com.mellow.resources.exception.mapper;
+package com.mellow.webservice.resources.exception.mapper;
 
 
 import javax.ws.rs.core.Response;

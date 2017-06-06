@@ -1,6 +1,6 @@
-package com.mellow.resources;
+package com.mellow.webservice.resources;
 
-import com.mellow.model.Comment;
+import com.mellow.webservice.model.Comment;
 import com.mellow.entity.model.CommentModel;
 import com.mellow.service.CommentService;
 import com.mellow.service.PostService;

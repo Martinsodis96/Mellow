@@ -1,4 +1,4 @@
-package com.mellow.security.jwt;
+package com.mellow.webservice.security.jwt;
 
 import com.mellow.service.AuthenticationService;
 import com.mellow.service.exception.UnAuthorizedException;

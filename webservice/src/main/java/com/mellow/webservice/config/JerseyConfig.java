@@ -1,11 +1,11 @@
-package com.mellow.config;
+package com.mellow.webservice.config;
 
-import com.mellow.resources.*;
-import com.mellow.resources.exception.mapper.InvalidInputExceptionMapper;
-import com.mellow.resources.exception.mapper.NoSearchResultExceptionMapper;
-import com.mellow.resources.exception.mapper.UnAuthorizedExceptionMapper;
-import com.mellow.security.jwt.AuthorizationRequestFilter;
-import com.mellow.security.jwt.AuthorizationResponseFilter;
+import com.mellow.webservice.resources.*;
+import com.mellow.webservice.resources.exception.mapper.InvalidInputExceptionMapper;
+import com.mellow.webservice.resources.exception.mapper.NoSearchResultExceptionMapper;
+import com.mellow.webservice.resources.exception.mapper.UnAuthorizedExceptionMapper;
+import com.mellow.webservice.security.jwt.AuthorizationRequestFilter;
+import com.mellow.webservice.security.jwt.AuthorizationResponseFilter;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.stereotype.Component;
 

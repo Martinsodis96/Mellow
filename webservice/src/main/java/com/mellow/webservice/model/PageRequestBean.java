@@ -1,4 +1,4 @@
-package com.mellow.model;
+package com.mellow.webservice.model;
 
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.QueryParam;

@@ -1,8 +1,8 @@
-package com.mellow.resources;
+package com.mellow.webservice.resources;
 
-import com.mellow.model.Post;
+import com.mellow.webservice.model.Post;
 import com.mellow.entity.model.PostModel;
-import com.mellow.model.User;
+import com.mellow.webservice.model.User;
 import com.mellow.entity.model.UserModel;
 import com.mellow.service.PostService;
 import com.mellow.service.UserService;

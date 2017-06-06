@@ -1,4 +1,4 @@
-package com.mellow.resources;
+package com.mellow.webservice.resources;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
