@@ -3,13 +3,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.mellow</groupId>
-	<artifactId>jpa</artifactId>
+	<groupId>com.mellow.application</groupId>
+	<artifactId>jpa-service</artifactId>
 	<version>1.0.0</version>
 	<packaging>jar</packaging>
 
-	<name>jpa</name>
-	<description>Demo project for Spring Boot</description>
+	<name>jpa-service</name>
+	<description>The jpa service for the application Mellow</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
