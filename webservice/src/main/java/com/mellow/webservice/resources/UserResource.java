@@ -1,11 +1,11 @@
 package com.mellow.webservice.resources;
 
 import com.mellow.webservice.model.Post;
-import com.mellow.entity.model.PostModel;
+import com.mellow.application.jpaservice.entity.model.PostModel;
 import com.mellow.webservice.model.User;
-import com.mellow.entity.model.UserModel;
-import com.mellow.service.PostService;
-import com.mellow.service.UserService;
+import com.mellow.application.jpaservice.entity.model.UserModel;
+import com.mellow.application.jpaservice.service.PostService;
+import com.mellow.application.jpaservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.ws.rs.*;

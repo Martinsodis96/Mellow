@@ -1,5 +1,6 @@
 package com.mellow.webservice.model;
 
+import com.mellow.application.jpaservice.entity.model.CommentModel;
 
 
 public final class Comment {

@@ -1,6 +1,6 @@
 package com.mellow.webservice.model;
 
-import com.mellow.entity.model.PostModel;
+import com.mellow.application.jpaservice.entity.model.PostModel;
 
 import java.util.ArrayList;
 import java.util.List;

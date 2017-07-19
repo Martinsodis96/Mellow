@@ -1,6 +1,6 @@
 package com.mellow.webservice.resources.exception.mapper;
 
-import com.mellow.service.exception.InvalidInputException;
+import com.mellow.application.jpaservice.service.exception.InvalidInputException;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;

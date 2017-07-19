@@ -1,6 +1,6 @@
 package com.mellow.webservice.model;
 
-import com.mellow.entity.model.LikeModel;
+import com.mellow.application.jpaservice.entity.model.LikeModel;
 
 public final class Like {
     private Long id;

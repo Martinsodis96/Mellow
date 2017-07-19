@@ -1,9 +1,9 @@
 package com.mellow.webservice.resources;
 
 import com.mellow.webservice.model.Comment;
-import com.mellow.entity.model.CommentModel;
-import com.mellow.service.CommentService;
-import com.mellow.service.PostService;
+import com.mellow.application.jpaservice.entity.model.CommentModel;
+import com.mellow.application.jpaservice.service.CommentService;
+import com.mellow.application.jpaservice.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.ws.rs.BadRequestException;

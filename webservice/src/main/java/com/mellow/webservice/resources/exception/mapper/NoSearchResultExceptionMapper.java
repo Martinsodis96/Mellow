@@ -1,6 +1,6 @@
 package com.mellow.webservice.resources.exception.mapper;
 
-import com.mellow.service.exception.NoSearchResultException;
+import com.mellow.application.jpaservice.service.exception.NoSearchResultException;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;

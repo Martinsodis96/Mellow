@@ -3,13 +3,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.mellow</groupId>
-	<artifactId>mellow-webservice</artifactId>
+	<groupId>com.mellow.application</groupId>
+	<artifactId>web-service</artifactId>
 	<version>1.0.0</version>
 	<packaging>war</packaging>
 
-	<name>mellow</name>
-	<description>Demo project for Spring Boot</description>
+	<name>web-service</name>
+	<description>The webservice for the application Mellow</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -32,9 +32,9 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.mellow</groupId>
-			<artifactId>jpa</artifactId>
-			<version>1.0</version>
+			<groupId>com.mellow.application</groupId>
+			<artifactId>jpa-service</artifactId>
+			<version>1.0.0</version>
 		</dependency>
 
 		<dependency>

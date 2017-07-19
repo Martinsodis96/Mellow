@@ -1,8 +1,7 @@
 package com.mellow.webservice.resources.exception.mapper;
 
-
+import com.mellow.application.jpaservice.service.exception.DatabaseException;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
 import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;

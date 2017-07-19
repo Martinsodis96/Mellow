@@ -1,6 +1,6 @@
 package com.mellow.webservice.security.jwt;
 
-import com.mellow.service.AuthenticationService;
+import com.mellow.application.jpaservice.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.ws.rs.container.ContainerRequestContext;
