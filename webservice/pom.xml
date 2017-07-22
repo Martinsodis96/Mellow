@@ -44,12 +44,6 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-			<version>3.5</version>
-		</dependency>
-
-		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 			<exclusions>
@@ -87,7 +81,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>com.mellow.webservice.MellowApplication</mainClass>
+							<mainClass>com.mellow.application.webservice.MellowApplication</mainClass>
 						</manifest>
 					</archive>
 					<descriptorRefs>

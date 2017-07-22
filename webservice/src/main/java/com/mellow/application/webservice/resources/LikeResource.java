@@ -1,7 +1,7 @@
-package com.mellow.webservice.resources;
+package com.mellow.application.webservice.resources;
 
 import com.mellow.application.jpaservice.entity.model.LikeModel;
-import com.mellow.webservice.model.Like;
+import com.mellow.application.webservice.model.Like;
 import com.mellow.application.jpaservice.service.LikeService;
 import com.mellow.application.jpaservice.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;

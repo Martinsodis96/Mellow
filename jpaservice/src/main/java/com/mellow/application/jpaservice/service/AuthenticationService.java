@@ -37,7 +37,7 @@ public class AuthenticationService {
     @Autowired
     public AuthenticationService(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.configHelper = new ConfigHelper("config.properties");
+        this.configHelper = new ConfigHelper("config/config.properties");
     }
 
     public UserModel createUser(Credentials credentials) {
@@ -122,10 +122,14 @@ public class AuthenticationService {
     }
 
     private void checkCredentialsPresence(Credentials credentials) {
-        if (!Optional.ofNullable(credentials.getUsername()).isPresent())
-            throw new InvalidInputException("Missing username in body");
-        else if (!Optional.ofNullable(credentials.getPassword()).isPresent())
-            throw new InvalidInputException("Missing password in body");
+        if(credentials != null){
+            if (!Optional.ofNullable(credentials.getUsername()).isPresent())
+                throw new InvalidInputException("Missing username in body");
+            else if (!Optional.ofNullable(credentials.getPassword()).isPresent())
+                throw new InvalidInputException("Missing password in body");
+        }else{
+            throw new InvalidInputException("Missing credentials in request body");
+        }
     }
 
     private boolean usernameExist(String username) {

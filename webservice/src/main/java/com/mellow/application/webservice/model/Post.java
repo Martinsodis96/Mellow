@@ -1,4 +1,4 @@
-package com.mellow.webservice.model;
+package com.mellow.application.webservice.model;
 
 import com.mellow.application.jpaservice.entity.model.PostModel;
 
