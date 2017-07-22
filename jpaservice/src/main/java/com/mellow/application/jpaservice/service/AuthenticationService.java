@@ -37,7 +37,7 @@ public class AuthenticationService {
     @Autowired
     public AuthenticationService(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.configHelper = new ConfigHelper("config/config.properties");
+        this.configHelper = new ConfigHelper("config.properties");
     }
 
     public UserModel createUser(Credentials credentials) {

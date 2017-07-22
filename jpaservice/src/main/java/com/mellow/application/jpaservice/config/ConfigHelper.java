@@ -2,7 +2,6 @@ package com.mellow.application.jpaservice.config;
 
 import com.mellow.application.jpaservice.service.exception.DatabaseException;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -60,7 +59,7 @@ public final class ConfigHelper {
 
     private String getValueFromInputStream(String property) throws IOException {
         try {
-            this.inputStream = new FileInputStream(fileName);
+            this.inputStream = getClass().getClassLoader().getResourceAsStream(fileName);
             properties.load(inputStream);
             return properties.getProperty(property);
         } catch (IOException e) {

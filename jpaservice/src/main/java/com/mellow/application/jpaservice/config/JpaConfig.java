@@ -24,7 +24,7 @@ public class JpaConfig {
 
     @Bean
     public DataSource dataSource() {
-        ConfigHelper configHelper = new ConfigHelper("config/config.properties");
+        ConfigHelper configHelper = new ConfigHelper("config.properties");
         HikariConfig config = new HikariConfig();
         config.setDriverClassName("com.mysql.jdbc.Driver");
         config.setJdbcUrl(configHelper.getMySqlUrlValue());
