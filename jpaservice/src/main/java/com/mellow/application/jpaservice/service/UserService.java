@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.function.Function;
 
 @Service
@@ -39,8 +40,13 @@ public class UserService {
     }
 
     public UserModel getByUsername(String username) {
-        return execute(userRepository -> userRepository.findByUsername(username),
-                String.format("Failed to get User with username: %s", username));
+        return execute(userRepository -> {
+            Optional<UserModel> optionalUser = userRepository.findByUsername(username);
+            if (optionalUser.isPresent())
+                return optionalUser.get();
+            else
+                throw new NoSearchResultException("User with username " + username + " do not exist.");
+        }, String.format("Failed to get User with username: %s", username));
     }
 
     public UserModel updateUsername(String username, Long userId) {

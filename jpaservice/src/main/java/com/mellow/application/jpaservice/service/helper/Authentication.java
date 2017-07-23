@@ -1,4 +1,4 @@
-package com.mellow.application.jpaservice.service;
+package com.mellow.application.jpaservice.service.helper;
 
 import com.mellow.application.jpaservice.entity.Credentials;
 import com.mellow.application.jpaservice.entity.model.UserModel;

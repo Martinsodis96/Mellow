@@ -16,14 +16,14 @@ import java.util.Date;
 import java.util.Optional;
 import java.util.function.Function;
 
-import static com.mellow.application.jpaservice.service.Authentication.checkCredentialsPresence;
-import static com.mellow.application.jpaservice.service.Authentication.createToken;
-import static com.mellow.application.jpaservice.service.Authentication.generateSalt;
-import static com.mellow.application.jpaservice.service.Authentication.hashPassword;
-import static com.mellow.application.jpaservice.service.Authentication.hashingIterations;
-import static com.mellow.application.jpaservice.service.Authentication.passwordMatches;
-import static com.mellow.application.jpaservice.service.Authentication.validateCredentials;
-import static com.mellow.application.jpaservice.service.Authentication.validateToken;
+import static com.mellow.application.jpaservice.service.helper.Authentication.checkCredentialsPresence;
+import static com.mellow.application.jpaservice.service.helper.Authentication.createToken;
+import static com.mellow.application.jpaservice.service.helper.Authentication.generateSalt;
+import static com.mellow.application.jpaservice.service.helper.Authentication.hashPassword;
+import static com.mellow.application.jpaservice.service.helper.Authentication.hashingIterations;
+import static com.mellow.application.jpaservice.service.helper.Authentication.passwordMatches;
+import static com.mellow.application.jpaservice.service.helper.Authentication.validateCredentials;
+import static com.mellow.application.jpaservice.service.helper.Authentication.validateToken;
 
 @Service
 public class AuthenticationService {
@@ -43,7 +43,7 @@ public class AuthenticationService {
         validateCredentials(credentials, userRepository);
         String salt = generateSalt();
         String hashedPassword = hashPassword(credentials.getPassword(), salt);
-        return execute(userRepository1 -> userRepository.save(new UserModel(credentials.getUsername(),
+        return execute(userRepository -> userRepository.save(new UserModel(credentials.getUsername(),
                         hashedPassword, salt, hashingIterations)),
                 String.format("Failed to create User with username: %s", credentials.getUsername()));
     }
