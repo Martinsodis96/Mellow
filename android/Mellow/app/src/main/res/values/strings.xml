@@ -7,8 +7,10 @@
     <string name="post_title">post</string>
     <string name="settings_title">settings</string>
     <string name="options">options</string>
+    <string name="username_input">Enter username</string>
+    <string name="password_input">Enter password</string>
     <string name="title_activity_create_post">Post</string>
-    <string name="MELLOW_BASE_URL">http://188.166.66.165:8080/mellow/</string>
+    <string name="MELLOW_BASE_URL">http://192.168.0.21:8080/</string>
     <string name="username_already_taken">That username is already taken, please choose another one.</string>
     <string name="username_too_short">Username must be at least 4 characters long.</string>
     <string name="title_activity_post">Comment</string>

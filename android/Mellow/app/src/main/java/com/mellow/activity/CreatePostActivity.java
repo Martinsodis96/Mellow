@@ -11,14 +11,14 @@ import android.view.WindowManager;
 import android.widget.EditText;
 
 import com.mellow.adapter.CustomDialogClass;
-import com.mellow.client.adapter.PostAdapter;
+import com.mellow.client.service.PostService;
 import com.mellow.mellow.R;
 import com.mellow.model.Post;
 
 public class CreatePostActivity extends AppCompatActivity {
 
     EditText postInput;
-    private PostAdapter postAdapter;
+    private PostService postService;
     private Long userId;
 
     @Override
@@ -28,7 +28,7 @@ public class CreatePostActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         this.postInput = (EditText) findViewById(R.id.post_input);
-        this.postAdapter = new PostAdapter(this);
+        this.postService = new PostService(this);
         this.userId = getUserId(this);
         postInput.requestFocus();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
@@ -56,7 +56,7 @@ public class CreatePostActivity extends AppCompatActivity {
 
             case R.id.post: {
                 if (!postInput.getText().toString().isEmpty()) {
-                    postAdapter.createPost(new Post(postInput.getText().toString()), userId);
+                    postService.createPost(new Post(postInput.getText().toString()), userId);
                     NavUtils.navigateUpFromSameTask(this);
                 }
                 return true;

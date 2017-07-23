@@ -12,8 +12,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.mellow.adapter.CommentArrayAdapter;
-import com.mellow.client.adapter.CommentAdapter;
-import com.mellow.client.adapter.UserAdapter;
+import com.mellow.client.service.CommentService;
+import com.mellow.client.service.UserService;
 import com.mellow.mellow.R;
 import com.mellow.model.Comment;
 import com.mellow.model.Post;
@@ -29,8 +29,8 @@ public class PostActivity extends AppCompatActivity {
     TextView contentText;
     TextView commentContent;
     private Post post;
-    private CommentAdapter commentAdapter;
-    private UserAdapter userAdapter;
+    private CommentService commentService;
+    private UserService userService;
     private List<Comment> comments;
     private ViewGroup header;
 
@@ -39,13 +39,13 @@ public class PostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
         setTitle(R.string.title_activity_post);
-        this.commentAdapter = new CommentAdapter(this);
-        this.userAdapter = new UserAdapter(this);
+        this.commentService = new CommentService(this);
+        this.userService = new UserService(this);
         this.commentContent = (TextView) findViewById(R.id.comment_content);
         this.post = new Post(getIntent().getStringExtra("post_content"))
                 .setId(getIntent().getLongExtra("postId", 1L))
                 .setUser(new User(getIntent().getStringExtra("username")));
-        this.comments = commentAdapter.getAllComments(post.getId());
+        this.comments = commentService.getAllComments(post.getId());
         setUpCommentListView(comments);
         setUpUsernameLayout();
         setUpContentTextLayout();
@@ -53,9 +53,9 @@ public class PostActivity extends AppCompatActivity {
 
     public void onCommentClicked(View view){
         if(!commentContent.getText().toString().isEmpty()){
-            User user = userAdapter.getUserById(getUserId(this));
+            User user = userService.getUserById(getUserId(this));
             Comment comment = new Comment(commentContent.getText().toString(), user);
-            commentAdapter.createComment(comment, post.getId());
+            commentService.createComment(comment, post.getId());
             commentContent.setText("");
             comments.add(comment);
             adapter.notifyDataSetChanged();

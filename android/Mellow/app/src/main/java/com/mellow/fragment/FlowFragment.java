@@ -14,7 +14,7 @@ import android.widget.ListView;
 
 import com.mellow.activity.CreatePostActivity;
 import com.mellow.adapter.FlowArrayAdapter;
-import com.mellow.client.adapter.PostAdapter;
+import com.mellow.client.service.PostService;
 import com.mellow.mellow.R;
 import com.mellow.model.Post;
 
@@ -25,7 +25,7 @@ public class FlowFragment extends Fragment {
 
     ListView postListView;
     private ListAdapter adapter;
-    private PostAdapter postAdapter;
+    private PostService postService;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,8 +44,8 @@ public class FlowFragment extends Fragment {
         postListView = (ListView) view.findViewById(R.id.post_listview);
         makeFloatingActionButtonClickable((FloatingActionButton) view.findViewById(R.id.floating_action_button),
                 view.getContext());
-        postAdapter = new PostAdapter(view.getContext());
-        List<Post> posts = postAdapter.getAllPosts();
+        postService = new PostService(view.getContext());
+        List<Post> posts = postService.getAllPosts();
         Collections.reverse(posts);
         adapter = new FlowArrayAdapter(getActivity().getApplicationContext(),posts);
         postListView.setAdapter(adapter);

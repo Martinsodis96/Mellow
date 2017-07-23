@@ -1,4 +1,4 @@
-package com.mellow.client.adapter;
+package com.mellow.client.service;
 
 import android.content.Context;
 
@@ -20,17 +20,14 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class PostAdapter {
+public class PostService extends Service{
 
-    private final String MELLOW_BASE_URL;
     private PostApi postApi;
-    private Retrofit retrofit;
     private ExecutorService executor = Executors.newCachedThreadPool();
 
-    public PostAdapter(Context context) {
-        this.MELLOW_BASE_URL = context.getResources().getString(R.string.MELLOW_BASE_URL);
-        retrofit = new Retrofit.Builder().baseUrl(MELLOW_BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
-        postApi = retrofit.create(PostApi.class);
+    public PostService(Context context) {
+        super(context);
+        postApi = getRetrofit().create(PostApi.class);
     }
 
     //TODO add serious exception handling

@@ -13,12 +13,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.mellow.activity.PostActivity;
-import com.mellow.client.adapter.LikeAdapter;
-import com.mellow.client.adapter.PostAdapter;
+import com.mellow.client.service.LikeService;
+import com.mellow.client.service.PostService;
 import com.mellow.mellow.R;
 import com.mellow.model.Like;
 import com.mellow.model.Post;
-import com.mellow.model.User;
 
 import java.util.List;
 
@@ -27,8 +26,8 @@ import retrofit2.Response;
 public class FlowArrayAdapter extends ArrayAdapter<Post> {
 
     private List<Post> posts;
-    private PostAdapter postAdapter;
-    private LikeAdapter likeAdapter;
+    private PostService postService;
+    private LikeService likeService;
     private Long userId;
     private Like userLike;
     Context context;
@@ -55,8 +54,8 @@ public class FlowArrayAdapter extends ArrayAdapter<Post> {
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View customView = inflater.inflate(R.layout.activity_flow_adapter, parent, false);
         initializePalettes(customView);
-        this.postAdapter = new PostAdapter(customView.getContext());
-        this.likeAdapter = new LikeAdapter(customView.getContext());
+        this.postService = new PostService(customView.getContext());
+        this.likeService = new LikeService(customView.getContext());
         this.userId = getUserId(customView.getContext());
         Post post = posts.get(position);
         contentText.setText(post.getContent());
@@ -89,7 +88,7 @@ public class FlowArrayAdapter extends ArrayAdapter<Post> {
             @Override
             public void onClick(View v) {
                 if (likedByUser(post, userId)) {
-                    postAdapter.removeLikeFromPost(post.getId(), userLike.getId());
+                    postService.removeLikeFromPost(post.getId(), userLike.getId());
                     post.getLikes().remove(userLike);
                     amountOfLikes.setText(String.valueOf(post.getLikes().size()));
                     if (!hasLikes(post)) {
@@ -99,8 +98,8 @@ public class FlowArrayAdapter extends ArrayAdapter<Post> {
                         }
                     }
                 } else {
-                    Response response = postAdapter.addLikeToPost(post.getId(), new Like(userId));
-                    Like like = likeAdapter.getLike(response.headers().get("location"));
+                    Response response = postService.addLikeToPost(post.getId(), new Like(userId));
+                    Like like = likeService.getLike(response.headers().get("location"));
                     post.getLikes().add(like);
                     amountOfLikes.setText(String.valueOf(post.getLikes().size()));
                     likesContainer.setVisibility(View.VISIBLE);

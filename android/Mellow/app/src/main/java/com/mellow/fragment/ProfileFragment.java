@@ -13,8 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.mellow.adapter.FlowArrayAdapter;
-import com.mellow.client.adapter.PostAdapter;
-import com.mellow.client.adapter.UserAdapter;
+import com.mellow.client.service.UserService;
 import com.mellow.mellow.R;
 import com.mellow.model.Post;
 
@@ -27,7 +26,7 @@ public class ProfileFragment extends Fragment {
     TextView usernameTextView;
     TextView totalAmountOfLikes;
     TextView totalAmountOfPost;
-    private UserAdapter userAdapter;
+    private UserService userService;
     private List<Post> postsFromUser;
 
     @Override
@@ -39,7 +38,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        this.userAdapter = new UserAdapter(view.getContext());
+        this.userService = new UserService(view.getContext());
         setUpListView(view, savedInstanceState);
         setUpTotalAmountOfLikes(view);
         setUpTotalAmountOfPost(view);
@@ -52,7 +51,7 @@ public class ProfileFragment extends Fragment {
         LayoutInflater infalter = getLayoutInflater(bundle);
         ViewGroup header = (ViewGroup) infalter.inflate(R.layout.content_profile_information, profileListView, false);
         profileListView.addHeaderView(header);
-        postsFromUser = userAdapter.getPostsFromUser(getUserId(view.getContext()));
+        postsFromUser = userService.getPostsFromUser(getUserId(view.getContext()));
         Collections.reverse(postsFromUser);
         ArrayAdapter adapter = new FlowArrayAdapter(getActivity().getApplicationContext(), postsFromUser);
         profileListView.setAdapter(adapter);

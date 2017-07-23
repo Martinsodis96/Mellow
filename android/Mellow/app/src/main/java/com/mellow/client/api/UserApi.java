@@ -14,7 +14,7 @@ import retrofit2.http.Url;
 
 public interface UserApi {
 
-    @POST("users")
+    @POST("register")
     Call<Void> createUser(@Body User user);
 
     @GET
