@@ -1,9 +1,12 @@
 package com.mellow.client.service;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import com.mellow.client.api.AuthenticationApi;
 import com.mellow.model.Credentials;
+import com.mellow.model.User;
 
 import java.io.IOException;
 import java.util.concurrent.Callable;
@@ -26,7 +29,9 @@ public class AuthenticationService extends Service {
             @Override
             public Response call() throws Exception {
                 try {
-                    return authenticationApi.login(credentials).execute();
+                    Response response = authenticationApi.login(credentials).execute();
+                    saveAuthenticationToken(response);
+                    return response;
                 } catch (IOException e) {
                     e.printStackTrace();
                     throw new IOException(e);
@@ -60,4 +65,12 @@ public class AuthenticationService extends Service {
             return null;
         }
     }
+
+    protected void saveAuthenticationToken(Response response) {
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getContext()).edit();
+        editor.putString("access_token", response.headers().get("access_token"));
+        editor.putString("refresh_token", response.headers().get("refresh_token"));
+        editor.apply();
+    }
+
 }

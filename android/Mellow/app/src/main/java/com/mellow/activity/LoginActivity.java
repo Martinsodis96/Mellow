@@ -39,21 +39,32 @@ public class LoginActivity extends AppCompatActivity {
         if (usernameAndPasswordIsPresent()) {
             Response response = authenticationService.login(new Credentials(usernameInput.getText().toString(),
                     passwordInput.getText().toString()));
-            if (response.isSuccessful()) {
-                saveLoggedIn((User) response.body());
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
-                errorMessage.setText("");
-                finish();
-            } else {
-                errorMessage.setText(R.string.username_already_taken);
+            switch (response.code()) {
+                case 200: {
+                    saveLoggedIn((User) response.body());
+                    Intent intent = new Intent(this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                    break;
+                }
+                case 400: {
+                    errorMessage.setText(getResources().getString(R.string.invalid_username, usernameInput.getText().toString()));
+                    break;
+                }
+                case 401: {
+                    errorMessage.setText(R.string.invalid_password);
+                    break;
+                }
+                default:{
+                    errorMessage.setText(R.string.server_connection_error);
+                }
             }
-        }else{
+        } else {
             //TODO add a error message saying that the input field is empty
         }
     }
 
-    private boolean usernameAndPasswordIsPresent(){
+    private boolean usernameAndPasswordIsPresent() {
         return !usernameInput.getText().toString().isEmpty() && !passwordInput.getText().toString().isEmpty();
     }
 
@@ -62,6 +73,6 @@ public class LoginActivity extends AppCompatActivity {
         editor.putBoolean("isLoggedIn", true);
         editor.putLong("userId", user.getId());
         editor.putString("username", user.getUsername());
-        editor.apply();
+        editor.commit();
     }
 }

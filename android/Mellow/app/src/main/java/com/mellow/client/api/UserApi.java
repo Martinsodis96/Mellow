@@ -14,12 +14,6 @@ import retrofit2.http.Url;
 
 public interface UserApi {
 
-    @POST("register")
-    Call<Void> createUser(@Body User user);
-
-    @GET
-    Call<User> getUserByUrl(@Url String url);
-
     @GET("users/{userId}")
     Call<User> getUserById(@Path("userId") Long userId);
 

@@ -38,7 +38,11 @@ public class PostService extends Service{
                 try {
                     Response response = postApi.getAllPosts().execute();
                     if (response.isSuccessful()) {
-                        return (List<Post>) response.body();
+                        if(!response.body().toString().isEmpty()){
+                            saveAuthenticationToken(response);
+                            return (List<Post>) response.body();
+                        }
+                        return new ArrayList<>();
                     } else {
                         //TODO display to the user that there is something wrong
                         throw new IOException();
@@ -65,6 +69,7 @@ public class PostService extends Service{
                 try {
                     Response response = postApi.createPost(userId, post).execute();
                     if (response.isSuccessful()) {
+                        saveAuthenticationToken(response);
                         return response;
                     } else {
                         //TODO display to the user that there is something wrong
@@ -92,6 +97,7 @@ public class PostService extends Service{
                 try {
                     Response response = postApi.addLikeToPost(postId, like).execute();
                     if (response.isSuccessful()) {
+                        saveAuthenticationToken(response);
                         return response;
                     } else {
                         //TODO display to the user that there is something wrong
@@ -119,6 +125,7 @@ public class PostService extends Service{
                 try {
                     Response response = postApi.removeLikeFromPost(postId, likeId).execute();
                     if(response.isSuccessful()){
+                        saveAuthenticationToken(response);
                         return response;
                     }else{
                         //TODO display to the user that there is something wrong

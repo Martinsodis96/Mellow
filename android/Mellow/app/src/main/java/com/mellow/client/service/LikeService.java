@@ -35,10 +35,10 @@ public class LikeService extends Service{
                 try {
                     Response response = likeApi.getLikeByUrl(url).execute();
                     if (response.isSuccessful()) {
+                        saveAuthenticationToken(response);
                         return (Like) response.body();
                     } else {
                         //TODO display to the user that there is something wrong
-                        System.out.println(response.code());
                         throw new IOException();
                     }
                 } catch (IOException e) {

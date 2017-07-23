@@ -37,6 +37,7 @@ public class CommentService extends Service{
                 try {
                     Response response = commentApi.getAllComments(postId).execute();
                     if (response.isSuccessful()) {
+                        saveAuthenticationToken(response);
                         return (List<Comment>) response.body();
                     } else {
                         //TODO display to the user that there is something wrong
@@ -64,6 +65,7 @@ public class CommentService extends Service{
                 try {
                     Response response = commentApi.createComment(postId, comment).execute();
                     if (response.isSuccessful()) {
+                        saveAuthenticationToken(response);
                         return response;
                     } else {
                         //TODO display to the user that there is something wrong
