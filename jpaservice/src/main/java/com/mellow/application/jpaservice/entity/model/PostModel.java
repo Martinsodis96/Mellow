@@ -1,8 +1,12 @@
 package com.mellow.application.jpaservice.entity.model;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "`post`")
@@ -10,10 +14,12 @@ public class PostModel extends AbstractModel {
 
     private String content;
 
-    @OneToMany(mappedBy = "post")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<CommentModel> comments;
 
-    @OneToMany(mappedBy = "post")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<LikeModel> likes;
 
     @ManyToOne(fetch = FetchType.EAGER)
