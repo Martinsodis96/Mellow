@@ -51,7 +51,9 @@ public class AuthenticationService extends Service {
             @Override
             public Response call() throws Exception {
                 try {
-                    return authenticationApi.login(credentials).execute();
+                    Response response = authenticationApi.register(credentials).execute();
+                    saveAuthenticationToken(response);
+                    return response;
                 } catch (IOException e) {
                     e.printStackTrace();
                     throw new IOException(e);

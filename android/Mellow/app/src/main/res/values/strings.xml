@@ -10,6 +10,8 @@
     <string name="username_input">Enter username</string>
     <string name="password_input">Enter password</string>
     <string name="title_activity_create_post">Post</string>
+    <string name="title_activity_register">Create an account</string>
+    <string name="title_activity_login">Login</string>
     <string name="MELLOW_BASE_URL">http://192.168.0.21:8080/</string>
     <string name="username_already_taken">That username is already taken, please choose another one.</string>
     <string name="invalid_username">Could not find a user with username: %1$s</string>
@@ -17,4 +19,8 @@
     <string name="server_connection_error">There seems to be a connection error to the server, typ again later.</string>
     <string name="username_too_short">Username must be at least 4 characters long.</string>
     <string name="title_activity_post">Comment</string>
+    <string name="access_type_information_register">Already have an account?</string>
+    <string name="access_type_register">Sign in!</string>
+    <string name="access_type_information_login">Don\'t have an account yet?</string>
+    <string name="access_type_login">Register!</string>
 </resources>

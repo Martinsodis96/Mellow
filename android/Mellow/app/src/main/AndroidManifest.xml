@@ -12,7 +12,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name="com.mellow.activity.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name="com.mellow.activity.CreatePostActivity"
             android:label="@string/title_activity_create_post"
@@ -24,7 +24,8 @@
         </activity>
         <activity
             android:name="com.mellow.activity.LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:label="@string/title_activity_register"
+            android:theme="@style/loginTheme"/>
         <activity
             android:name="com.mellow.activity.LoadingActivity"
             android:theme="@style/SplashTheme">

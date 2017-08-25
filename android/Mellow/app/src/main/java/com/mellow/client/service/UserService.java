@@ -65,7 +65,6 @@ public class UserService extends Service {
             public List<Post> call() throws Exception {
                 try {
                     Response response = userApi.getPostsFromUsers(userId).execute();
-                    System.out.println(response.code());
                     if (response.isSuccessful()) {
                         saveAuthenticationToken(response);
                         return (List<Post>) response.body();
