@@ -13,6 +13,8 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
+import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AuthenticationService extends Service {
@@ -24,55 +26,18 @@ public class AuthenticationService extends Service {
         authenticationApi = getRetrofit().create(AuthenticationApi.class);
     }
 
-    public Response login(final Credentials credentials) {
-        Future<Response> future = getExecutor().submit(new Callable<Response>() {
-            @Override
-            public Response call() throws Exception {
-                try {
-                    Response response = authenticationApi.login(credentials).execute();
-                    saveAuthenticationToken(response);
-                    return response;
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    throw new IOException(e);
-                }
-            }
-        });
-        try {
-            return future.get();
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-            return null;
-        }
+    public Call<User> login(final Credentials credentials) {
+        return authenticationApi.login(credentials);
     }
 
-    public Response register(final Credentials credentials) {
-        Future<Response> future = getExecutor().submit(new Callable<Response>() {
-            @Override
-            public Response call() throws Exception {
-                try {
-                    Response response = authenticationApi.register(credentials).execute();
-                    saveAuthenticationToken(response);
-                    return response;
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    throw new IOException(e);
-                }
-            }
-        });
-        try {
-            return future.get();
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-            return null;
-        }
+    public Call<Void> register(Credentials credentials){
+        return authenticationApi.register(credentials);
     }
 
-    protected void saveAuthenticationToken(Response response) {
+    public void saveAuthenticationToken(Response response) {
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getContext()).edit();
         editor.putString("access_token", response.headers().get("access_token"));
         editor.putString("refresh_token", response.headers().get("refresh_token"));
         editor.apply();
     }
-
 }

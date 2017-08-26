@@ -46,7 +46,7 @@ public abstract class Service {
         return this.executor;
     }
 
-    protected Context getContext(){
+    protected Context getContext() {
         return this.context;
     }
 
