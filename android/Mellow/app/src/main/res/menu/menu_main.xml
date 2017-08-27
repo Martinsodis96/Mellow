@@ -5,21 +5,22 @@
     tools:context="com.mellow.activity.MainActivity">
     <item
         android:id="@+id/action_search"
-        android:icon="@drawable/abc_ic_search_api_mtrl_alpha"
+        android:icon="@drawable/ic_feather_white_24dp"
         android:title="@string/search_title"
         app:actionViewClass="android.support.v7.widget.SearchView"
         app:showAsAction="ifRoom|collapseActionView" />
 
     <item android:id="@+id/action_option"
-        android:showAsAction="ifRoom|collapseActionView">
+        app:showAsAction="ifRoom|collapseActionView"
+        android:title="">
         <menu>
             <item android:id="@+id/action_settings"
                 android:icon="@android:drawable/ic_menu_preferences"
-                android:showAsAction="ifRoom"
+                app:showAsAction="ifRoom"
                 android:title="1" />
             <item android:id="@+id/action_help"
                 android:icon="@android:drawable/ic_menu_help"
-                android:showAsAction="ifRoom"
+                app:showAsAction="ifRoom"
                 android:title="2" />
         </menu>
     </item>

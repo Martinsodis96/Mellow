@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "11629503626",
+    "firebase_url": "https://mellow-c6cc7.firebaseio.com",
+    "project_id": "mellow-c6cc7",
+    "storage_bucket": "mellow-c6cc7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:11629503626:android:507841cd152dde54",
+        "android_client_info": {
+          "package_name": "com.mellow.application"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "11629503626-odm8prh6tc92bjp6o3deidi74dp93et5.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "11629503626-0e2n0n9hamn1bjgphvbt8c117vmqj5v5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWAmpDjTt8FJwjlKRw1tbl6edfuk9PXqg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
