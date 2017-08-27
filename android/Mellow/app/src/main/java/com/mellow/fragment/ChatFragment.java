@@ -37,22 +37,13 @@ public class ChatFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        contactListView = (ListView) view.findViewById(R.id.contact_list);
+        contactListView = view.findViewById(R.id.contact_list);
         //TODO add ChatAdapter and ChatApi.
         List<Chat> chats = new ArrayList<>();
         List<User> users = new ArrayList<>();
         List<Message> messages = new ArrayList<>();
-        List<User> users2 = new ArrayList<>();
-        List<Message> messages2 = new ArrayList<>();
-        users.add(new User("Testssons son"));
-        messages.add(new Message("This is the content of a message."));
-        messages.add(new Message("last This is the content of a message."));
-        users2.add(new User("Martin tester"));
-        users2.add(new User("Martin2 tester"));
-        messages2.add(new Message("Did you know that you cant see the whole message?"));
-
+        users.add(new User("Conversation 1"));
         chats.add(new Chat(users).setMessages(messages));
-        chats.add(new Chat(users2).setMessages(messages2));
         listAdapter = new ChatArrayAdapter(getActivity().getApplicationContext(), chats);
         contactListView.setAdapter(listAdapter);
     }

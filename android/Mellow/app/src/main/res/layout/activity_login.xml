@@ -47,18 +47,19 @@
             android:layout_centerInParent="true" />
 
         <EditText
+            android:id="@+id/password_input"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:id="@+id/password_input"
-            android:hint="@string/password_input"
-            android:textAlignment="center"
-            android:layout_marginTop="15dp"
-            android:singleLine="true"
-            android:textColorHint="#909090"
-            android:textSize="20sp"
-            android:backgroundTint="#5c5c5c"
+            android:layout_alignStart="@+id/username_input"
             android:layout_below="@+id/username_input"
-            android:layout_alignStart="@+id/username_input" />
+            android:layout_marginTop="15dp"
+            android:backgroundTint="#5c5c5c"
+            android:hint="@string/password_input"
+            android:inputType="textPassword"
+            android:singleLine="true"
+            android:textAlignment="center"
+            android:textColorHint="#909090"
+            android:textSize="20sp" />
     </RelativeLayout>
 
     <TextView

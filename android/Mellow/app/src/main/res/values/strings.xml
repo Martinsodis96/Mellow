@@ -24,4 +24,7 @@
     <string name="access_type_information_login">Don\'t have an account yet?</string>
     <string name="access_type_login">Register!</string>
     <string name="missing_credentials">Missing username or password.</string>
+    <string name="title_activity_chat">ChatActivity</string>
+    <string name="send">Send</string>
+    <string name="type_a_message">Type a message…</string>
 </resources>

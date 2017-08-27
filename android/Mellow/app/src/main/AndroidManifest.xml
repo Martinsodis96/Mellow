@@ -12,9 +12,9 @@
         android:theme="@style/AppTheme">
         <activity
             android:name="com.mellow.activity.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.mellow.activity.CreatePostActivity"
+            android:name="com.mellow.activity.PostActivity"
             android:label="@string/title_activity_create_post"
             android:parentActivityName="com.mellow.activity.MainActivity"
             android:theme="@style/AppTheme">
@@ -25,7 +25,7 @@
         <activity
             android:name="com.mellow.activity.LoginActivity"
             android:label="@string/title_activity_register"
-            android:theme="@style/loginTheme"/>
+            android:theme="@style/loginTheme" />
         <activity
             android:name="com.mellow.activity.LoadingActivity"
             android:theme="@style/SplashTheme">
@@ -35,8 +35,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.mellow.activity.PostActivity"
-            android:windowSoftInputMode="adjustResize"> ></activity>
+        <activity
+            android:name="com.mellow.activity.CommentActivity"
+            android:windowSoftInputMode="adjustResize"/>
+        <activity
+            android:name="com.mellow.activity.ChatActivity"
+            android:label="@string/title_activity_chat"
+            android:theme="@style/loginTheme" />
     </application>
 
 </manifest>

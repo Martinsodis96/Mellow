@@ -165,18 +165,17 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private User getUserFromLocationHeader(String location) {
-        System.out.println(location);
         String[] urlParts = location.split("/");
         Long id = Long.valueOf(urlParts[urlParts.length - 1]);
         return new UserService(this).getUserById(id);
     }
 
     private void initializePalettes(){
-        this.usernameInput = (EditText) findViewById(R.id.username_input);
-        this.passwordInput = (EditText) findViewById(R.id.password_input);
-        this.errorMessage = (TextView) findViewById(R.id.error_message);
-        this.accessType = (TextView) findViewById(R.id.access_type_text);
-        this.accessTypeInformation = (TextView) findViewById(R.id.access_type_information);
-        this.progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        this.usernameInput = findViewById(R.id.username_input);
+        this.passwordInput = findViewById(R.id.password_input);
+        this.errorMessage = findViewById(R.id.error_message);
+        this.accessType = findViewById(R.id.access_type_text);
+        this.accessTypeInformation = findViewById(R.id.access_type_information);
+        this.progressBar = findViewById(R.id.progressBar);
     }
 }

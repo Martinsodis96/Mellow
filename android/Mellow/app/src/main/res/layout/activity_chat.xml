@@ -4,6 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.mellow.activity.CreatePostActivity">
-    <include layout="@layout/content_create_post" />
+    tools:context="com.mellow.activity.ChatActivity">
+
+
+    <include layout="@layout/content_chat" />
+
 </android.support.design.widget.CoordinatorLayout>

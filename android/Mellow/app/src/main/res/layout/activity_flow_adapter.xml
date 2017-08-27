@@ -155,14 +155,14 @@
             android:background="#ffffff" />
 
         <Button
+            android:id="@+id/share_button"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:text="@string/share_string"
-            android:id="@+id/share_button"
             android:layout_weight="1"
+            android:background="#ffffff"
+            android:text="@string/share_string"
             android:textColor="#ff8400"
-            android:textSize="14sp"
-            android:background="#ffffff" />
+            android:textSize="14dp" />
     </LinearLayout>
 
 </LinearLayout>

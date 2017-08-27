@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.mellow.activity.PostActivity;
+import com.mellow.activity.CommentActivity;
 import com.mellow.client.service.LikeService;
 import com.mellow.client.service.PostService;
 import com.mellow.mellow.R;
@@ -30,18 +30,18 @@ public class FlowArrayAdapter extends ArrayAdapter<Post> {
     private LikeService likeService;
     private Long userId;
     private Like userLike;
-    Context context;
-    ImageView profilePicture;
-    Button likeButton;
-    Button commentButton;
-    Button shareButton;
-    TextView contentText;
-    TextView usernameTextView;
-    TextView amountOfLikes;
-    TextView amountOfComments;
-    LinearLayout informationContainer;
-    LinearLayout likesContainer;
-    LinearLayout commentsContainer;
+    private Context context;
+    private ImageView profilePicture;
+    private Button likeButton;
+    private Button commentButton;
+    private Button shareButton;
+    private TextView contentText;
+    private TextView usernameTextView;
+    private TextView amountOfLikes;
+    private TextView amountOfComments;
+    private LinearLayout informationContainer;
+    private LinearLayout likesContainer;
+    private LinearLayout commentsContainer;
 
     public FlowArrayAdapter(Context context, List<Post> posts) {
         super(context, R.layout.activity_flow_adapter, posts);
@@ -71,7 +71,7 @@ public class FlowArrayAdapter extends ArrayAdapter<Post> {
         commentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent startPostActivity = new Intent(context, PostActivity.class);
+                Intent startPostActivity = new Intent(context, CommentActivity.class);
                 startPostActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startPostActivity.putExtra("postId", post.getId());
                 startPostActivity.putExtra("username", post.getUser().getUsername());
@@ -152,17 +152,17 @@ public class FlowArrayAdapter extends ArrayAdapter<Post> {
     }
 
     private void initializePalettes(View view){
-        this.profilePicture = (ImageView) view.findViewById(R.id.profile_picture);
-        this.likeButton = (Button) view.findViewById(R.id.like_button);
-        this.commentButton = (Button) view.findViewById(R.id.comment_button);
-        this.shareButton = (Button) view.findViewById(R.id.share_button);
-        this.contentText = (TextView) view.findViewById(R.id.content_text);
-        this.usernameTextView = (TextView) view.findViewById(R.id.username);
-        this.informationContainer = (LinearLayout) view.findViewById(R.id.information_container);
-        this.amountOfLikes = (TextView) view.findViewById(R.id.amount_of_likes);
-        this.amountOfComments = (TextView) view.findViewById(R.id.amount_of_comments);
-        this.likesContainer = (LinearLayout) view.findViewById(R.id.likes_container);
-        this.commentsContainer = (LinearLayout) view.findViewById(R.id.comments_container);
+        this.profilePicture = view.findViewById(R.id.profile_picture);
+        this.likeButton = view.findViewById(R.id.like_button);
+        this.commentButton = view.findViewById(R.id.comment_button);
+        this.shareButton = view.findViewById(R.id.share_button);
+        this.contentText = view.findViewById(R.id.content_text);
+        this.usernameTextView = view.findViewById(R.id.username);
+        this.informationContainer = view.findViewById(R.id.information_container);
+        this.amountOfLikes = view.findViewById(R.id.amount_of_likes);
+        this.amountOfComments = view.findViewById(R.id.amount_of_comments);
+        this.likesContainer = view.findViewById(R.id.likes_container);
+        this.commentsContainer = view.findViewById(R.id.comments_container);
     }
 
     private Long getUserId(Context context){

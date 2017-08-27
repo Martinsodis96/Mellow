@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
-import com.mellow.activity.CreatePostActivity;
+import com.mellow.activity.PostActivity;
 import com.mellow.adapter.FlowArrayAdapter;
 import com.mellow.client.service.PostService;
 import com.mellow.mellow.R;
@@ -41,7 +41,7 @@ public class FlowFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        postListView = (ListView) view.findViewById(R.id.post_listview);
+        postListView = view.findViewById(R.id.post_listview);
         makeFloatingActionButtonClickable((FloatingActionButton) view.findViewById(R.id.floating_action_button),
                 view.getContext());
         postService = new PostService(view.getContext());
@@ -54,7 +54,7 @@ public class FlowFragment extends Fragment {
     public void makeFloatingActionButtonClickable(FloatingActionButton floatingActionButton, final Context context){
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(context, CreatePostActivity.class);
+                Intent intent = new Intent(context, PostActivity.class);
                 startActivity(intent);
             }
         });
