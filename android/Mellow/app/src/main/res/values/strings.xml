@@ -12,7 +12,7 @@
     <string name="title_activity_create_post">Post</string>
     <string name="title_activity_register">Create an account</string>
     <string name="title_activity_login">Login</string>
-    <string name="MELLOW_BASE_URL">http://192.168.0.21:8080/</string>
+    <string name="MELLOW_BASE_URL">http://188.166.66.165:8080/mellow/</string>
     <string name="username_already_taken">That username is already taken, please choose another one.</string>
     <string name="invalid_username">Could not find a user with username: %1$s</string>
     <string name="invalid_password">Wrong password.</string>

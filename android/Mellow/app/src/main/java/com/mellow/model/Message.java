@@ -5,6 +5,9 @@ public class Message {
     private String content;
     private String username;
 
+    public Message() {
+    }
+
     public Message(String content, String username) {
         this.content = content;
         this.username = username;

@@ -3,21 +3,21 @@ package com.mellow.activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.mellow.adapter.CustomDialogClass;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.mellow.adapter.MessageArrayAdapter;
 import com.mellow.mellow.R;
 import com.mellow.model.Message;
-import com.mellow.model.Post;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,71 +26,70 @@ public class ChatActivity extends AppCompatActivity {
 
     private Button sendButton;
     private EditText messageInput;
-    private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter messageAdapter;
     private LinearLayoutManager linearLayoutManager;
     private List<Message> messages;
     private SharedPreferences sharedPreferences;
+    private DatabaseReference databaseReference;
+    private DatabaseReference messagesReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
         initializePalettes();
+        this.databaseReference = FirebaseDatabase.getInstance().getReference();
+        this.messagesReference = databaseReference.child("messages");
         this.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        mRecyclerView = findViewById(R.id.messages_list);
-        mRecyclerView.setHasFixedSize(true);
-        linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setStackFromEnd(true);
-        mRecyclerView.setLayoutManager(linearLayoutManager);
         this.messages = new ArrayList<>();
-        messages.add(new Message("This is a message", "someone"));
-        messages.add(new Message("This is another message", "user"));
-        messages.add(new Message("This is an even longer message that creates multiple rows just to see what it looks like", "user"));
-        mAdapter = new MessageArrayAdapter(messages, this);
-        mRecyclerView.setAdapter(mAdapter);
-    }
-
-/*    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_create_post, menu);
-        return true;
+        setupRecycleView();
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home: {
-                if(!postInput.getText().toString().isEmpty()){
-                    CustomDialogClass customDialogClass = new CustomDialogClass(this);
-                    customDialogClass.show();
-                    customDialogClass.getWindow().setAttributes(getNewWidthParam(customDialogClass));
-                } else {
-                    NavUtils.navigateUpFromSameTask(this);
+    protected void onStart() {
+        super.onStart();
+        messagesReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                List<Message> newMessages = new ArrayList<>();
+                for(DataSnapshot childDataSnapshot : dataSnapshot.getChildren()){
+                    newMessages.add(childDataSnapshot.getValue(Message.class));
                 }
-                return true;
+                messages.clear();
+                messages.addAll(newMessages);
+                if(!messages.isEmpty())
+                    recyclerView.smoothScrollToPosition(messages.size() - 1);
+                messageAdapter.notifyDataSetChanged();
             }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
-            case R.id.post: {
-                if (!postInput.getText().toString().isEmpty()) {
-                    postService.createPost(new Post(postInput.getText().toString()), userId);
-                    NavUtils.navigateUpFromSameTask(this);
-                }
-                return true;
             }
-        }
-        return super.onOptionsItemSelected(item);
-    }*/
+        });
+    }
+
+
+    private void setupRecycleView(){
+        recyclerView.setHasFixedSize(true);
+        linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setStackFromEnd(true);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        messageAdapter = new MessageArrayAdapter(messages, this);
+        recyclerView.setAdapter(messageAdapter);
+    }
 
     public void onSendClicked(View view) {
-        messages.add(new Message(messageInput.getText().toString(), sharedPreferences.getString("username", "")));
-        mAdapter.notifyDataSetChanged();
-        mRecyclerView.smoothScrollToPosition(messages.size()-1);
+        List<Message> newMessages = new ArrayList<>();
+        newMessages.addAll(messages);
+        newMessages.add(new Message(messageInput.getText().toString(), sharedPreferences.getString("username", "")));
+        messagesReference.setValue(newMessages);
         messageInput.setText("");
     }
 
     private void initializePalettes() {
         this.sendButton = findViewById(R.id.send_button);
         this.messageInput = findViewById(R.id.message_input);
+        this.recyclerView = findViewById(R.id.messages_list);
     }
 }
