@@ -23,9 +23,9 @@ public final class AuthorizationResponseFilter implements ContainerResponseFilte
     public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext) throws IOException {
         if (statusIsSuccess(responseContext.getStatus())) {
             if (uriShouldReturnRefreshToken(requestContext)) {
-                responseContext.getHeaders().add("refresh_token", authenticationService.createRefreshToken());
+                responseContext.getHeaders().add("refresh_token", authenticationService.getRefreshToken());
             }
-            responseContext.getHeaders().add("access_token", authenticationService.createAccessToken());
+            responseContext.getHeaders().add("access_token", authenticationService.getAccessToken());
         }
     }
 

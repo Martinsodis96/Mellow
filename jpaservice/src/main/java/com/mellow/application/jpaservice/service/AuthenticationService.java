@@ -17,7 +17,8 @@ import java.util.Optional;
 import java.util.function.Function;
 
 import static com.mellow.application.jpaservice.service.helper.Authentication.checkCredentialsPresence;
-import static com.mellow.application.jpaservice.service.helper.Authentication.createToken;
+import static com.mellow.application.jpaservice.service.helper.Authentication.createAccessToken;
+import static com.mellow.application.jpaservice.service.helper.Authentication.createRefreshToken;
 import static com.mellow.application.jpaservice.service.helper.Authentication.generateSalt;
 import static com.mellow.application.jpaservice.service.helper.Authentication.hashPassword;
 import static com.mellow.application.jpaservice.service.helper.Authentication.hashingIterations;
@@ -68,12 +69,12 @@ public class AuthenticationService {
         validateToken(token, "Refresh Token", issuer, configHelper.getJwtRefreshSecretValue());
     }
 
-    public String createAccessToken() {
-        return createToken("Access Token", DateUtils.addHours(new Date(), 2), configHelper.getJwtAccessSecretValue());
+    public String getAccessToken() {
+        return createAccessToken("Access Token", DateUtils.addHours(new Date(), 2), configHelper.getJwtAccessSecretValue());
     }
 
-    public String createRefreshToken() {
-        return createToken("Refresh Token", DateUtils.addDays(new Date(), 12), configHelper.getJwtRefreshSecretValue());
+    public String getRefreshToken() {
+        return createRefreshToken("Refresh Token", configHelper.getJwtRefreshSecretValue());
     }
 
     private UserModel execute(Function<UserRepository, UserModel> operation, String dbExMsg) {

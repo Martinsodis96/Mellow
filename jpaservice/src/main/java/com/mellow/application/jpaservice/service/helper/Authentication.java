@@ -6,6 +6,7 @@ import com.mellow.application.jpaservice.repository.UserRepository;
 import com.mellow.application.jpaservice.service.exception.HashingException;
 import com.mellow.application.jpaservice.service.exception.InvalidInputException;
 import com.mellow.application.jpaservice.service.exception.UnAuthorizedException;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -47,8 +48,6 @@ public final class Authentication {
         return storedPassword.equals(hashPassword(password, salt));
     }
 
-
-
     public static void validateToken(String token, String subject, String issuer, String secret) {
         if (Optional.ofNullable(token).isPresent()) {
             try {
@@ -68,7 +67,7 @@ public final class Authentication {
         }
     }
 
-    public static String createToken(String subject, Date expirationDate, String secret) {
+    public static String createAccessToken(String subject, Date expirationDate, String secret) {
         return Jwts.builder()
                 .setHeaderParam("typ", "JWT")
                 .setIssuer("https://stormpath.com/")
@@ -78,9 +77,17 @@ public final class Authentication {
                 .compact();
     }
 
+    public static String createRefreshToken(String subject, String secret) {
+        return Jwts.builder()
+                .setHeaderParam("typ", "JWT")
+                .setIssuer("https://stormpath.com/")
+                .setSubject(subject)
+                .signWith(SignatureAlgorithm.HS512, secret)
+                .compact();
+    }
 
     public static void validateCredentials(Credentials credentials, UserRepository userRepository) {
-        if (credentials.getUsername().length() > 3){
+        if (credentials.getUsername().length() > 3) {
             Optional<UserModel> optionalUser = userRepository.findByUsername(credentials.getUsername());
             if (optionalUser.isPresent())
                 throw new InvalidInputException("Username is already taken");
