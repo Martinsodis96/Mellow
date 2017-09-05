@@ -1,11 +1,11 @@
-package com.mellow.application.jpaservice.entity.model;
+package com.mellow.application.jpaservice.entity;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "`user`")
-public class UserModel extends AbstractModel {
+public class User extends AbstractEntity {
 
     @Column(unique = true, nullable = false)
     private String username;
@@ -16,24 +16,21 @@ public class UserModel extends AbstractModel {
     private int saltingIterations;
 
     @OneToMany(mappedBy = "user")
-    private List<CommentModel> comments;
+    private List<Comment> comments;
 
     @OneToMany(mappedBy = "user")
-    private List<LikeModel> likes;
+    private List<Like> likes;
 
     @OneToMany(mappedBy = "user")
-    private List<MessageModel> messages;
-
-    @OneToMany(mappedBy = "user")
-    private List<PostModel> posts;
+    private List<Post> posts;
 
     @ManyToMany
-    private List<ChatModel> chats;
+    private List<Chat> chats;
 
-    protected UserModel() {
+    protected User() {
     }
 
-    public UserModel(String username, String password, String salt, int saltingIterations) {
+    public User(String username, String password, String salt, int saltingIterations) {
         this.username = username;
         this.password = password;
         this.salt = salt;
@@ -44,7 +41,7 @@ public class UserModel extends AbstractModel {
         return username;
     }
 
-    public UserModel setUsername(String username) {
+    public User setUsername(String username) {
         this.username = username;
         return this;
     }
@@ -73,47 +70,38 @@ public class UserModel extends AbstractModel {
         this.saltingIterations = saltingIterations;
     }
 
-    public List<CommentModel> getComments() {
+    public List<Comment> getComments() {
         return comments;
     }
 
-    public UserModel setComments(List<CommentModel> comments) {
+    public User setComments(List<Comment> comments) {
         this.comments = comments;
         return this;
     }
 
-    public List<LikeModel> getLikes() {
+    public List<Like> getLikes() {
         return likes;
     }
 
-    public UserModel setLikes(List<LikeModel> likes) {
+    public User setLikes(List<Like> likes) {
         this.likes = likes;
         return this;
     }
 
-    public List<MessageModel> getMessages() {
-        return messages;
-    }
-
-    public UserModel setMessages(List<MessageModel> messages) {
-        this.messages = messages;
-        return this;
-    }
-
-    public List<PostModel> getPosts() {
+    public List<Post> getPosts() {
         return posts;
     }
 
-    public UserModel setPosts(List<PostModel> posts) {
+    public User setPosts(List<Post> posts) {
         this.posts = posts;
         return this;
     }
 
-    public List<ChatModel> getChats() {
+    public List<Chat> getChats() {
         return chats;
     }
 
-    public UserModel setChats(List<ChatModel> chats) {
+    public User setChats(List<Chat> chats) {
         this.chats = chats;
         return this;
     }

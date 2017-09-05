@@ -1,11 +1,11 @@
 package com.mellow.application.jpaservice.repository;
 
-import com.mellow.application.jpaservice.entity.model.UserModel;
+import com.mellow.application.jpaservice.entity.User;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;
 
-public interface UserRepository extends CrudRepository<UserModel, Long> {
+public interface UserRepository extends CrudRepository<User, Long> {
 
-    Optional<UserModel> findByUsername(String username);
+    Optional<User> findByUsername(String username);
 }

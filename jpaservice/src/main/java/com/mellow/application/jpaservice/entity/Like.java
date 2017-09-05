@@ -1,4 +1,4 @@
-package com.mellow.application.jpaservice.entity.model;
+package com.mellow.application.jpaservice.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -7,35 +7,35 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "`like`")
-public class LikeModel extends AbstractModel {
+public class Like extends AbstractEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)
-    private PostModel post;
+    private Post post;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    private UserModel user;
+    private User user;
 
-    protected LikeModel() {
+    protected Like() {
     }
 
-    public LikeModel(PostModel post, UserModel user) {
+    public Like(Post post, User user) {
         this.post = post;
         this.user = user;
     }
 
-    public PostModel getPost() {
+    public Post getPost() {
         return post;
     }
 
-    public void setPost(PostModel post) {
+    public void setPost(Post post) {
         this.post = post;
     }
 
-    public UserModel getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(UserModel user) {
+    public void setUser(User user) {
         this.user = user;
     }
 }

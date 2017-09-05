@@ -1,12 +1,11 @@
 package com.mellow.application.jpaservice.service.helper;
 
 import com.mellow.application.jpaservice.entity.Credentials;
-import com.mellow.application.jpaservice.entity.model.UserModel;
+import com.mellow.application.jpaservice.entity.User;
 import com.mellow.application.jpaservice.repository.UserRepository;
 import com.mellow.application.jpaservice.service.exception.HashingException;
 import com.mellow.application.jpaservice.service.exception.InvalidInputException;
 import com.mellow.application.jpaservice.service.exception.UnAuthorizedException;
-import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -88,7 +87,7 @@ public final class Authentication {
 
     public static void validateCredentials(Credentials credentials, UserRepository userRepository) {
         if (credentials.getUsername().length() > 3) {
-            Optional<UserModel> optionalUser = userRepository.findByUsername(credentials.getUsername());
+            Optional<User> optionalUser = userRepository.findByUsername(credentials.getUsername());
             if (optionalUser.isPresent())
                 throw new InvalidInputException("Username is already taken");
         } else

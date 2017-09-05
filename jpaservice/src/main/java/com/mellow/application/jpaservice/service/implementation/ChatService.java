@@ -1,7 +1,7 @@
-package com.mellow.application.jpaservice.service;
+package com.mellow.application.jpaservice.service.implementation;
 
-import com.mellow.application.jpaservice.entity.model.ChatModel;
-import com.mellow.application.jpaservice.entity.model.UserModel;
+import com.mellow.application.jpaservice.entity.Chat;
+import com.mellow.application.jpaservice.entity.User;
 import com.mellow.application.jpaservice.repository.ChatRepository;
 import com.mellow.application.jpaservice.repository.UserRepository;
 import com.mellow.application.jpaservice.service.exception.DatabaseException;
@@ -25,13 +25,13 @@ public class ChatService {
         this.userRepository = userRepository;
     }
 
-    public ChatModel getChatById(Long chatId) {
+    public Chat getChatById(Long chatId) {
         return execute(chatRepository1 -> chatRepository1.findOne(chatId),
                 "Failed to get chat with id: " + chatId);
     }
 
-    public Iterable<ChatModel> getAllChats() {
-        Iterable<ChatModel> chats;
+    public Iterable<Chat> getAllChats() {
+        Iterable<Chat> chats;
         try {
             return chatRepository.findAll();
         } catch (DataAccessException e) {
@@ -39,16 +39,16 @@ public class ChatService {
         }
     }
 
-    public ChatModel createChat(List<UserModel> users) {
+    public Chat createChat(List<User> users) {
         return execute(chatRepository1 ->
-                        chatRepository1.save(new ChatModel(users)),
+                        chatRepository1.save(new Chat(users)),
                 "Failed To Create Chat");
     }
 
-    public ChatModel addUserToChat(Long chatId, Long userId) {
+    public Chat addUserToChat(Long chatId, Long userId) {
         return execute(chatRepository1 -> {
-            ChatModel chat = chatRepository.findOne(chatId);
-            UserModel user = userRepository.findOne(userId);
+            Chat chat = chatRepository.findOne(chatId);
+            User user = userRepository.findOne(userId);
             if (chat != null && user != null) {
                 chat.addUser(user);
                 return chatRepository.save(chat);
@@ -59,10 +59,10 @@ public class ChatService {
         }, "Failed to add user to chat.");
     }
 
-    public ChatModel removeUserFromChat(Long chatId, Long userId) {
+    public Chat removeUserFromChat(Long chatId, Long userId) {
         return execute(chatRepository1 -> {
-            ChatModel chat = chatRepository.findOne(chatId);
-            UserModel user = userRepository.findOne(userId);
+            Chat chat = chatRepository.findOne(chatId);
+            User user = userRepository.findOne(userId);
             if (chat != null && user != null) {
                 chat.removeUser(user);
                 return chatRepository.save(chat);
@@ -73,9 +73,9 @@ public class ChatService {
         }, "Failed to remove user from chat.");
     }
 
-    public List<UserModel> getAllUsersFromChat(Long chatId) {
+    public List<User> getAllUsersFromChat(Long chatId) {
         try {
-            ChatModel chat = chatRepository.findOne(chatId);
+            Chat chat = chatRepository.findOne(chatId);
             if (chat != null) {
                 return chat.getUsers();
             } else {
@@ -86,7 +86,7 @@ public class ChatService {
         }
     }
 
-    private ChatModel execute(Function<ChatRepository, ChatModel> operation, String dbExMsg) {
+    private Chat execute(Function<ChatRepository, Chat> operation, String dbExMsg) {
         try {
             return operation.apply(chatRepository);
         } catch (DataAccessException e) {

@@ -1,4 +1,4 @@
-package com.mellow.application.jpaservice.entity.model;
+package com.mellow.application.jpaservice.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -7,25 +7,25 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "`comment`")
-public class CommentModel extends AbstractModel {
+public class Comment extends AbstractEntity {
 
     private String content;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    private PostModel post;
+    private Post post;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    private UserModel user;
+    private User user;
 
-    protected CommentModel() {
+    protected Comment() {
     }
 
-    public CommentModel(String content, PostModel post) {
+    public Comment(String content, Post post) {
         this.content = content;
         this.post = post;
     }
 
-    public PostModel getPost() {
+    public Post getPost() {
         return post;
     }
 
@@ -33,21 +33,21 @@ public class CommentModel extends AbstractModel {
         return content;
     }
 
-    public CommentModel setContent(String content) {
+    public Comment setContent(String content) {
         this.content = content;
         return this;
     }
 
-    public UserModel getUser() {
+    public User getUser() {
         return user;
     }
 
-    public CommentModel setPost(PostModel post) {
+    public Comment setPost(Post post) {
         this.post = post;
         return this;
     }
 
-    public CommentModel setUser(UserModel user) {
+    public Comment setUser(User user) {
         this.user = user;
         return this;
     }

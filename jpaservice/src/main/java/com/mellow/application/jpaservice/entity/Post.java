@@ -1,4 +1,4 @@
-package com.mellow.application.jpaservice.entity.model;
+package com.mellow.application.jpaservice.entity;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -6,29 +6,28 @@ import org.hibernate.annotations.LazyCollectionOption;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "`post`")
-public class PostModel extends AbstractModel {
+public class Post extends AbstractEntity {
 
     private String content;
 
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
-    private List<CommentModel> comments;
+    private List<Comment> comments;
 
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
-    private List<LikeModel> likes;
+    private List<Like> likes;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    private UserModel user;
+    private User user;
 
-    protected PostModel() {
+    protected Post() {
     }
 
-    public PostModel(String content, UserModel user) {
+    public Post(String content, User user) {
         this.content = content;
         this.user = user;
         this.likes = new ArrayList<>();
@@ -39,44 +38,44 @@ public class PostModel extends AbstractModel {
         return content;
     }
 
-    public List<CommentModel> getComments() {
+    public List<Comment> getComments() {
         return comments;
     }
 
-    public PostModel setComments(List<CommentModel> comments) {
+    public Post setComments(List<Comment> comments) {
         this.comments = comments;
         return this;
     }
 
-    public List<LikeModel> getLikes() {
+    public List<Like> getLikes() {
         return likes;
     }
 
-    public PostModel setLikes(List<LikeModel> likes) {
+    public Post setLikes(List<Like> likes) {
         this.likes = likes;
         return this;
     }
 
-    public PostModel addLike(LikeModel like) {
+    public Post addLike(Like like) {
         this.likes.add(like);
         return this;
     }
 
-    public PostModel removeLike(LikeModel like) {
+    public Post removeLike(Like like) {
         this.likes.remove(like);
         return this;
     }
 
-    public UserModel getUser() {
+    public User getUser() {
         return user;
     }
 
-    public PostModel setUser(UserModel user) {
+    public Post setUser(User user) {
         this.user = user;
         return this;
     }
 
-    public PostModel setContent(String content) {
+    public Post setContent(String content) {
         this.content = content;
         return this;
     }
