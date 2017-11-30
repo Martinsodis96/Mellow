@@ -1,7 +1,5 @@
 package com.mellow.application.jpaservice.service.implementation;
 
-import com.mellow.application.jpaservice.entity.Credentials;
-import com.mellow.application.jpaservice.entity.Post;
 import com.mellow.application.jpaservice.entity.User;
 import com.mellow.application.jpaservice.repository.PostRepository;
 import com.mellow.application.jpaservice.repository.UserRepository;
@@ -17,14 +15,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
-import static com.mellow.application.jpaservice.service.helper.Authentication.checkCredentialsPresence;
-import static com.mellow.application.jpaservice.service.helper.Authentication.generateSalt;
-import static com.mellow.application.jpaservice.service.helper.Authentication.hashPassword;
-import static com.mellow.application.jpaservice.service.helper.Authentication.hashingIterations;
-import static com.mellow.application.jpaservice.service.helper.Authentication.validateCredentials;
-
 @Service
-public class UserService implements CrudService<User>{
+public class UserService implements CrudService<User> {
 
     private UserRepository userRepository;
     private PostRepository postRepository;
@@ -51,38 +43,47 @@ public class UserService implements CrudService<User>{
     }
 
     @Override
-    public User create(User entity) {
-        Credentials credentials = new Credentials(entity.getUsername(), entity.getPassword());
-        checkCredentialsPresence(credentials);
-        validateCredentials(credentials, userRepository);
-        String salt = generateSalt();
-        String hashedPassword = hashPassword(credentials.getPassword(), salt);
-        return execute(userRepository -> userRepository.save(new User(credentials.getUsername(),
-                        hashedPassword, salt, hashingIterations)),
-                String.format("Failed to create User with username: %s", credentials.getUsername()));
+    public User create(User user) {
+        return execute(userRepository -> {
+            if (user != null) {
+                if (user.getUsername().length() > 3) {
+                    User existingUser = userRepository.findOne(user.getId());
+                    if (existingUser == null) {
+                        userRepository.save(user);
+                        return user;
+                    } else {
+                        throw new InvalidInputException(
+                                String.format("user with username: %s already exists.", user.getUsername()));
+                    }
+                } else
+                    throw new InvalidInputException("Username has to be at least 3 characters long");
+            } else {
+                throw new InvalidInputException("User can't be null");
+            }
+        }, String.format("Failed to create User with username: %s", user.getUsername()));
     }
 
     @Override
-    public User update(User entity) {
+    public User update(User user) {
         return null;
     }
 
     @Override
-    public User delete(User entity) {
+    public User delete(User user) {
         return execute(userRepository -> {
-            if(entity != null){
-                User user = userRepository.findOne(entity.getId());
-                if (user != null) {
+            if (user != null) {
+                User existingUser = userRepository.findOne(user.getId());
+                if (existingUser != null) {
                     userRepository.delete(user);
                     return user;
                 } else {
                     throw new NoSearchResultException(
-                            String.format("user with id: %d do not exist.", entity.getId()));
+                            String.format("user with id: %d do not exist.", user.getId()));
                 }
-            }else {
+            } else {
                 throw new InvalidInputException("User can't be null");
             }
-        }, String.format("Failed to remove user with id: %d", entity.getId()));
+        }, String.format("Failed to remove user with id: %d", user.getId()));
     }
 
     public User getByUsername(String username) {

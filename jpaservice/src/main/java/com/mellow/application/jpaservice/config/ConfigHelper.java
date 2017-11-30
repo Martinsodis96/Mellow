@@ -17,7 +17,7 @@ public final class ConfigHelper {
         this.fileName = fileName;
     }
 
-    public String getMySqlUserValue() {
+    String getMySqlUserValue() {
         try {
             return getValueFromInputStream("user");
         } catch (IOException e) {
@@ -25,7 +25,7 @@ public final class ConfigHelper {
         }
     }
 
-    public String getMySqlPasswordValue() {
+    String getMySqlPasswordValue() {
         try {
             return getValueFromInputStream("password");
         } catch (IOException e) {
@@ -33,7 +33,7 @@ public final class ConfigHelper {
         }
     }
 
-    public String getMySqlUrlValue() {
+    String getMySqlUrlValue() {
         try {
             return getValueFromInputStream("mysqlUrl");
         } catch (IOException e) {

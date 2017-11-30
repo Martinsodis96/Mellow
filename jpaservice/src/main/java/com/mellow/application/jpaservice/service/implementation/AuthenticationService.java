@@ -3,45 +3,49 @@ package com.mellow.application.jpaservice.service.implementation;
 import com.mellow.application.jpaservice.config.ConfigHelper;
 import com.mellow.application.jpaservice.entity.Credentials;
 import com.mellow.application.jpaservice.entity.User;
-import com.mellow.application.jpaservice.repository.UserRepository;
-import com.mellow.application.jpaservice.service.exception.NoSearchResultException;
 import com.mellow.application.jpaservice.service.exception.UnAuthorizedException;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.Optional;
 
 import static com.mellow.application.jpaservice.service.helper.Authentication.checkCredentialsPresence;
 import static com.mellow.application.jpaservice.service.helper.Authentication.createAccessToken;
 import static com.mellow.application.jpaservice.service.helper.Authentication.createRefreshToken;
+import static com.mellow.application.jpaservice.service.helper.Authentication.generateSalt;
+import static com.mellow.application.jpaservice.service.helper.Authentication.hashPassword;
+import static com.mellow.application.jpaservice.service.helper.Authentication.hashingIterations;
 import static com.mellow.application.jpaservice.service.helper.Authentication.passwordMatches;
 import static com.mellow.application.jpaservice.service.helper.Authentication.validateToken;
 
 @Service
 public class AuthenticationService {
 
-    private UserRepository userRepository;
+    private UserService userService;
     private ConfigHelper configHelper;
     private final String issuer = "https://stormpath.com/";
 
     @Autowired
-    public AuthenticationService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-        this.configHelper = new ConfigHelper("config.properties");
+    public AuthenticationService(UserService userService) {
+        this.userService = userService;
+        this.configHelper = new ConfigHelper("config/config.properties");
+    }
+
+    public User createUser(Credentials credentials) {
+        checkCredentialsPresence(credentials);
+        String salt = generateSalt();
+        String hashedPassword = hashPassword(credentials.getPassword(), salt);
+        return userService.create(new User(credentials.getUsername(), hashedPassword, salt, hashingIterations));
     }
 
     public User authenticateUser(Credentials credentials) {
         checkCredentialsPresence(credentials);
-        Optional<User> optionalUser = userRepository.findByUsername(credentials.getUsername());
-        if (optionalUser.isPresent()) {
-            if (passwordMatches(credentials.getPassword(), optionalUser.get().getSalt(), optionalUser.get().getPassword())) {
-                return optionalUser.get();
-            }
-            throw new UnAuthorizedException("Wrong password");
+        User user = userService.getByUsername(credentials.getUsername());
+        if (passwordMatches(credentials.getPassword(), user.getSalt(), user.getPassword())) {
+            return user;
         }
-        throw new NoSearchResultException(String.format("Could not find user with username %s", credentials.getUsername()));
+        throw new UnAuthorizedException("Wrong password");
     }
 
     public void validateAccessToken(String token) {
