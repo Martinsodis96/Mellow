@@ -1,19 +1,19 @@
 package com.mellow.application.webservice.model;
 
-import com.mellow.application.jpaservice.entity.model.LikeModel;
+import com.mellow.application.jpaservice.entity.Like;
 
-public final class Like {
+public final class LikeDTO {
     private Long id;
     private Long userId;
     private Long postId;
 
-    public Like(LikeModel likeModel) {
-        this.id = likeModel.getId();
-        this.userId = likeModel.getUser().getId();
-        this.postId = likeModel.getPost().getId();
+    public LikeDTO(Like like) {
+        this.id = like.getId();
+        this.userId = like.getUser().getId();
+        this.postId = like.getPost().getId();
     }
 
-    protected Like() {
+    protected LikeDTO() {
     }
 
     public Long getId() {

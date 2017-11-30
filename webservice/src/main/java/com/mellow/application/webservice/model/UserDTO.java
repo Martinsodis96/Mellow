@@ -1,15 +1,15 @@
 package com.mellow.application.webservice.model;
 
-import com.mellow.application.jpaservice.entity.model.UserModel;
+import com.mellow.application.jpaservice.entity.User;
 
-public final class User {
+public final class UserDTO {
     private Long id;
     private String username;
 
-    protected User() {
+    protected UserDTO() {
     }
 
-    public User(UserModel userModel) {
+    public UserDTO(User userModel) {
         this.id = userModel.getId();
         this.username = userModel.getUsername();
     }

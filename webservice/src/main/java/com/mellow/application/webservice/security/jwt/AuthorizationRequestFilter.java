@@ -1,6 +1,6 @@
 package com.mellow.application.webservice.security.jwt;
 
-import com.mellow.application.jpaservice.service.AuthenticationService;
+import com.mellow.application.jpaservice.service.implementation.AuthenticationService;
 import com.mellow.application.jpaservice.service.exception.UnAuthorizedException;
 import org.springframework.beans.factory.annotation.Autowired;
 
