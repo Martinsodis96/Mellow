@@ -1,8 +1,9 @@
 package com.mellow.application.webservice.resources;
 
 import com.mellow.application.jpaservice.entity.Credentials;
-import com.mellow.application.webservice.model.User;
-import com.mellow.application.jpaservice.service.AuthenticationService;
+import com.mellow.application.jpaservice.service.implementation.AuthenticationService;
+import com.mellow.application.jpaservice.service.implementation.UserService;
+import com.mellow.application.webservice.model.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.ws.rs.Consumes;
@@ -26,22 +27,22 @@ public class AuthenticationResource {
     private UriInfo uriInfo;
 
     @Autowired
-    public AuthenticationResource(AuthenticationService authenticationService) {
+    public AuthenticationResource(AuthenticationService authenticationService, UserService userService) {
         this.authenticationService = authenticationService;
     }
 
     @POST
     @Path("register")
     public Response createUser(Credentials credentials) {
-        User user = new User(authenticationService.createUser(credentials));
+        UserDTO user = new UserDTO(authenticationService.createUser(credentials));
         return Response.created(URI.create("users/" + user.getId())).build();
     }
 
     @POST
     @Path("login")
     public Response authenticateUser(Credentials credentials) {
-        User user = new User(authenticationService.authenticateUser(credentials));
-        return Response.ok(user).build();
+        UserDTO userDTO = new UserDTO(authenticationService.authenticateUser(credentials));
+        return Response.ok(userDTO).build();
     }
 
     @POST

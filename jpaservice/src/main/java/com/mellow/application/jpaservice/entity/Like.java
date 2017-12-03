@@ -15,7 +15,7 @@ public class Like extends AbstractEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     private User user;
 
-    protected Like() {
+    public Like() {
     }
 
     public Like(Post post, User user) {
@@ -27,15 +27,22 @@ public class Like extends AbstractEntity {
         return post;
     }
 
-    public void setPost(Post post) {
+    public Like setId(Long id) {
+        super.id = id;
+        return this;
+    }
+
+    public Like setPost(Post post) {
         this.post = post;
+        return this;
     }
 
     public User getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public Like setUser(User user) {
         this.user = user;
+        return this;
     }
 }

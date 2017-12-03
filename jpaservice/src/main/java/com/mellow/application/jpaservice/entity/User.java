@@ -1,6 +1,10 @@
 package com.mellow.application.jpaservice.entity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.List;
 
 @Entity
@@ -27,7 +31,7 @@ public class User extends AbstractEntity {
     @ManyToMany
     private List<Chat> chats;
 
-    protected User() {
+    public User() {
     }
 
     public User(String username, String password, String salt, int saltingIterations) {
@@ -35,6 +39,11 @@ public class User extends AbstractEntity {
         this.password = password;
         this.salt = salt;
         this.saltingIterations = saltingIterations;
+    }
+
+    public User setId(Long id) {
+        super.id = id;
+        return this;
     }
 
     public String getUsername() {

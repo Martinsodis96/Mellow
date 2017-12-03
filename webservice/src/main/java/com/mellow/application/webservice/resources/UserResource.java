@@ -1,15 +1,26 @@
 package com.mellow.application.webservice.resources;
 
-import com.mellow.application.webservice.model.Post;
-import com.mellow.application.jpaservice.entity.model.PostModel;
-import com.mellow.application.webservice.model.User;
-import com.mellow.application.jpaservice.entity.model.UserModel;
-import com.mellow.application.jpaservice.service.PostService;
-import com.mellow.application.jpaservice.service.UserService;
+import com.mellow.application.jpaservice.entity.Post;
+import com.mellow.application.jpaservice.entity.User;
+import com.mellow.application.jpaservice.service.implementation.PostService;
+import com.mellow.application.jpaservice.service.implementation.UserService;
+import com.mellow.application.webservice.model.PostDTO;
+import com.mellow.application.webservice.model.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,45 +44,45 @@ public class UserResource {
 
     @GET
     @Path("{userId}")
-    public User getById(@PathParam("userId") Long userId) {
-        return new User(userService.getById(userId));
+    public UserDTO getById(@PathParam("userId") Long userId) {
+        return new UserDTO(userService.getById(userId));
     }
 
     @GET
-    public Iterable<User> getAllUsers(@QueryParam("username") String username) {
-        List<User> users = new ArrayList<>();
-        userService.getAllUsers().forEach(userDao -> users.add(new User(userDao)));
-        //TODO make a method in jpa to filter all users by username.
-        return users;
-    }
-
-    @POST
-    @Path("/{userId}/posts")
-    public Response createPost(@PathParam("userId") Long userId, Post post) {
-        PostModel createdPostModel = postService.createPost(userId, post.getContent());
-        return Response.created(URI.create(uriInfo.getPath() + "/" + createdPostModel.getId())).build();
-    }
-
-    @GET
-    @Path("/{userId}/posts")
-    public List<Post> getAllPostsFromUser(@PathParam("userId") Long userId) {
-        List<Post> posts = new ArrayList<>();
-        userService.getAllPostsFromUser(userId)
-                .forEach(postModel -> posts.add(new Post(postModel)));
-        return posts;
+    public List<UserDTO> getAllUsers(@QueryParam("username") String username) {
+        List<UserDTO> userDTOS = new ArrayList<>();
+        userService.getAll().forEach(userDao -> userDTOS.add(new UserDTO(userDao)));
+        return userDTOS;
     }
 
     @PUT
     @Path("{userId}")
-    public Response updateUsername(@PathParam("userId") Long userId, UserModel userModel) {
-        userService.updateUsername(userModel.getUsername(), userId);
+    public Response updateUsername(@PathParam("userId") Long userId, UserDTO userDTO) {
+        userService.updateUsername(userDTO.getUsername(), userId);
         return Response.noContent().location(URI.create(uriInfo.getPath() + "/" + userId)).build();
     }
 
     @DELETE
     @Path("{userId}")
-    public User removeUser(@PathParam("userId") Long userId) {
-        return new User(userService.deleteUser(userId));
+    public UserDTO removeUser(@PathParam("userId") Long userId) {
+        return new UserDTO(userService.delete(new User().setId(userId)));
     }
 
+    @POST
+    @Path("/{userId}/posts")
+    public Response createPost(@PathParam("userId") Long userId, PostDTO postDTO) {
+        User user = new User().setId(userId);
+        Post post = new Post(postDTO.getContent(), user);
+        Post createdPostModel = postService.create(post);
+        return Response.created(URI.create(uriInfo.getPath() + "/" + createdPostModel.getId())).build();
+    }
+
+    @GET
+    @Path("/{userId}/posts")
+    public List<PostDTO> getAllPostsFromUser(@PathParam("userId") Long userId) {
+        List<PostDTO> postDTOS = new ArrayList<>();
+        postService.getAllByUserId(userId)
+                .forEach(post -> postDTOS.add(new PostDTO(post)));
+        return postDTOS;
+    }
 }

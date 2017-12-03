@@ -1,7 +1,6 @@
 package com.mellow.application.jpaservice.service.implementation;
 
 import com.mellow.application.jpaservice.entity.User;
-import com.mellow.application.jpaservice.repository.PostRepository;
 import com.mellow.application.jpaservice.repository.UserRepository;
 import com.mellow.application.jpaservice.service.CrudService;
 import com.mellow.application.jpaservice.service.exception.DatabaseException;
@@ -19,12 +18,10 @@ import java.util.function.Function;
 public class UserService implements CrudService<User> {
 
     private UserRepository userRepository;
-    private PostRepository postRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository, PostRepository postRepository) {
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.postRepository = postRepository;
     }
 
     @Override

@@ -3,7 +3,12 @@ package com.mellow.application.jpaservice.entity;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +29,7 @@ public class Post extends AbstractEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     private User user;
 
-    protected Post() {
+    public Post() {
     }
 
     public Post(String content, User user) {
@@ -32,6 +37,11 @@ public class Post extends AbstractEntity {
         this.user = user;
         this.likes = new ArrayList<>();
         this.comments = new ArrayList<>();
+    }
+
+    public Post setId(Long id) {
+        super.id = id;
+        return this;
     }
 
     public String getContent() {

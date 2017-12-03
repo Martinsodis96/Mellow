@@ -47,15 +47,15 @@ public class CommentService implements CrudService<Comment> {
     }
 
     @Override
-    public Comment create(Comment entity) {
-        if (entity != null && entity.getContent() != null && entity.getUser() != null && entity.getPost() != null) {
+    public Comment create(Comment comment) {
+        if (comment != null && comment.getContent() != null && comment.getUser() != null && comment.getPost() != null) {
             return execute(commentRepository -> {
-                Post post = postRepository.findOne(entity.getPost().getId());
-                User user = userRepository.findOne(entity.getUser().getId());
+                Post post = postRepository.findOne(comment.getPost().getId());
+                User user = userRepository.findOne(comment.getUser().getId());
                 if (Optional.ofNullable(post).isPresent() && Optional.ofNullable(user).isPresent()) {
-                    return commentRepository.save(entity);
+                    return commentRepository.save(comment);
                 } else {
-                    throw new NoSearchResultException(String.format("Could not find post with id '%d' or user with id '%d'", entity.getPost().getId(), entity.getUser().getId()));
+                    throw new NoSearchResultException(String.format("Could not find post with id '%d' or user with id '%d'", comment.getPost().getId(), comment.getUser().getId()));
                 }
             }, "Failed to create comment");
         } else {
@@ -64,17 +64,17 @@ public class CommentService implements CrudService<Comment> {
     }
 
     @Override
-    public Comment update(Comment entity) {
-        if (entity != null && entity.getUser() != null && entity.getContent() != null) {
+    public Comment update(Comment comment) {
+        if (comment != null && comment.getUser() != null && comment.getContent() != null) {
             return execute(commentRepository -> {
-                Comment comment = commentRepository.findOne(entity.getId());
-                if (Optional.ofNullable(comment).isPresent()) {
-                    if (!comment.getUser().getId().equals(entity.getUser().getId())) {
-                        throw new ForbiddenException(String.format("Comment with id '%d' do not belong to user with id '%d'", entity.getId(), entity.getUser().getId()));
+                Comment existingComment = commentRepository.findOne(comment.getId());
+                if (Optional.ofNullable(existingComment).isPresent()) {
+                    if (!existingComment.getUser().getId().equals(comment.getUser().getId())) {
+                        throw new ForbiddenException(String.format("Comment with id '%d' do not belong to user with id '%d'", comment.getId(), comment.getUser().getId()));
                     }
-                    return commentRepository.save(comment.setContent(entity.getContent()));
+                    return commentRepository.save(existingComment.setContent(comment.getContent()));
                 } else {
-                    throw new NoSearchResultException("Could not find comment with id: " + entity.getId());
+                    throw new NoSearchResultException("Could not find comment with id: " + comment.getId());
                 }
             }, "Failed to update comment");
         } else {
@@ -83,18 +83,18 @@ public class CommentService implements CrudService<Comment> {
     }
 
     @Override
-    public Comment delete(Comment entity) {
+    public Comment delete(Comment comment) {
         return execute(commentRepository -> {
-            if (entity != null && entity.getUser() != null) {
-                Comment comment = commentRepository.findOne(entity.getId());
-                if (Optional.ofNullable(comment).isPresent()) {
-                    if (!comment.getUser().getId().equals(entity.getUser().getId())) {
-                        throw new ForbiddenException(String.format("Comment with id '%d' do not belong to user with id '%d'", entity.getId(), entity.getUser().getId()));
+            if (comment != null && comment.getUser() != null) {
+                Comment existingComment = commentRepository.findOne(comment.getId());
+                if (Optional.ofNullable(existingComment).isPresent()) {
+                    if (!existingComment.getUser().getId().equals(comment.getUser().getId())) {
+                        throw new ForbiddenException(String.format("Comment with id '%d' do not belong to user with id '%d'", comment.getId(), comment.getUser().getId()));
                     }
-                    commentRepository.delete(comment);
-                    return comment;
+                    commentRepository.delete(existingComment);
+                    return existingComment;
                 } else {
-                    throw new NoSearchResultException("Could not find comment with id: " + entity.getId());
+                    throw new NoSearchResultException("Could not find comment with id: " + comment.getId());
                 }
             } else {
                 throw new InvalidInputException("Comment or user can't be null");

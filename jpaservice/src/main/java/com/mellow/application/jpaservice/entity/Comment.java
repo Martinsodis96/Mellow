@@ -17,12 +17,18 @@ public class Comment extends AbstractEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     private User user;
 
-    protected Comment() {
+    public Comment() {
     }
 
-    public Comment(String content, Post post) {
+    public Comment(String content, Post post, User user) {
         this.content = content;
         this.post = post;
+        this.user = user;
+    }
+
+    public Comment setId(Long id) {
+        super.id = id;
+        return this;
     }
 
     public Post getPost() {

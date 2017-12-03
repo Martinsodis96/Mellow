@@ -1,12 +1,17 @@
 package com.mellow.application.webservice.resources;
 
-import com.mellow.application.webservice.model.Post;
-import com.mellow.application.jpaservice.entity.model.PostModel;
-import com.mellow.application.jpaservice.service.PostService;
-import com.mellow.application.jpaservice.service.UserService;
+import com.mellow.application.jpaservice.entity.Post;
+import com.mellow.application.jpaservice.service.implementation.PostService;
+import com.mellow.application.webservice.model.PostDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -24,38 +29,37 @@ public class PostResource {
     private UriInfo uriInfo;
 
     private final PostService postService;
-    private final UserService userService;
 
     @Autowired
-    public PostResource(PostService postService, UserService userService) {
+    public PostResource(PostService postService) {
         this.postService = postService;
-        this.userService = userService;
     }
 
     @GET
     @Path("{postId}")
-    public Post getPostById(@PathParam("postId") Long postId) {
-        return new Post(postService.getPostById(postId));
+    public PostDTO getPostById(@PathParam("postId") Long postId) {
+        return new PostDTO(postService.getById(postId));
     }
 
     @GET
-    public List<Post> getAllPosts() {
-        List<Post> posts = new ArrayList<>();
-        postService.getAllPosts().forEach(postModel -> posts.add(new Post(postModel)));
-        return posts;
+    public List<PostDTO> getAllPosts() {
+        List<PostDTO> postDTOS = new ArrayList<>();
+        postService.getAll().forEach(post -> postDTOS.add(new PostDTO(post)));
+        return postDTOS;
     }
 
     @PUT
     @Path("{postId}")
-    public Response updatePost(@PathParam("postId") Long postId, Post post) {
-        PostModel createdPostModel = postService.updatePost(postId, post.getContent());
-        return Response.noContent().location(URI.create(uriInfo.getPath() + "/" + createdPostModel.getId())).build();
+    public Response updatePost(@PathParam("postId") Long postId, PostDTO postDTO) {
+        Post post = new Post().setId(postId).setContent(postDTO.getContent());
+        Post createdPost = postService.update(post);
+        return Response.noContent().location(URI.create(uriInfo.getPath() + "/" + createdPost.getId())).build();
     }
 
     @DELETE
     @Path("{postId}")
     public Response remove(@PathParam("postId") Long postId) {
-        postService.removePost(postId);
+        postService.delete(new Post().setId(postId));
         return Response.noContent().build();
     }
 }

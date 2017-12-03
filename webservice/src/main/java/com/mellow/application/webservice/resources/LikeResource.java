@@ -1,9 +1,10 @@
 package com.mellow.application.webservice.resources;
 
-import com.mellow.application.jpaservice.entity.model.LikeModel;
-import com.mellow.application.webservice.model.Like;
-import com.mellow.application.jpaservice.service.LikeService;
-import com.mellow.application.jpaservice.service.PostService;
+import com.mellow.application.jpaservice.entity.Like;
+import com.mellow.application.jpaservice.entity.Post;
+import com.mellow.application.jpaservice.entity.User;
+import com.mellow.application.jpaservice.service.implementation.LikeService;
+import com.mellow.application.webservice.model.LikeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.ws.rs.Consumes;
@@ -31,40 +32,44 @@ public class LikeResource {
 
     @PathParam("postId")
     private Long postId;
-    private final PostService postService;
 
     private final LikeService likeService;
 
     @Autowired
-    public LikeResource(PostService postService, LikeService likeService) {
-        this.postService = postService;
+    public LikeResource(LikeService likeService) {
         this.likeService = likeService;
     }
 
     @GET
     @Path("{likeId}")
-    public Like getLike(@PathParam("likeId") Long likeId) {
-        return new Like(likeService.getLikeById(likeId));
+    public LikeDTO get(@PathParam("likeId") Long likeId) {
+        return new LikeDTO(likeService.getById(likeId));
     }
 
     @GET
-    public List<Like> getAllLikes() {
-        List<Like> likes = new ArrayList<>();
-        postService.getAllLikesFromPost(postId).forEach(likeModel ->
-                likes.add(new Like(likeModel)));
-        return likes;
+    public List<LikeDTO> getAll() {
+        List<LikeDTO> likeDTOS = new ArrayList<>();
+        likeService.getAllByPostId(postId).forEach(likeModel ->
+                likeDTOS.add(new LikeDTO(likeModel)));
+        return likeDTOS;
     }
 
     @POST
-    public Response addLikeToPost(Like like) {
-        LikeModel createdLike = postService.addLikeToPost(postId, like.getUserId());
+    public Response create(LikeDTO likeDTO) {
+        User user = new User().setId(likeDTO.getUserId());
+        Post post = new Post().setId(postId);
+        Like like = new Like(post, user);
+        Like createdLike = likeService.create(like);
         return Response.created(URI.create(uriInfo.getAbsolutePath() + "/" + createdLike.getId())).build();
     }
 
     @DELETE
     @Path("{likeId}")
-    public Response removeLikeFromPost(@PathParam("likeId") Long likeId) {
-        postService.removeLikeFromPost(likeId);
+    public Response delete(@PathParam("likeId") Long likeId, LikeDTO likeDTO) {
+        User user = new User().setId(likeDTO.getUserId());
+        Post post = new Post().setId(postId);
+        Like like = new Like(post, user).setId(likeId);
+        likeService.delete(like);
         return Response.noContent().build();
     }
 }

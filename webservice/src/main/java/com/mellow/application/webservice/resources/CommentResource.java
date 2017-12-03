@@ -1,12 +1,12 @@
 package com.mellow.application.webservice.resources;
 
-import com.mellow.application.webservice.model.Comment;
-import com.mellow.application.jpaservice.entity.model.CommentModel;
-import com.mellow.application.jpaservice.service.CommentService;
-import com.mellow.application.jpaservice.service.PostService;
+import com.mellow.application.jpaservice.entity.Comment;
+import com.mellow.application.jpaservice.entity.Post;
+import com.mellow.application.jpaservice.entity.User;
+import com.mellow.application.jpaservice.service.implementation.CommentService;
+import com.mellow.application.webservice.model.CommentDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.ws.rs.BadRequestException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -32,29 +32,27 @@ public class CommentResource {
     @Context
     UriInfo uriInfo;
 
-    private final PostService postService;
     private final CommentService commentService;
 
     @Autowired
-    public CommentResource(PostService postService, CommentService commentService) {
-        this.postService = postService;
+    public CommentResource(CommentService commentService) {
         this.commentService = commentService;
     }
 
     @GET
-    public List<Comment> getAllComments() {
-        List<Comment> comments = new ArrayList<>();
-        postService.getAllCommentsFromPost(postId)
-                .forEach(commentModel -> comments.add(new Comment(commentModel)));
-        return comments;
+    public List<CommentDTO> getAllComments() {
+        List<CommentDTO> commentDTOS = new ArrayList<>();
+        commentService.getbyPostId(postId)
+                .forEach(commentModel -> commentDTOS.add(new CommentDTO(commentModel)));
+        return commentDTOS;
     }
 
     @POST
-    public Response createComment(Comment comment) {
-        //TODO move null checks to the service layer.
-        if (comment.getContent() != null && comment.getUser() != null) {
-            CommentModel createdComment = commentService.createComment(comment.getContent(), postId, comment.getUser().getId());
-            return Response.created(URI.create(uriInfo.getAbsolutePath() + "/" + createdComment.getId())).build();
-        } else throw new BadRequestException();
+    public Response createComment(CommentDTO commentDTO) {
+        User user = new User().setId(commentDTO.getUserId());
+        Post post = new Post().setId(postId);
+        Comment comment = new Comment(commentDTO.getContent(), post, user);
+        Comment createdComment = commentService.create(comment);
+        return Response.created(URI.create(uriInfo.getAbsolutePath() + "/" + createdComment.getId())).build();
     }
 }

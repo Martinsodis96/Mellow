@@ -7,13 +7,13 @@ public final class CommentDTO {
     private Long id;
     private String content;
     private Long postId;
-    private UserDTO userDTO;
+    private Long userId;
 
     public CommentDTO(Comment comment) {
         this.id = comment.getId();
         this.content = comment.getContent();
         this.postId = comment.getPost().getId();
-        this.userDTO = new UserDTO(comment.getUser());
+        this.userId = comment.getUser().getId();
     }
 
     protected CommentDTO() {
@@ -35,7 +35,7 @@ public final class CommentDTO {
         return postId;
     }
 
-    public UserDTO getUserDTO() {
-        return userDTO;
+    public Long getUserId() {
+        return userId;
     }
 }
