@@ -9,4 +9,5 @@ A social network Android application with a REST API written in Java using Sprin
 ## Technologies used
 * MySQL, FireBase, Spring, Java, Retrofit
 
+## Pictures
 ![alt text](https://lh3.googleusercontent.com/7MSHLoOZO_7EkCDz8vLLdP_Y1EzfSgbZFLwqnIi6R3MLhHYQFrmbikP20KSlyrWh39IR=w1920-h949-rw)
