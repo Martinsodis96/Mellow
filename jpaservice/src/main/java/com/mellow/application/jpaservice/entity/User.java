@@ -2,7 +2,6 @@ package com.mellow.application.jpaservice.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.List;
@@ -28,8 +27,6 @@ public class User extends AbstractEntity {
     @OneToMany(mappedBy = "user")
     private List<Post> posts;
 
-    @ManyToMany
-    private List<Chat> chats;
 
     public User() {
     }
@@ -103,15 +100,6 @@ public class User extends AbstractEntity {
 
     public User setPosts(List<Post> posts) {
         this.posts = posts;
-        return this;
-    }
-
-    public List<Chat> getChats() {
-        return chats;
-    }
-
-    public User setChats(List<Chat> chats) {
-        this.chats = chats;
         return this;
     }
 }

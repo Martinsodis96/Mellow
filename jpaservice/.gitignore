@@ -1,6 +1,6 @@
 reated by https://www.gitignore.io/api/eclipse,intellij,java
 
-# config
+/config
 
 src/main/resources/config.properties
 
