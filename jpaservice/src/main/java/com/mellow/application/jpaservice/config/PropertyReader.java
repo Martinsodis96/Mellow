@@ -6,13 +6,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-public final class ConfigHelper {
+public final class PropertyReader {
 
     private final String fileName;
     private Properties properties;
     private InputStream inputStream;
 
-    public ConfigHelper(String fileName) {
+    public PropertyReader(String fileName) {
         this.properties = new Properties();
         this.fileName = fileName;
     }

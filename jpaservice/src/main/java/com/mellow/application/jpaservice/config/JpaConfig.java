@@ -26,12 +26,12 @@ public class JpaConfig {
 
     @Bean
     public DataSource dataSource() {
-        ConfigHelper configHelper = new ConfigHelper("config.properties");
+        PropertyReader propertyReader = new PropertyReader("config.properties");
         HikariConfig config = new HikariConfig();
         config.setDriverClassName("com.mysql.jdbc.Driver");
-        config.setJdbcUrl(configHelper.getMySqlUrlValue());
-        config.setUsername(configHelper.getMySqlUserValue());
-        config.setPassword(configHelper.getMySqlPasswordValue());
+        config.setJdbcUrl(propertyReader.getMySqlUrlValue());
+        config.setUsername(propertyReader.getMySqlUserValue());
+        config.setPassword(propertyReader.getMySqlPasswordValue());
         return new HikariDataSource(config);
     }
 

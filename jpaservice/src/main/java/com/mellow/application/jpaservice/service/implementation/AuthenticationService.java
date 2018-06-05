@@ -1,6 +1,6 @@
 package com.mellow.application.jpaservice.service.implementation;
 
-import com.mellow.application.jpaservice.config.ConfigHelper;
+import com.mellow.application.jpaservice.config.PropertyReader;
 import com.mellow.application.jpaservice.entity.Credentials;
 import com.mellow.application.jpaservice.entity.User;
 import com.mellow.application.jpaservice.service.exception.UnAuthorizedException;
@@ -23,13 +23,13 @@ import static com.mellow.application.jpaservice.service.helper.Authentication.va
 public class AuthenticationService {
 
     private UserService userService;
-    private ConfigHelper configHelper;
+    private PropertyReader propertyReader;
     private final String issuer = "https://stormpath.com/";
 
     @Autowired
     public AuthenticationService(UserService userService) {
         this.userService = userService;
-        this.configHelper = new ConfigHelper("config/config.properties");
+        this.propertyReader = new PropertyReader("config.properties");
     }
 
     public User createUser(Credentials credentials) {
@@ -49,18 +49,18 @@ public class AuthenticationService {
     }
 
     public void validateAccessToken(String token) {
-        validateToken(token, "Access Token", issuer, configHelper.getJwtAccessSecretValue());
+        validateToken(token, "Access Token", issuer, propertyReader.getJwtAccessSecretValue());
     }
 
     public void validateRefreshToken(String token) {
-        validateToken(token, "Refresh Token", issuer, configHelper.getJwtRefreshSecretValue());
+        validateToken(token, "Refresh Token", issuer, propertyReader.getJwtRefreshSecretValue());
     }
 
     public String getAccessToken() {
-        return createAccessToken("Access Token", DateUtils.addHours(new Date(), 2), configHelper.getJwtAccessSecretValue());
+        return createAccessToken("Access Token", DateUtils.addHours(new Date(), 2), propertyReader.getJwtAccessSecretValue());
     }
 
     public String getRefreshToken() {
-        return createRefreshToken("Refresh Token", configHelper.getJwtRefreshSecretValue());
+        return createRefreshToken("Refresh Token", propertyReader.getJwtRefreshSecretValue());
     }
 }
