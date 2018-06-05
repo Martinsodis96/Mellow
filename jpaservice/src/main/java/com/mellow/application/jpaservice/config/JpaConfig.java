@@ -5,6 +5,7 @@ import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -20,11 +21,12 @@ import javax.sql.DataSource;
 @ComponentScan(basePackages = {"com.mellow.application.jpaservice"})
 @EnableJpaRepositories("com.mellow.application.jpaservice.repository")
 @EnableTransactionManagement
+@EnableJpaAuditing
 public class JpaConfig {
 
     @Bean
     public DataSource dataSource() {
-        ConfigHelper configHelper = new ConfigHelper("config/config.properties");
+        ConfigHelper configHelper = new ConfigHelper("config.properties");
         HikariConfig config = new HikariConfig();
         config.setDriverClassName("com.mysql.jdbc.Driver");
         config.setJdbcUrl(configHelper.getMySqlUrlValue());
