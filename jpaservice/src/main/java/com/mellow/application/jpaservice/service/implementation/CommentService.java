@@ -120,6 +120,7 @@ public class CommentService implements CrudService<Comment> {
         try {
             return operation.apply(commentRepository);
         } catch (DataAccessException e) {
+            e.printStackTrace();
             throw new DatabaseException(dbExMsg);
         }
     }

@@ -44,8 +44,8 @@ public class UserService implements CrudService<User> {
         return execute(userRepository -> {
             if (user != null) {
                 if (user.getUsername().length() > 3) {
-                    User existingUser = userRepository.findOne(user.getId());
-                    if (existingUser == null) {
+                    Optional<User> optionalUser = userRepository.findByUsername(user.getUsername());
+                    if (!optionalUser.isPresent()) {
                         userRepository.save(user);
                         return user;
                     } else {
@@ -114,6 +114,7 @@ public class UserService implements CrudService<User> {
         try {
             return operation.apply(userRepository);
         } catch (DataAccessException e) {
+            e.printStackTrace();
             throw new DatabaseException(dbExMsg);
         }
     }

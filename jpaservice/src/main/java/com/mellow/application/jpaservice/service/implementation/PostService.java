@@ -120,6 +120,7 @@ public class PostService implements CrudService<Post> {
         try {
             return operation.apply(postRepository);
         } catch (DataAccessException e) {
+            e.printStackTrace();
             throw new DatabaseException(dbExMsg);
         }
     }
